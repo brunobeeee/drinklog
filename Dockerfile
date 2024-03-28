@@ -5,8 +5,6 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-# RUN apk update && apk upgrade && \
-#    pip install
 RUN apk add --no-cache --virtual .build-deps \
     ca-certificates gcc postgresql-dev linux-headers musl-dev \
     libffi-dev jpeg-dev zlib-dev \
