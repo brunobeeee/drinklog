@@ -1,59 +1,20 @@
-## Compose sample application
+# drinklog
 
-### Use with Docker Development Environments
+A habit tracker for tracking water intake.
 
-You can open this sample in the Dev Environments feature of Docker Desktop version 4.12 or later.
+## Getting started
 
-[Open in Docker Dev Environments <img src="../open_in_new.svg" alt="Open in Docker Dev Environments" align="top"/>](https://open.docker.com/dashboard/dev-envs?url=https://github.com/docker/awesome-compose/tree/master/django)
-
-### Django application in dev mode
-
-Project structure:
-```
-.
-├── compose.yaml
-├── app
-    ├── Dockerfile
-    ├── requirements.txt
-    └── manage.py
+To run the app clone this repo and run
 
 ```
-
-[_compose.yaml_](compose.yaml)
-```
-services: 
-  web: 
-    build: app 
-    ports: 
-      - '8000:8000'
+docker compose up -d
 ```
 
-## Deploy with docker compose
+To use it in production mode use the `production.yml` file
 
 ```
-$ docker compose up -d
-Creating network "django_default" with the default driver
-Building web
-Step 1/6 : FROM python:3.7-alpine
-...
-...
-Status: Downloaded newer image for python:3.7-alpine
-Creating django_web_1 ... done
-
+docker compose -f production.yml build
+docker compose -f production.yml up -d
 ```
 
-## Expected result
-
-Listing containers must show one container running and the port mapping as below:
-```
-$ docker ps
-CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
-3adaea94142d        django_web          "python3 manage.py r…"   About a minute ago   Up About a minute   0.0.0.0:8000->8000/tcp   django_web_1
-```
-
-After the application starts, navigate to `http://localhost:8000` in your web browser:
-
-Stop and remove the containers
-```
-$ docker compose down
-```
+The web app will be available at `localhost:8000`.
