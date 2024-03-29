@@ -16,21 +16,21 @@ This will start the container but not the web app. The `app` folder is mounted t
 
 - (Optional) To start the web app run inside the container
 
-```
-docker compose exec web python3 manage.py runserver 0.0.0.0:8000
-```
+  ```
+  docker compose exec web python3 manage.py runserver 0.0.0.0:8000
+  ```
 
 - (Optional) To see if the dbs were created correctly run
 
-```
-docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
-```
+  ```
+  docker compose exec db psql --username=hello_django --dbname=hello_django_dev
+  ```
 
 And type `\l` to list all databases.
 
 ### Production
 
-1. To use it in production mode use the `production.yml` file
+To use it in production mode use the `production.yml` file
 
 ```
 docker compose -f production.yml up -d --build
