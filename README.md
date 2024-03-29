@@ -8,11 +8,11 @@ A habit tracker for tracking water intake.
 
 1. To run the app clone this repo and run
 
-```
-docker compose up -d
-```
+   ```
+   docker compose up -d
+   ```
 
-This will start the container but not the web app. The `app` folder is mounted to the container so you can read and write from the host machine.
+   This will start the container but not the web app. The `app` folder is mounted to the container so you can read and write from the host machine.
 
 - (Optional) To start the web app run inside the container
 
