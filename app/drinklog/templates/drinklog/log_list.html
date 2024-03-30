@@ -1,1 +1,22 @@
 <h1>logList</h1>
+
+<table>
+    <tr>
+        <th>id</th>
+        <th>user</th>
+        <th>date</th>
+        <th>intensity</th>
+        <th>overdrive</th>
+    </tr>
+    {% for log in object_list %}
+    <tr>
+        <td>{{ log.id }}</td>
+        <td>{{ log.user }}</td>
+        <td>{{ log.date }}</td>
+        <td>{{ log.intensity }}</td>
+        <td>{{ log.overdrive }}</td>
+    </tr>
+    {% empty %}
+    <h3>No logs in logList</h3>
+    {% endfor %}
+</table>
