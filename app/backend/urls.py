@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import LogList
+from .views import LogCreate, LogList, LogUpdate
 
 urlpatterns = [
-    path('', LogList.as_view(), name="List"),
+    path('', LogList.as_view(), name="list-logs"),
+    path('create-log/', LogCreate.as_view(), name="create-log"),
+    path('update-log/<int:pk>/', LogUpdate.as_view(), name="update-log"),
+    path('delete-log/<int:pk>/', LogUpdate.as_view(), name="delete-log"),
     path('admin/', admin.site.urls),
 ]
