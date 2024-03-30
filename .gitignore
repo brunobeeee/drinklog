@@ -1,4 +1,6 @@
 .DS_Store
+.env.prod
+.env.prod.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
