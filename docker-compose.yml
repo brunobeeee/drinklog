@@ -7,7 +7,7 @@ services:
       context: .
       target: builder
     command: >
-      sh -c "/app/docker-entrypoint.sh && python3 manage.py flush --noinput && python3 manage.py migrate && python3 manage.py createsuperuser --noinput && sleep infinity"
+      sh -c "/app/docker-entrypoint.sh && python3 manage.py flush --noinput && python3 manage.py migrate && python3 manage.py createsuperuser --noinput && python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
     env_file:
