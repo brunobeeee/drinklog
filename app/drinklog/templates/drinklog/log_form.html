@@ -1,7 +1,0 @@
-<h1>LogForm</h1>
-<a href="{% url 'list-logs' %}">Go Back</a>
-
-<form method="POST" action="">
-    {% csrf_token %} {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>

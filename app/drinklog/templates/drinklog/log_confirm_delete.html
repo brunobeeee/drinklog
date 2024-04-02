@@ -1,8 +1,0 @@
-<h1>Delete Log</h1>
-<a href="{% url 'list-logs' %}">Go Back</a>
-
-<form method="POST">
-    {% csrf_token %}
-    <p>Are you sure you want to delete log "{{ log }}"?</p>
-    <input type="submit" value="Delete" />
-</form>
