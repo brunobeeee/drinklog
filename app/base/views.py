@@ -17,6 +17,8 @@ from django.db import transaction
 from .models import Log
 from .forms import PositionForm
 
+from datetime import datetime, timedelta
+
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
@@ -73,6 +75,11 @@ class LogCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(LogCreate, self).form_valid(form)
+
+    def get_initial(self):
+            initial = super().get_initial()
+            initial['date'] = datetime.now() - timedelta(days=1)
+            return initial
 
 
 class LogUpdate(LoginRequiredMixin, UpdateView):

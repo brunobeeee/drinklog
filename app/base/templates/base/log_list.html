@@ -2,57 +2,94 @@
 
 <div class="header-bar">
     <div>
-        <h1>Hello {{request.user|title}}</h1>
+        <h1 class="m-0">
+            <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
+            Drinklog
+        </h1>
     </div>
 
     {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}">Logout</a> {% else %}
-    <a href="{% url 'login' %}">Login</a> {% endif %}
+    <a class="d-flex" href="{% url 'logout' %}"
+        ><i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i
+    ></a>
+    {% else %} <a href="{% url 'login' %}">Login</a> {% endif %}
 </div>
 
 <div id="search-add-wrapper">
-    <form method="GET" style="display: flex">
-        <input
-            type="text"
-            name="search-area"
-            placeholder="Search your log"
-            value="{{search_input}}"
-        />
-        <input class="button" type="submit" value="Search" />
+    <form method="GET" class="d-flex w-50">
+        <div class="input-group">
+            <input
+                class="form-control rounded-pill"
+                type="text"
+                name="search-area"
+                placeholder="Search your log dates"
+                value="{{search_input}}"
+            />
+            <span class="input-group-append">
+                <button
+                    class="btn btn-outline-secondary rounded-pill border"
+                    style="
+                        border-top-left-radius: 0 !important;
+                        border-bottom-left-radius: 0 !important;
+                        margin-left: -41px;
+                    "
+                    type="button"
+                >
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
     </form>
     {% if logs|length > 0 %}
-    <a id="add-link" href="{% url 'log-create' %}">&#x2b;</a>
+    <a class="d-flex text-decoration-none" href="{% url 'log-create' %}"
+        ><i class="fa-solid fa-plus fa-2xl text-secondary m-auto"></i
+    ></a>
     {% endif %}
 </div>
 
-<div id="tasklist" class="task-items-wrapper">
-    {% for log in logs %}
-    <div class="log-wrapper" data-position="{{log.pk}}">
-        <div class="task-title">
-            <a href="{% url 'log-update' log.id %}">{{log}}</a>
-        </div>
-        <div class="task-controls">
-            <a class="delete-link" href="{% url 'log-delete' log.id %}"
-                >&#215;</a
-            >
-            <span class="handle">&nbsp;&#10247;</span>
-        </div>
-    </div>
+{% if logs|length > 0 %}
+<table id="loglist" class="table-striped table-hover table">
+    <thead>
+        <th>Date</th>
+        <th>Intensity</th>
+        <th>Overdrive</th>
+        <th></th>
+    </thead>
+    {% endif %} {% for log in logs %}
+    <tr
+        onclick="window.location='{% url 'log-update' log.id %}';"
+        style="cursor: pointer"
+    >
+        <td>{{log.date|date:"d.m.Y"}}</td>
+        <td>{{log.intensity}}</td>
+        <td>
+            {% if log.overdrive %}
+            <i class="fa-solid fa-check fa-lg text-danger"></i> {% else %}
+            <i class="fa-solid fa-xmark fa-lg text-secondary"></i> {% endif %}
+        </td>
+        <td style="vertical-align: middle">
+            <a
+                class="d-flex text-decoration-none"
+                href="{% url 'log-delete' log.id %}"
+                ><i class="fa-solid fa-trash-can fa-lg text-danger m-auto"></i
+            ></a>
+        </td>
+    </tr>
 
     {% empty %}
-    <div style="text-align: center; padding-bottom: 10px; line-height: 1em">
-        <h3>No new logs are created.</h3>
+    <div class="mt-2 pb-3 text-center">
+        <h3>No logs are created or found using your search.</h3>
         <h3>
             Create a
             <a
                 style="text-decoration: none; color: #e53935"
                 href="{% url 'log-create' %}"
-                >New log</a
+                >new log</a
             >
             !
         </h3>
     </div>
     {% endfor %}
-</div>
+</table>
 
 {% endblock content %}
