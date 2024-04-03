@@ -49,19 +49,15 @@ class LogList(LoginRequiredMixin, ListView):
     model = Log
     context_object_name = 'logs'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['logs'] = context['logs'].filter(user=self.request.user)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
-            context['logs'] = context['logs'].filter(
-                date__contains=search_input)
+            queryset = queryset.filter(date__contains=search_input)
 
-        context['search_input'] = search_input
-
-        return context
-
+        return queryset.order_by('-date')  # Sortiere nach Datum absteigend
 
 class LogDetail(LoginRequiredMixin, DetailView):
     model = Log
@@ -71,7 +67,7 @@ class LogDetail(LoginRequiredMixin, DetailView):
 
 class LogCreate(LoginRequiredMixin, CreateView):
     model = Log
-    fields = ['date', 'intensity', 'overdrive', 'user']
+    fields = ['date', 'intensity', 'overdrive']
     success_url = reverse_lazy('logs')
 
     def form_valid(self, form):
@@ -81,7 +77,7 @@ class LogCreate(LoginRequiredMixin, CreateView):
 
 class LogUpdate(LoginRequiredMixin, UpdateView):
     model = Log
-    fields = ['date', 'intensity', 'overdrive', 'user']
+    fields = ['date', 'intensity', 'overdrive']
     success_url = reverse_lazy('logs')
 
 
