@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TaskList, TaskDetail, TaskCreate, TaskUpdate, DeleteView, CustomLoginView, RegisterPage, TaskReorder
+from .views import LogList, LogDetail, LogCreate, LogUpdate, DeleteView, CustomLoginView, RegisterPage, LogReorder
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -7,10 +7,10 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', RegisterPage.as_view(), name='register'),
 
-    path('', TaskList.as_view(), name='tasks'),
-    path('task/<int:pk>/', TaskDetail.as_view(), name='task'),
-    path('task-create/', TaskCreate.as_view(), name='task-create'),
-    path('task-update/<int:pk>/', TaskUpdate.as_view(), name='task-update'),
-    path('task-delete/<int:pk>/', DeleteView.as_view(), name='task-delete'),
-    path('task-reorder/', TaskReorder.as_view(), name='task-reorder'),
+    path('', LogList.as_view(), name='logs'),
+    path('log/<int:pk>/', LogDetail.as_view(), name='log'),
+    path('log-create/', LogCreate.as_view(), name='log-create'),
+    path('log-update/<int:pk>/', LogUpdate.as_view(), name='log-update'),
+    path('log-delete/<int:pk>/', DeleteView.as_view(), name='log-delete'),
+    path('log-reorder/', LogReorder.as_view(), name='log-reorder'),
 ]
