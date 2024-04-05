@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LogList, LogDetail, LogCreate, LogUpdate, DeleteView, CustomLoginView, RegisterPage, LogReorder
+from .views import LogList, LogDetail, LogCreate, LogUpdate, DeleteView, CustomLoginView, RegisterPage, LogReorder, logplot
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path('log-update/<int:pk>/', LogUpdate.as_view(), name='log-update'),
     path('log-delete/<int:pk>/', DeleteView.as_view(), name='log-delete'),
     path('log-reorder/', LogReorder.as_view(), name='log-reorder'),
+    path('log-plot/', logplot, name='log-plot')
 ]
