@@ -19,6 +19,9 @@ from .forms import PositionForm
 
 from datetime import datetime, timedelta
 
+import plotly.express as px
+import pandas as pd
+
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
@@ -107,3 +110,15 @@ class LogReorder(View):
                 self.request.user.set_log_order(positionList)
 
         return redirect(reverse_lazy('logs'))
+
+
+def logplot(request):
+    all_logs = Log.objects.all()
+    dates = [log.date for log in all_logs]
+    intensities = [log.intensity for log in all_logs]
+
+    df = pd.DataFrame({'date': dates, 'intensity': intensities})
+    fig_bar = px.bar(df, x='date', y='intensity', title="Drinklog Plot", labels={'intensity': 'Intensity', 'date': 'Date'})
+    bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False)
+
+    return render(request, "base/log_plot.html", {"bar_chart": bar_chart})
