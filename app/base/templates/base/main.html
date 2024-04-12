@@ -16,14 +16,7 @@
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- Bootstrap -->
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="{% static '/app/static/dist/main.css' %}"/>
+        <link rel="stylesheet" href="{% static 'main.css' %}"/>
         <!-- Fontawesome -->
         <link
             rel="stylesheet"
@@ -32,144 +25,11 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         />
-
-        <style>
-            body {
-                font-family: "Helvetica Neue", sans-serif;
-            }
-
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6 {
-                font-family: "Jost", sans-serif;
-            }
-
-            a,
-            p {
-                color: #4b5156;
-            }
-
-            a {
-                font-weight: 600;
-            }
-
-            .container {
-                max-width: 576px;
-                margin-top: 50px;
-                border-radius: 0.3rem;
-                padding: 0;
-                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            }
-
-            .header-bar {
-                display: flex;
-                justify-content: space-between;
-                color: #fff;
-                padding: 1rem;
-                border-radius: 0.3rem 0.3rem 0 0;
-                background: linear-gradient(
-                    90deg,
-                    #c9b254 0%,
-                    #c2a83e 43%,
-                    #c2a83e 100%
-                );
-            }
-
-            .header-bar a {
-                color: rgb(247, 247, 247);
-                text-decoration: none;
-            }
-
-            @media (max-width: 576px) {
-                .container {
-                    margin-top: 0;
-                    border-radius: 0 !important;
-                    box-shadow: none;
-                }
-                .header-bar {
-                    border-radius: 0;
-                }
-            }
-
-            input {
-                outline: none;
-                border: none;
-            }
-
-            #search-add-wrapper {
-                display: flex;
-                padding: 1rem;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            input[type="text"],
-            input[type="password"],
-            input[type="number"],
-            textarea {
-                padding: 10px;
-                border: 1px solid #dee2e6;
-                border-radius: 50rem;
-                padding: 2.5px 10px;
-            }
-
-            label {
-                padding-top: 10px !important;
-                display: block;
-            }
-
-            ::placeholder {
-                font-weight: 300;
-                opacity: 0.5;
-            }
-
-            table td,
-            table th {
-                padding: 1rem !important;
-            }
-
-            .button {
-                border: 1px solid #dee2e6;
-                background-color: white;
-                color: #eb796f;
-                padding: 2.5px 10px;
-                border-radius: 50rem;
-                cursor: pointer;
-                text-decoration: none;
-            }
-
-            /* Overwrite color classes bc I'm to lazy to install bootstrap w/o a CDN */
-            .text-danger {
-                color: #d7263d !important;
-            }
-
-            .bg-light {
-                background-color: #fcfafa !important;
-            }
-        </style>
     </head>
 
-    <body class="bg-light">
-        <div class="container">{% block content %} {% endblock content %}</div>
+    <body>
+        {% block content %} {% endblock content %}
 
-        <!-- Bootstrap -->
-        <script
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"
-        ></script>
+        <script src="{% static 'main.js' %}"></script>
     </body>
 </html>

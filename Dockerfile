@@ -16,5 +16,9 @@ COPY app/requirements.txt .
 RUN pip3 install --upgrade pip && pip3 install -r requirements.txt --no-cache-dir
 
 FROM builder as production
+
 COPY app /app
-RUN npm run build
+
+WORKDIR /app
+
+RUN npm run prod

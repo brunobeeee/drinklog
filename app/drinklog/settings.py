@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -130,4 +131,14 @@ LOGIN_URL = 'login'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# Where static files are served on the built-in webserver
+STATIC_URL = '/static/'
+
+# Where they are stored temporarily when running 'python manage.py collectstatic'
+# CAUTION: Not permanent! Also not used atm
+STATIC_ROOT = '/var/www/drinklog/static/'
+
+# Where they are read from when running 'python manage.py collectstatic' or whitenoise
+STATICFILES_DIRS = ["/app/static/dist",]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

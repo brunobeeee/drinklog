@@ -2,7 +2,7 @@
 
 services:
   web:
-    container_name: drinklog-dev
+    container_name: drinklog-web-dev
     build:
       context: .
       target: builder
@@ -17,7 +17,7 @@ services:
       - ./app:/app
 
   db:
-    container_name: drinklog-db
+    container_name: drinklog-db-dev
     image: postgres:15
     volumes:
       - db-dev:/var/lib/postgresql/data/
