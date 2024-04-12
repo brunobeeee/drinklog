@@ -33,7 +33,6 @@
 
         <style>
             body {
-                background-color: #fafafa;
                 font-family: "Helvetica Neue", sans-serif;
             }
 
@@ -71,9 +70,9 @@
                 border-radius: 0.3rem 0.3rem 0 0;
                 background: linear-gradient(
                     90deg,
-                    #eea390 0%,
-                    #eb796f 43%,
-                    #eb796f 100%
+                    #c9b254 0%,
+                    #c2a83e 43%,
+                    #c2a83e 100%
                 );
             }
 
@@ -139,10 +138,19 @@
                 cursor: pointer;
                 text-decoration: none;
             }
+
+            /* Overwrite color classes bc I'm to lazy to install bootstrap w/o a CDN */
+            .text-danger {
+                color: #d7263d !important;
+            }
+
+            .bg-light {
+                background-color: #fcfafa !important;
+            }
         </style>
     </head>
 
-    <body>
+    <body class="bg-light">
         <div class="container">{% block content %} {% endblock content %}</div>
 
         <!-- Bootstrap -->
