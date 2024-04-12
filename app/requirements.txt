@@ -3,3 +3,5 @@ environs==7.3.1
 plotly==5.3.1
 pandas==2.2.1
 psycopg2-binary==2.9.9
+black==24.3.0
+isort==5.13.2
