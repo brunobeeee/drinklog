@@ -2,4 +2,4 @@
 
 ### Changes made by this Pull Request
 
-- Introduces Blockchain
+- Hier könnte ihre Werbung stehen
