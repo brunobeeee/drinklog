@@ -1,0 +1,29 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel watch",
+    "prod": "parcel build",
+    "help": "parcel -h",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "targets": {
+    "default": {
+      "source": "static/src/main.js",
+      "distDir": "./static/dist"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "parcel": "^2.12.0"
+  }
+}

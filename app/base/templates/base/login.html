@@ -1,22 +1,23 @@
 {% extends 'base/main.html' %} {% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1><i class="fa-solid fa-arrow-right-from-bracket"></i> Login</h1>
+    </div>
 
-<div class="header-bar">
-    <h1>Login</h1>
-</div>
-
-<div class="card-body">
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label class="h5" for="id_username">Username:</label>
-            {{ form.username }}
-        </div>
-        <div class="form-group">
-            <label class="h5" for="id_password">Password:</label>
-            {{ form.password }}
-        </div>
-        <input class="button" type="submit" value="Login" />
-    </form>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="h5" for="id_username">Username:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label class="h5" for="id_password">Password:</label>
+                {{ form.password }}
+            </div>
+            <input class="button mt-3" type="submit" value="Login" />
+        </form>
+    </div>
 </div>
 
 {% endblock content %}

@@ -1,0 +1,123 @@
+@import "./abstracts/variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+body {
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @extend %headings !optional;
+    font-family: "Jost", sans-serif;
+}
+
+a,
+p {
+    color: $dark;
+}
+
+a {
+    font-weight: 600;
+}
+
+.card {
+    margin: 5rem auto auto auto;
+    max-width: 576px;
+    border: none !important;
+    border-radius: 0.3rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    
+    .card-header {
+        display: flex !important;
+        color: $light;
+        border: none !important;
+        background: linear-gradient(
+            90deg,
+            #c9b254 0%,
+            #c2a83e 43%,
+            #c2a83e 100%
+        );
+
+        a {
+            color: $light;
+            text-decoration: none;
+        }
+
+        %headings {margin-bottom: 0!important;}
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        margin-top: 0;
+        border-radius: 0 !important;
+        box-shadow: none;
+
+        .card-header {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+#search-add-wrapper {
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 50rem;
+    padding: 2.5px 10px;
+}
+
+label {
+    padding-top: 10px !important;
+    display: block;
+}
+
+::placeholder {
+    font-weight: 300;
+    opacity: 0.5;
+}
+
+table td,
+table th {
+    padding: 1rem !important;
+}
+
+.card-table {
+    margin-bottom: 0;
+    tr:last-child {
+        td:first-child {
+            border-radius: 0 0 0 .3rem;
+        }
+        td:last-child {
+            border-radius: 0 0 .3rem 0;
+        }
+    }
+}
+
+.button {
+    border: 1px solid $secondary;
+    background-color: transparent;
+    color: $primary;
+    padding: 2.5px 10px;
+    border-radius: 50rem;
+    cursor: pointer;
+    text-decoration: none;
+}
