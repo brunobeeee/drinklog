@@ -10,6 +10,7 @@ services:
       sh -c "/app/docker-entrypoint.sh && python3 manage.py flush --noinput && python3 manage.py migrate && python3 manage.py createsuperuser --noinput && python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
+      - "1234:1234"
     env_file:
       - ./.env.dev
     volumes:
