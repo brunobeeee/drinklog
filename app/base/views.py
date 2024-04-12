@@ -19,9 +19,6 @@ from django.views.generic.list import ListView
 from .forms import PositionForm
 from .models import Log
 
-import plotly.express as px
-import pandas as pd
-
 
 class CustomLoginView(LoginView):
     template_name = "base/login.html"
