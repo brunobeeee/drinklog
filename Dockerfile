@@ -17,3 +17,4 @@ RUN pip3 install --upgrade pip && pip3 install -r requirements.txt --no-cache-di
 
 FROM builder as production
 COPY app /app
+RUN npm run build
