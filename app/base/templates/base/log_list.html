@@ -1,5 +1,4 @@
 {% extends 'base/main.html' %} {% block content %}
-<!-- beer video background-->
 <div class="video-bg" data-vbg-start-at="30" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>
 
 <div class="card">
@@ -19,7 +18,7 @@
     </div>
 
     <div id="search-add-wrapper">
-        <form method="GET" class="d-flex w-50">
+        <form method="GET" class="d-flex">
             <div class="input-group">
                 <input
                     class="form-control rounded-pill"
@@ -51,7 +50,7 @@
     </div>
 
     {% if logs|length > 0 %}
-    <table id="loglist" class="table-striped table-hover table card-table">
+    <table id="loglist" class="table card-table">
         <thead>
             <th>Date</th>
             <th>Intensity</th>
@@ -74,7 +73,7 @@
                 <a
                     class="d-flex text-decoration-none"
                     href="{% url 'log-delete' log.id %}"
-                    ><i class="fa-solid fa-trash-can fa-lg text-danger m-auto"></i
+                    ><i class="fa-solid fa-trash-can fa-xl text-danger m-auto" style="margin-right: 3px!important;"></i
                 ></a>
             </td>
         </tr>
