@@ -37,9 +37,9 @@ a {
         border: none !important;
         background: linear-gradient(
             90deg,
-            #c9b254 0%,
-            #c2a83e 43%,
-            #c2a83e 100%
+            $primary 0%,
+            darken($primary, .1) 50%,
+            darken($primary, .1) 100%
         );
 
         a {
@@ -120,4 +120,20 @@ table th {
     border-radius: 50rem;
     cursor: pointer;
     text-decoration: none;
+}
+
+.video-bg {
+    filter: blur(5px) brightness(.4);
+    animation: fadeInAnimation ease 10s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
