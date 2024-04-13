@@ -6,3 +6,4 @@ psycopg2-binary==2.9.9
 whitenoise==6.6.0
 black==24.3.0
 isort==5.13.2
+gunicorn==21.2.0
