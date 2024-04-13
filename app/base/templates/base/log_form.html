@@ -1,8 +1,12 @@
 {% extends 'base/main.html' %} {% block content %}
+<div class="video-bg" data-vbg-start-at="30" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>
 
 <div class="card">
     <div class="card-header">
-        <a href="{% url 'logs' %}">&#8592; Back</a>
+        <a class="h1" href="{% url 'logs' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Go Back
+        </a>
     </div>
 
     <div class="card-body">
