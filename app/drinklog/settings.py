@@ -77,7 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "drinklog.wsgi.application"
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
