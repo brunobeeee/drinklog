@@ -35,6 +35,8 @@ To use it in production mode use the `production.yml` file
 
 ```
 docker compose -f production.yml up -d --build
+docker compose -f production.yml exec web python manage.py migrate --noinput
+docker compose -f production.yml exec web python manage.py createsuperuser
 ```
 
 The web app will be available at `localhost:8000`.
