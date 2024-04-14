@@ -60,6 +60,7 @@ COPY /app/docker-entrypoint.prod.sh .
 RUN chmod +x  $APP_HOME/docker-entrypoint.prod.sh
 
 # copy project
+COPY --from=builder /app/node_modules $APP_HOME/node_modules
 COPY app $APP_HOME
 
 # chown all the files to the app user

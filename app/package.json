@@ -12,7 +12,7 @@
   "targets": {
     "default": {
       "source": "static/src/main.js",
-      "distDir": "./static/dist"
+      "distDir": "static/dist"
     }
   },
   "keywords": [],
