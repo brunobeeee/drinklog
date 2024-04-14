@@ -5,9 +5,8 @@ services:
     container_name: drinklog-web-dev
     build:
       context: .
-      target: builder
-    command: >
-      sh -c "/app/docker-entrypoint.sh"
+      target: development
+    command: python manage.py runserver 0.0.0.0:8000 & npm run dev
     ports:
       - "8000:8000"
       - "1234:1234"

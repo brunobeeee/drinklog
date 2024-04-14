@@ -12,7 +12,7 @@
   "targets": {
     "default": {
       "source": "static/src/main.js",
-      "distDir": "./static/dist"
+      "distDir": "static/dist"
     }
   },
   "keywords": [],
@@ -21,9 +21,6 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
-    "youtube-background": "^1.1.7"
-  },
-  "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
     "parcel": "^2.12.0"
   }

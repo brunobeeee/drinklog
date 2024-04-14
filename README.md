@@ -40,3 +40,10 @@ docker compose -f production.yml up -d --build
 The web app will be available at `localhost:8000`.
 
 > **Hint:** The `--build` flag is required because in production mode the app directory is not mounted to the container.
+
+#### First run
+On the first run in the production environment use these commands to migrate the db an create a admin user:
+```
+docker compose -f production.yml exec web python manage.py migrate --noinput
+docker compose -f production.yml exec web python manage.py createsuperuser
+```
