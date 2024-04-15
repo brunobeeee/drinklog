@@ -42,11 +42,18 @@
                 </span>
             </div>
         </form>
+        
         {% if logs|length > 0 %}
+        <a class="d-flex text-decoration-none" href="{% url 'log-plot' %}">
+            Show Plot
+            <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
+        </a>
+
         <a class="d-flex text-decoration-none" href="{% url 'log-create' %}"
-            ><i class="fa-solid fa-plus fa-2xl m-auto"></i
+        ><i class="fa-solid fa-plus fa-2xl m-auto"></i
         ></a>
         {% endif %}
+
     </div>
 
     {% if logs|length > 0 %}
@@ -83,11 +90,10 @@
             <p class="h4">No logs are created or found using your search.</p>
             <p class="h4">
                 Create a
-                <a class="text-danger text-decoration-none"
+                <a class="text-primary-light text-decoration-none"
                     href="{% url 'log-create' %}"
                     >new log</a
-                >
-                !
+                >!
             </p>
         </div>
         {% endfor %}

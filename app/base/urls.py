@@ -9,10 +9,8 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     path("register/", RegisterPage.as_view(), name="register"),
     path("", LogList.as_view(), name="logs"),
-    path("log/<int:pk>/", LogDetail.as_view(), name="log"),
     path("log-create/", LogCreate.as_view(), name="log-create"),
     path("log-update/<int:pk>/", LogUpdate.as_view(), name="log-update"),
     path("log-delete/<int:pk>/", DeleteView.as_view(), name="log-delete"),
-    path("log-reorder/", LogReorder.as_view(), name="log-reorder"),
     path("log-plot/", logplot, name="log-plot"),
 ]
