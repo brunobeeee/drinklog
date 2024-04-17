@@ -16,7 +16,7 @@ class Log(models.Model):
     intensity = models.IntegerField(
         default=0,
         validators=[
-            MaxValueValidator(10),
+            MaxValueValidator(100),
             MinValueValidator(0)
         ]
     )
