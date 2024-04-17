@@ -1,5 +1,9 @@
 {% extends 'base/main.html' %} {% block content %}
-<div class="video-bg" data-vbg-start-at="30" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>
+<div
+    class="video-bg"
+    data-vbg-start-at="30"
+    data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"
+></div>
 
 <div class="card">
     <div class="card-header">
@@ -17,7 +21,7 @@
                 {{ form.date }}
             </div>
             <div class="form-group">
-                <label class="h5" for="id_intensity">Intensity (0-10):</label>
+                <label class="h5" for="id_intensity">Intensity:</label>
                 {{ form.intensity }}
             </div>
             <div class="form-group d-flex align-items-center">
