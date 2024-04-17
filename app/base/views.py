@@ -125,7 +125,7 @@ def logplot(request):
         title="Drinklog Plot",
         labels={"intensity": "Intensity", "date": "Date"},
         color="intensity",
-        color_continuous_scale=["green", "yellow", "red"]
+        color_continuous_scale=["#00B86B", "#D78F09", "#CD133B"]
     )
     fig_bar.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
