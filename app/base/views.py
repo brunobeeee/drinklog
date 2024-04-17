@@ -124,7 +124,15 @@ def logplot(request):
         y="intensity",
         title="Drinklog Plot",
         labels={"intensity": "Intensity", "date": "Date"},
+        color="intensity",
+        color_continuous_scale=["#00B86B", "#D78F09", "#CD133B"]
     )
+    fig_bar.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font_color='white',
+        title_font_family='Jost',
+        modebar_orientation='v',)
     bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False)
 
     return render(request, "base/log_plot.html", {"bar_chart": bar_chart})

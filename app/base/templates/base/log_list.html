@@ -1,4 +1,5 @@
 {% extends 'base/main.html' %} {% block content %}
+<div class="video-bg" data-vbg-start-at="30" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>
 
 <div class="card">
     <div class="card-header">
@@ -17,7 +18,7 @@
     </div>
 
     <div id="search-add-wrapper">
-        <form method="GET" class="d-flex w-50">
+        <form method="GET" class="d-flex">
             <div class="input-group">
                 <input
                     class="form-control rounded-pill"
@@ -41,15 +42,22 @@
                 </span>
             </div>
         </form>
+        
         {% if logs|length > 0 %}
+        <a class="d-flex text-decoration-none" href="{% url 'log-plot' %}">
+            Show Plot
+            <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
+        </a>
+
         <a class="d-flex text-decoration-none" href="{% url 'log-create' %}"
-            ><i class="fa-solid fa-plus fa-2xl m-auto"></i
+        ><i class="fa-solid fa-plus fa-2xl m-auto"></i
         ></a>
         {% endif %}
+
     </div>
 
     {% if logs|length > 0 %}
-    <table id="loglist" class="table-striped table-hover table card-table">
+    <table id="loglist" class="table card-table">
         <thead>
             <th>Date</th>
             <th>Intensity</th>
@@ -72,7 +80,7 @@
                 <a
                     class="d-flex text-decoration-none"
                     href="{% url 'log-delete' log.id %}"
-                    ><i class="fa-solid fa-trash-can fa-lg text-danger m-auto"></i
+                    ><i class="fa-solid fa-trash-can fa-xl text-danger m-auto" style="margin-right: 3px!important;"></i
                 ></a>
             </td>
         </tr>
@@ -82,15 +90,20 @@
             <p class="h4">No logs are created or found using your search.</p>
             <p class="h4">
                 Create a
-                <a class="text-danger text-decoration-none"
+                <a class="text-primary-light text-decoration-none"
                     href="{% url 'log-create' %}"
                     >new log</a
-                >
-                !
+                >!
             </p>
         </div>
         {% endfor %}
     </table>
 </div>
+
+<script>
+    
+
+    
+</script>
 
 {% endblock content %}

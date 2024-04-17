@@ -19,9 +19,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
-    "@parcel/transformer-sass": "^2.12.0",
-    "parcel": "^2.12.0"
+    "parcel": "^2.12.0",
+    "youtube-background": "^1.1.7"
   }
 }

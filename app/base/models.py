@@ -2,6 +2,7 @@ import os
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Log(models.Model):
@@ -12,7 +13,13 @@ class Log(models.Model):
         blank=os.environ.get("ALLOW_BLANK_USERS"),
     )
     date = models.DateField()
-    intensity = models.IntegerField(default=0)
+    intensity = models.IntegerField(
+        default=0,
+        validators=[
+            MaxValueValidator(10),
+            MinValueValidator(0)
+        ]
+    )
     overdrive = models.BooleanField(default=False)
 
     def __str__(self):
