@@ -37,6 +37,7 @@ COPY /app/package-lock.json .
 RUN npm install
 
 COPY /app/static/src /app/static/src
+COPY /app/generate-favicons.mjs .
 RUN mkdir -p /app/static/dist && \
     npm run prod
 
