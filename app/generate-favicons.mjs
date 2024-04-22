@@ -10,6 +10,7 @@ const htmlBasename = "index.html"; // HTML file basename.
 const configuration = {
   path: "static/favicons",
   appName: "drinklog",
+  appDescription: "A habit tracker for tracking water intake.",
 };
 
 // Below is the processing.
