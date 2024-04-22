@@ -16,6 +16,7 @@ COPY /app/package-lock.json .
 RUN npm install
 
 COPY /app/static/src /app/static/src
+COPY /app/generate-favicons.mjs .
 RUN npm run prod
 
 # install python dependencies

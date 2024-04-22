@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "dev": "parcel watch --dist-dir /app/static/dist /app/static/src/index.js",
-    "prod": "parcel build --dist-dir /app/static/dist /app/static/src/index.js",
-    "help": "parcel watch -h"
+    "prod": "npm run generate:favicons && parcel build --dist-dir /app/static/dist /app/static/src/index.js",
+    "generate:favicons": "node --experimental-modules generate-favicons.mjs",
+    "help": "parcel build -h"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +15,14 @@
     "@parcel/transformer-sass": "^2.12.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "favicons": "^7.2.0",
     "parcel": "^2.12.0",
     "youtube-background": "^1.1.7"
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.12.0",
+    "@parcel/packager-xml": "^2.12.0",
+    "@parcel/transformer-webmanifest": "^2.12.0",
+    "@parcel/transformer-xml": "^2.12.0"
   }
 }
