@@ -31,6 +31,33 @@ A habit tracker for tracking water intake.
 
 ### Production
 
+First you have to supply a `.env.prod` and a `.env.prod.db` file to set the env variables. The can look like this:
+
+#### `.env.prod`
+```
+SECRET_KEY=*****
+
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+
+SQL_ENGINE=django.db.backends.postgresql
+SQL_DATABASE=drinklogs
+SQL_USER=drinklog
+SQL_PASSWORD=*****
+SQL_HOST=db
+SQL_PORT=5432
+DATABASE=postgres
+
+ALLOW_NULL_USERS=False
+ALLOW_BLANK_USERS=False
+```
+
+#### `.env.prod.db`
+```
+POSTGRES_DB=drinklogs
+POSTGRES_USER=drinklog
+POSTGRES_PASSWORD=*****
+```
+
 To use it in production mode use the `production.yml` file
 
 ```

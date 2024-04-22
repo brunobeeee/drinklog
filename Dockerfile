@@ -1,6 +1,27 @@
-###########
-# BUILDER #
-###########
+###############
+# DEVELOPMENT #
+###############
+FROM python:3.12.2-alpine AS development
+
+# Set environment variables to prevent caching
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+COPY /app/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+COPY /app .
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+
+
+
+######################
+# PRODUCTION-BUILDER #
+######################
 FROM python:3.12.2-alpine AS builder
 
 # Set environment variables to prevent caching
@@ -17,28 +38,13 @@ RUN npm install
 
 COPY /app/static/src /app/static/src
 COPY /app/generate-favicons.mjs .
-RUN npm run prod
+RUN mkdir -p /app/static/dist && \
+    npm run prod
 
 # install python dependencies
 COPY app/requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
-
-###############
-# DEVELOPMENT #
-###############
-FROM builder AS development
-
-WORKDIR /app
-
-COPY --from=builder /app/wheels /wheels
-COPY --from=builder /app/requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
-
-COPY app .
-
-ENTRYPOINT ["./docker-entrypoint.sh"]
 
 
 ##############
