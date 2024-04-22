@@ -11,9 +11,12 @@ WORKDIR /app
 
 RUN apk update && apk add --no-cache nodejs npm make
 
-COPY app/package.json .
-COPY app/package-lock.json .
+COPY /app/package.json .
+COPY /app/package-lock.json .
 RUN npm install
+
+COPY /app/static/src /app/static/src
+RUN npm run prod
 
 # install python dependencies
 COPY app/requirements.txt .
@@ -50,24 +53,18 @@ ENV APP_HOME=/app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-RUN apk update && apk add --no-cache npm
 COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
-COPY /app/docker-entrypoint.prod.sh .
-RUN chmod +x  $APP_HOME/docker-entrypoint.prod.sh
-
-# copy project
-COPY --from=builder /app/node_modules $APP_HOME/node_modules
-COPY app $APP_HOME
+# copy app & static files
+COPY $APP_HOME $APP_HOME
+COPY --from=builder /$APP_HOME/static/dist /$APP_HOME/static/dist
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME && mkdir /var/www && chown -R app:app /var/www
 USER app
-
-RUN npm run prod
 
 RUN chmod +x docker-entrypoint.prod.sh
 
