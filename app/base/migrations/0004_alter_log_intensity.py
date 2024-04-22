@@ -7,13 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('base', '0003_alter_log_intensity'),
+        ("base", "0003_alter_log_intensity"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='log',
-            name='intensity',
-            field=models.IntegerField(default=0, validators=[django.core.validators.MaxValueValidator(100), django.core.validators.MinValueValidator(0)]),
+            model_name="log",
+            name="intensity",
+            field=models.IntegerField(
+                default=0,
+                validators=[
+                    django.core.validators.MaxValueValidator(100),
+                    django.core.validators.MinValueValidator(0),
+                ],
+            ),
         ),
     ]
