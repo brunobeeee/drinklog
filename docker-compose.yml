@@ -1,20 +1,29 @@
 # Development environmet
 
 services:
-  web:
-    container_name: drinklog-web-dev
+  frontend:
+    container_name: drinklog-frontend-dev
+    image: node:lts-alpine3.19
+    working_dir: /frontend
+    entrypoint: /bin/sh -c "npm install --no-update-notifier --no-fund && npm run dev"
+    volumes:
+      - ./frontend:/frontend
+
+  app:
+    container_name: drinklog-app-dev
     build:
-      context: .
-      target: development
+      context: app/
     ports:
       - "8000:8000"
       - "1234:1234"
     env_file:
       - ./.env.dev
     depends_on:
+      - frontend
       - db
     volumes:
       - ./app:/app
+      - ./frontend/dist:/static
 
   db:
     container_name: drinklog-db-dev

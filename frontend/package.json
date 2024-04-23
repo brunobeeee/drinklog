@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npm run generate:favicons && parcel watch --dist-dir /app/static/dist /app/static/src/index.js",
-    "prod": "npm run generate:favicons && parcel build --dist-dir /app/static/dist /app/static/src/index.js",
+    "dev": "npm run generate:favicons && parcel watch src/index.js",
+    "prod": "npm run generate:favicons && parcel build src/index.js",
     "generate:favicons": "node --experimental-modules generate-favicons.mjs",
     "help": "parcel build -h"
   },
