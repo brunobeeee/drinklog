@@ -140,7 +140,7 @@ STATIC_ROOT = "/var/www/drinklog/static/"
 
 # Where they are read from when running 'python manage.py collectstatic' or whitenoise
 STATICFILES_DIRS = [
-    "/app/static/dist",
+    "/static",
 ]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

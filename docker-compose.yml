@@ -4,7 +4,7 @@ services:
   app:
     container_name: drinklog-app-dev
     build:
-      context: .
+      context: app/
       target: development
     ports:
       - "8000:8000"
@@ -15,6 +15,7 @@ services:
       - db
     volumes:
       - ./app:/app
+      - ./frontend/dist:/dist
 
   db:
     container_name: drinklog-db-dev
