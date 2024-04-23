@@ -4,3 +4,7 @@
 .env
 .env.prod
 .env.prod.db
+
+frontend/node_modules
+frontend/dist
+frontend/.parcel-cache

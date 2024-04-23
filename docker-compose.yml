@@ -5,7 +5,7 @@ services:
     container_name: drinklog-frontend-dev
     image: node:lts-alpine3.19
     working_dir: /frontend
-    entrypoint: /bin/sh -c "npm install && npm run dev"
+    entrypoint: /bin/sh -c "npm install --no-update-notifier --no-fund && npm run dev"
     volumes:
       - ./frontend:/frontend
 
@@ -13,7 +13,6 @@ services:
     container_name: drinklog-app-dev
     build:
       context: app/
-      target: development
     ports:
       - "8000:8000"
       - "1234:1234"
