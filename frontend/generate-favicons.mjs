@@ -2,8 +2,8 @@ import favicons from "favicons";
 import fs from "fs/promises";
 import path from "path";
 
-const src = "/app/static/src/favicon-src.svg"; // Icon source file path.
-const dest = "/app/static/dist/favicons"; // Output directory path.
+const src = "./src/favicon.svg"; // Icon source file path.
+const dest = "./dist/favicons"; // Output directory path.
 const htmlBasename = "index.html"; // HTML file basename.
 
 // Configuration (see above in the README file).
