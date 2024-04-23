@@ -1,8 +1,8 @@
 # Production environment
 
 services:
-  web:
-    container_name: drinklog-web
+  app:
+    container_name: drinklog-app
     build:
       context: .
       target: production

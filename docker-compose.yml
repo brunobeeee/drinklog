@@ -1,8 +1,8 @@
 # Development environmet
 
 services:
-  web:
-    container_name: drinklog-web-dev
+  app:
+    container_name: drinklog-app-dev
     build:
       context: .
       target: development
