@@ -1,0 +1,6 @@
+.github
+.git
+.DS_STORE
+.env
+.env.prod
+.env.prod.db
