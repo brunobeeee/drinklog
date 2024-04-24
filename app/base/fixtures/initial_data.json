@@ -1,0 +1,113 @@
+[
+    {
+        "model": "base.log",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-23",
+            "intensity": 14,
+            "overdrive": false,
+            "_order": 0
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-22",
+            "intensity": 10,
+            "overdrive": false,
+            "_order": 1
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 3,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-21",
+            "intensity": 7,
+            "overdrive": true,
+            "_order": 2
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-20",
+            "intensity": 15,
+            "overdrive": false,
+            "_order": 3
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-15",
+            "intensity": 9,
+            "overdrive": false,
+            "_order": 4
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 6,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-14",
+            "intensity": 7,
+            "overdrive": true,
+            "_order": 5
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 7,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-12",
+            "intensity": 4,
+            "overdrive": true,
+            "_order": 6
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 8,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-11",
+            "intensity": 7,
+            "overdrive": false,
+            "_order": 7
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 9,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-05",
+            "intensity": 20,
+            "overdrive": false,
+            "_order": 8
+        }
+    },
+    {
+        "model": "base.log",
+        "pk": 10,
+        "fields": {
+            "user": 1,
+            "date": "2024-04-04",
+            "intensity": 13,
+            "overdrive": false,
+            "_order": 9
+        }
+    }
+]
+    

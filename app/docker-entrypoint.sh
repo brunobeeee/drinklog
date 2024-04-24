@@ -20,5 +20,6 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser --noinput
 python manage.py collectstatic --link --noinput
+python manage.py loaddata initial_data.json
 
 python manage.py runserver 0.0.0.0:8000 
