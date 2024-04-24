@@ -10,10 +10,26 @@
     </div>
 
     <div class="card-body">
+        <p>Are your sure you want to delete this log?</p>
+            <table id="loglist" class="table card-table mb-3">
+                <thead>
+                    <th>Date</th>
+                    <th>Intensity</th>
+                    <th>Overdrive</th>
+                </thead>
+                <tr>
+                    <td>{{log.date|date:"d.m.Y"}}</td>
+                    <td>{{log.intensity}}</td>
+                    <td>
+                        {% if log.overdrive %}
+                        <i class="fa-solid fa-check fa-lg text-danger"></i> {% else %}
+                        <i class="fa-solid fa-xmark fa-lg"></i> {% endif %}
+                    </td>
+                </tr>
+            </table>
+
         <form method="POST">
             {% csrf_token %}
-            <p>Are your sure you want to delete this log?</p>
-            <p><b>"{{log}}"</b></p>
             <input class="button" type="submit" value="Delete" />
         </form>
     </div>
