@@ -83,8 +83,9 @@ input {
 input[type="text"],
 input[type="password"],
 input[type="number"],
+input[type="date"],
 textarea {
-    padding: 10px;
+    color: $dark;
     border: 1px solid #dee2e6;
     border-radius: 50rem;
     padding: 2.5px 10px;
