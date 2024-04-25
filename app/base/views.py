@@ -99,19 +99,6 @@ class DeleteView(LoginRequiredMixin, DeleteView):
         return self.model.objects.filter(user=owner)
 
 
-class LogReorder(View):
-    def post(self, request):
-        form = PositionForm(request.POST)
-
-        if form.is_valid():
-            positionList = form.cleaned_data["position"].split(",")
-
-            with transaction.atomic():
-                self.request.user.set_log_order(positionList)
-
-        return redirect(reverse_lazy("logs"))
-
-
 def logplot(request):
     all_logs = Log.objects.all()
     dates = [log.date for log in all_logs]
