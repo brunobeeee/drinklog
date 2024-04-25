@@ -78,7 +78,7 @@ class LogCreate(LoginRequiredMixin, CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['date'].widget = forms.DateInput(attrs={'type': 'date'})
-        form.fields['intensity'].widget = forms.NumberInput(attrs={'type': 'number', 'min': '0', 'step': '1'})
+        form.fields['intensity'].widget = forms.TextInput(attrs={'type': 'range', 'min': '0', 'max': '25', 'value': '0'})
         return form
 
 

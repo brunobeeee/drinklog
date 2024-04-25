@@ -20,17 +20,16 @@
                 <label class="h5" for="id_date">Date:</label>
                 {{ form.date }}
             </div>
-            <div class="form-group">
-                <label class="h5" for="id_intensity">Intensity:</label>
+            <div class="form-group mt-2">
+                <label class="h5" for="id_intensity">Intensity: <span id="intensity-value">0</span></label>
                 {{ form.intensity }}
-                <button type="button" class="inc-button" onclick="increment()"><i class="fa-solid fa-plus"></i></button>
-                <button type="button" class="dec-button" onclick="decrement()"><i class="fa-solid fa-minus"></i></button>
             </div>
-            <div class="form-group d-flex align-items-center">
+            <div class="form-group d-flex align-items-center mt-2">
                 <label class="h5" for="id_overdrive">Overdrive:</label>
-                <div class="custom-control custom-checkbox pl-1">
+                <div class="ms-1">
                     {{ form.overdrive }}
                 </div>
+
             </div>
             <button class="button" type="submit">Submit</button>
         </form>
@@ -38,17 +37,15 @@
 </div>
 
 <script>
-function increment() {
-    var intensityField = document.getElementById("id_intensity");
-    intensityField.value = parseInt(intensityField.value) + 1;
-}
-
-function decrement() {
-    var intensityField = document.getElementById("id_intensity");
-    if (parseInt(intensityField.value) > 0) {
-        intensityField.value = parseInt(intensityField.value) - 1;
-    }
-}
+    document.addEventListener('DOMContentLoaded', function() {
+        var slider = document.getElementById('id_intensity');
+        var output = document.getElementById('intensity-value');
+        output.innerHTML = slider.value; // Initialwert setzen
+    
+        slider.oninput = function() {
+            output.innerHTML = this.value; // Aktuellen Wert anzeigen
+        };
+    });
 </script>
 
 {% endblock content %}
