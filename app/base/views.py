@@ -2,21 +2,20 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
+
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db import transaction
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-# Imports for Reordering Feature
+from django import forms
+
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import (CreateView, DeleteView, FormView,
-                                       UpdateView)
+from django.views.generic.edit import (CreateView, DeleteView, FormView,UpdateView)
 from django.views.generic.list import ListView
 
-from .forms import PositionForm
 from .models import Log
 
 
@@ -81,6 +80,11 @@ class LogCreate(LoginRequiredMixin, CreateView):
         initial = super().get_initial()
         initial["date"] = datetime.now() - timedelta(days=1)
         return initial
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['date'].widget = forms.DateInput(attrs={'type': 'date'})
+        return form
 
 
 class LogUpdate(LoginRequiredMixin, UpdateView):
