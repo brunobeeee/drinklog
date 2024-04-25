@@ -61,12 +61,6 @@ class LogList(LoginRequiredMixin, ListView):
         return queryset.order_by("-date")  # Sortiere nach Datum absteigend
 
 
-class LogDetail(LoginRequiredMixin, DetailView):
-    model = Log
-    context_object_name = "log"
-    template_name = "base/log.html"
-
-
 class LogCreate(LoginRequiredMixin, CreateView):
     model = Log
     fields = ["date", "intensity", "overdrive"]
@@ -91,6 +85,11 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
     model = Log
     fields = ["date", "intensity", "overdrive"]
     success_url = reverse_lazy("logs")
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['date'].widget = forms.DateInput(attrs={'type': 'date'})
+        return form
 
 
 class DeleteView(LoginRequiredMixin, DeleteView):
