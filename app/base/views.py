@@ -2,21 +2,19 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
+from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db import transaction
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-# Imports for Reordering Feature
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 from django.views.generic.list import ListView
 
-from .forms import PositionForm
 from .models import Log
 
 
@@ -62,12 +60,6 @@ class LogList(LoginRequiredMixin, ListView):
         return queryset.order_by("-date")  # Sortiere nach Datum absteigend
 
 
-class LogDetail(LoginRequiredMixin, DetailView):
-    model = Log
-    context_object_name = "log"
-    template_name = "base/log.html"
-
-
 class LogCreate(LoginRequiredMixin, CreateView):
     model = Log
     fields = ["date", "intensity", "overdrive"]
@@ -82,11 +74,24 @@ class LogCreate(LoginRequiredMixin, CreateView):
         initial["date"] = datetime.now() - timedelta(days=1)
         return initial
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields["date"].widget = forms.DateInput(attrs={"type": "date"})
+        form.fields["intensity"].widget = forms.TextInput(
+            attrs={"type": "range", "min": "0", "max": "25", "value": "0"}
+        )
+        return form
+
 
 class LogUpdate(LoginRequiredMixin, UpdateView):
     model = Log
     fields = ["date", "intensity", "overdrive"]
     success_url = reverse_lazy("logs")
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields["date"].widget = forms.DateInput(attrs={"type": "date"})
+        return form
 
 
 class DeleteView(LoginRequiredMixin, DeleteView):
@@ -97,19 +102,6 @@ class DeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         owner = self.request.user
         return self.model.objects.filter(user=owner)
-
-
-class LogReorder(View):
-    def post(self, request):
-        form = PositionForm(request.POST)
-
-        if form.is_valid():
-            positionList = form.cleaned_data["position"].split(",")
-
-            with transaction.atomic():
-                self.request.user.set_log_order(positionList)
-
-        return redirect(reverse_lazy("logs"))
 
 
 def logplot(request):

@@ -1,8 +1,8 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from .views import (CustomLoginView, DeleteView, LogCreate, LogDetail, LogList,
-                    LogReorder, LogUpdate, RegisterPage, logplot)
+from .views import (CustomLoginView, DeleteView, LogCreate, LogList, LogUpdate,
+                    RegisterPage, logplot)
 
 urlpatterns = [
     path("login/", CustomLoginView.as_view(), name="login"),
