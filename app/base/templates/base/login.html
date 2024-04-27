@@ -1,23 +1,25 @@
 {% extends 'base/main.html' %} {% block content %}
 <div class="video-bg" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>
 
-<div class="card">
-    <div class="card-header">
-        <h1><i class="fa-solid fa-arrow-right-from-bracket"></i> Login</h1>
+<div class="card login">
+    <div class="card-header banner">
+        <h1><i class="fa-solid fa-beer-mug-empty fa-xl fa-flip-horizontal"></i></h1>
+        <h1>Drinklog</h1>
     </div>
 
     <div class="card-body">
+
         <form method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <label class="h5" for="id_username">Username:</label>
+                <label class="h5 pt-0" for="id_username">Username:</label>
                 {{ form.username }}
             </div>
             <div class="form-group">
                 <label class="h5" for="id_password">Password:</label>
                 {{ form.password }}
             </div>
-            <input class="button mt-3" type="submit" value="Login" />
+            <input class="button mt-3 mb-0" type="submit" value="Login" />
         </form>
     </div>
 </div>

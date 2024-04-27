@@ -4,15 +4,15 @@
 // Jost Font
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
-
 :root {
     --bs-card-inner-border-radius: 10rem!important;
 }
 
 body {
     font-family: "Helvetica Neue", sans-serif;
-    height: 100vh;
+    min-height: 100vh;
     padding-top: 5rem;
+    padding-bottom: 5rem;
 }
 
 h1,
@@ -45,6 +45,14 @@ a {
     background-color: rgba(255, 255, 255, .15)!important;
     --webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+
+    &.login {
+        max-width: 300px;
+        form {
+            margin: 1rem;
+            padding: .5rem;
+        }
+    }
     
     .card-header {
         display: flex !important;
@@ -62,6 +70,21 @@ a {
         }
 
         %headings {margin-bottom: 0!important;}
+
+        &.banner {
+            background: transparent;
+            margin: 3rem;
+            margin-bottom: 0;
+            text-align: center;
+            flex-direction: column;
+
+            i {
+                color: $primary;
+                box-shadow: var(--bs-box-shadow-lg);
+                margin-right: 20px;
+                margin-bottom: 30px;
+            }
+        }
     }
 }
 
@@ -154,10 +177,6 @@ label {
     display: block;
 }
 
-.text-primary-light {
-    color: lighten($primary, 15%);
-}
-
 ::placeholder {
     font-weight: 300;
     opacity: 0.5;
@@ -205,33 +224,9 @@ table th {
     animation-fill-mode: forwards;
 }
 
-@media (max-width: 576px) {
-    body {
-        padding-top: 0;
-    }
-    .card {
-        margin-top: 0;
-        margin-bottom: 0;
-        border-radius: 0 !important;
-        box-shadow: none;
-        min-height: 100%!important;
-        --webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
-        
 
-        .card-header {
-            border-radius: 0 !important;
-        }
-    }
-    #search-add-wrapper form {
-        width: 100%!important;
-        margin-bottom: 1.5rem;
-    }
-    input[type=range]::-webkit-slider-thumb,
-    input[type=range]::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-}
+.text-primary-light {
+    color: lighten($primary, 15%);
 }
 
 @keyframes fadeInAnimation {
