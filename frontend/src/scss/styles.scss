@@ -65,17 +65,6 @@ a {
     }
 }
 
-#search-add-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-    justify-content: space-between;
-    align-items: center;
-    
-    form {
-        width: 50%;
-    }
-}
 
 ///// INPUTS /////
 input {
@@ -93,6 +82,7 @@ textarea {
     border-radius: 50rem;
     padding: 2.5px 10px;
 }
+
 
 ///// RANGE INPUTS /////
 input[type=range] {
@@ -117,6 +107,7 @@ input[type=range]::-moz-range-thumb {
     cursor: pointer;
 }
 
+
 ///// CHECKBOXES /////
 .pretty { 
     .state label {
@@ -132,6 +123,31 @@ input[type=range]::-moz-range-thumb {
         background-color: $primary !important;
     }
 }
+
+#search-add-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    
+    form {
+        width: 50%;
+    }
+
+    .input-group-append button {
+        z-index: 5;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        margin-left: -39px;
+        border: none!important;
+        &:hover {
+            background-color: $secondary;
+        }
+    }
+}
+
 
 label {
     padding-top: 10px !important;
