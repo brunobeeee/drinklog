@@ -2,16 +2,27 @@
   "name": "drinklog",
   "version": "1.0.0",
   "description": "",
+  "default": "dist/index.js",
+  "source": "src/index.js",
   "scripts": {
-    "dev": "npm run generate:favicons && parcel watch src/index.js",
-    "prod": "npm run generate:favicons && parcel build src/index.js",
+    "dev": "npm run generate:favicons && parcel watch",
+    "prod": "npm run generate:favicons && parcel build",
     "generate:favicons": "node --experimental-modules generate-favicons.mjs",
-    "help": "parcel build -h"
+    "help": "parcel -h"
   },
+  "targets": {
+    "default": {
+      "optimize": true,
+      "publicUrl": "/static"
+    }
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@parcel/css-cli": "^1.13.1",
     "@parcel/transformer-sass": "^2.12.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
