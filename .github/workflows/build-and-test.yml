@@ -43,9 +43,18 @@ jobs:
           echo .env.prod.db:
           cat .env.prod.db
       
-      - name: Build and test
+      - name: Build and Up
         run: |
           docker compose -f production.yml build --no-cache
           docker compose -f production.yml up -d
-          sleep 5
+
+      - uses: shoothzj/host-available-check-action@v1
+        with:
+          check_type: 'HTTP'
+          check_timeout: 60
+          check_http_port: 8000
+          check_http_path: '/'
+
+      - name: Down
+        run: |
           docker compose -f production.yml down -v            
