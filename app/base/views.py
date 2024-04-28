@@ -11,8 +11,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import (CreateView, DeleteView, FormView,
-                                       UpdateView)
+from django.views.generic.edit import (CreateView, DeleteView, FormView, UpdateView)
 from django.views.generic.list import ListView
 
 from .models import Log
@@ -105,13 +104,17 @@ class DeleteView(LoginRequiredMixin, DeleteView):
 
 
 def logplot(request):
+    current_user = request.user
     all_logs = Log.objects.all()
+    users = [log.user for log in all_logs]
     dates = [log.date for log in all_logs]
     intensities = [log.intensity for log in all_logs]
 
-    df = pd.DataFrame({"date": dates, "intensity": intensities})
+    df = pd.DataFrame({"user": users, "date": dates, "intensity": intensities})
+    df_current_user = df[df['user'] == current_user]
+
     fig_bar = px.bar(
-        df,
+        df_current_user,
         x="date",
         y="intensity",
         title="Drinklog Plot",
