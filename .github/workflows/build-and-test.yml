@@ -43,19 +43,12 @@ jobs:
           echo .env.prod.db:
           cat .env.prod.db
       
-      - name: Build and Up
+      - name: Build and Test
         run: |
           docker compose -f production.yml build --no-cache
           docker compose -f production.yml up -d
-
-      - name: Check if webserver is responsive
-        uses: shoothzj/host-available-check-action@v1
-        with:
-          check_type: 'HTTP'
-          check_timeout: 60
-          check_http_port: 8000
-          check_http_path: '/'
-
-      - name: Down
-        run: |
-          docker compose -f production.yml down -v            
+          sleep 15
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000)
+          if ([ "$response" == "200" ]);then echo "Website is reachable" && exit 0; echo "Website is not reachable. Exiting..." && exit 1;fi
+          docker compose -f production.yml down -v
+          
