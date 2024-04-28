@@ -46,6 +46,6 @@ jobs:
       - name: Build and test
         run: |
           docker compose -f production.yml build --no-cache
-          docker compose -f production.yml up
+          docker compose -f production.yml up -d
           sleep 5
           docker compose -f production.yml down -v            
