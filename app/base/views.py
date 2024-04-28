@@ -91,8 +91,10 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields["date"].widget = forms.DateInput(attrs={"type": "date"})
+        form.fields["intensity"].widget = forms.TextInput(
+            attrs={"type": "range", "min": "0", "max": "25", "value": "0"}
+        )
         return form
-
 
 class DeleteView(LoginRequiredMixin, DeleteView):
     model = Log
