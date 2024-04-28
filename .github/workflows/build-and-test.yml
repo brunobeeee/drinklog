@@ -1,0 +1,60 @@
+name: Build Docker Image and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker BuildX
+        uses: docker/setup-buildx-action@v3 
+
+      - name: Create .env.prod & .env.prod.db
+        run: |
+          touch .env.prod
+          echo SECRET_KEY=action >> .env.prod
+          echo DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] >> .env.prod
+          echo SQL_ENGINE=django.db.backends.postgresql >> .env.prod
+          echo SQL_DATABASE=drinklogs >> .env.prod
+          echo SQL_USER=drinklog >> .env.prod
+          echo SQL_PASSWORD=action >> .env.prod
+          echo SQL_HOST=db >> .env.prod
+          echo SQL_PORT=5432 >> .env.prod
+          echo DATABASE=postgres >> .env.prod
+          echo ALLOW_NULL_USERS=False >> .env.prod
+          echo ALLOW_BLANK_USERS=False >> .env.prod
+          touch .env.prod.db
+          echo POSTGRES_DB=drinklogs >> .env.prod.db
+          echo POSTGRES_USER=drinklog >> .env.prod.db
+          echo POSTGRES_PASSWORD=action >> .env.prod.db
+          echo .env.prod:
+          cat .env.prod
+          echo
+          echo .env.prod.db:
+          cat .env.prod.db
+      
+      - name: Build and Test
+        run: |
+          docker compose -f production.yml build --no-cache
+          docker compose -f production.yml up -d
+          echo "Waiting for webserver to start: 15s"
+          sleep 15
+          echo "Curl-ing webserver at path /login/"
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/login/)
+          echo "Response: $response"
+          if [ "$response" == "200" ];then echo "Website is reachable"; exit 0; else echo "Website is not reachable. Exiting..."; exit 1;fi
+      
+      - name: Remove containers
+        run: |
+          docker compose -f production.yml down -v
+          
