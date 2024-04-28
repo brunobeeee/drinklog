@@ -11,7 +11,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import (CreateView, DeleteView, FormView, UpdateView)
+from django.views.generic.edit import (CreateView, DeleteView, FormView,
+                                       UpdateView)
 from django.views.generic.list import ListView
 
 from .models import Log
@@ -111,7 +112,7 @@ def logplot(request):
     intensities = [log.intensity for log in all_logs]
 
     df = pd.DataFrame({"user": users, "date": dates, "intensity": intensities})
-    df_current_user = df[df['user'] == current_user]
+    df_current_user = df[df["user"] == current_user]
 
     fig_bar = px.bar(
         df_current_user,
