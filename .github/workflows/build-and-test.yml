@@ -47,8 +47,14 @@ jobs:
         run: |
           docker compose -f production.yml build --no-cache
           docker compose -f production.yml up -d
+          echo "Waiting for webserver to start: 15s"
           sleep 15
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000)
-          if ([ "$response" == "200" ]);then echo "Website is reachable" && exit 0; echo "Website is not reachable. Exiting..." && exit 1;fi
+          echo "Curl-ing webserver at path /login/"
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/login/)
+          echo "Response: $response"
+          if [ "$response" == "200" ];then echo "Website is reachable"; exit 0; else echo "Website is not reachable. Exiting..."; exit 1;fi
+      
+      - name: Remove containers
+        run: |
           docker compose -f production.yml down -v
           
