@@ -48,7 +48,8 @@ jobs:
           docker compose -f production.yml build --no-cache
           docker compose -f production.yml up -d
 
-      - uses: shoothzj/host-available-check-action@v1
+      - name: Check if webserver is responsive
+        uses: shoothzj/host-available-check-action@v1
         with:
           check_type: 'HTTP'
           check_timeout: 60
