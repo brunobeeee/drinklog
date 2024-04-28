@@ -96,6 +96,7 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
         )
         return form
 
+
 class DeleteView(LoginRequiredMixin, DeleteView):
     model = Log
     context_object_name = "log"
