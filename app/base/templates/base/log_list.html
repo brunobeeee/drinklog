@@ -25,7 +25,7 @@
                     type="text"
                     name="search-area"
                     placeholder="Search your log dates"
-                    value="{{search_input}}"
+                    value="{{ search_query }}"
                 />
                 <span class="input-group-append">
                     <button class="btn rounded-pill" type="submit">
@@ -49,6 +49,7 @@
     </div>
 
     {% if logs|length > 0 %}
+    <p>{{search_input}}</p>
     <table id="loglist" class="table card-table">
         <thead>
             <th>Date</th>
@@ -79,7 +80,7 @@
 
         {% empty %}
         <div class="mt-2 pb-3 text-center">
-            <p class="h4">No logs are created or found using your search.</p>
+            <p class="h4">No logs are created or were matching your query.</p>
             <p class="h4">
                 Create a
                 <a class="text-primary-light text-decoration-none"

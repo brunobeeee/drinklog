@@ -57,7 +57,12 @@ class LogList(LoginRequiredMixin, ListView):
         if search_input:
             queryset = queryset.filter(date__contains=search_input)
 
-        return queryset.order_by("-date")  # Sortiere nach Datum absteigend
+        return queryset.order_by("-date")  # Sort descending by date
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_query'] = self.request.GET.get("search-area", "")  # Suchtext an das Template übergeben
+        return context
 
 
 class LogCreate(LoginRequiredMixin, CreateView):
