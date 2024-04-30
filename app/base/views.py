@@ -11,7 +11,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import (CreateView, DeleteView, FormView, UpdateView)
+from django.views.generic.edit import (CreateView, DeleteView, FormView,
+                                       UpdateView)
 from django.views.generic.list import ListView
 
 from .models import Log
@@ -108,7 +109,7 @@ class DeleteView(LoginRequiredMixin, DeleteView):
 
 def logplot(request):
     current_user = request.user
-    
+
     all_logs = Log.objects.all()
     users = [log.user for log in all_logs]
     dates = [log.date for log in all_logs]
@@ -116,13 +117,22 @@ def logplot(request):
     overdrives = [log.overdrive for log in all_logs]
 
     # Create df
-    df = pd.DataFrame({"user": users, "date": dates, "intensity": intensities, "overdrive": overdrives})
+    df = pd.DataFrame(
+        {
+            "user": users,
+            "date": dates,
+            "intensity": intensities,
+            "overdrive": overdrives,
+        }
+    )
     df_current_user = df[df["user"] == current_user]
 
     # Add color column with black values when overdrive==True
-    df_current_user['color'] = df_current_user.apply(lambda row: 0 if row['overdrive'] else row['intensity'], axis=1)
+    df_current_user["color"] = df_current_user.apply(
+        lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
+    )
 
-    print(df_current_user['color'])
+    print(df_current_user["color"])
 
     # Creation of the plot
     fig_bar = px.bar(
@@ -130,11 +140,19 @@ def logplot(request):
         x="date",
         y="intensity",
         labels={"intensity": "Intensity", "date": "Date"},
-        color = df_current_user["color"],
-        color_continuous_scale=["black",
-            "#00B86B", "#36AE53", "#6CA43A", "#A29A22", 
-            "#D78F09", "#D57016", "#D25122", "#D0322F",
-            "#CD133B",],
+        color=df_current_user["color"],
+        color_continuous_scale=[
+            "black",
+            "#00B86B",
+            "#36AE53",
+            "#6CA43A",
+            "#A29A22",
+            "#D78F09",
+            "#D57016",
+            "#D25122",
+            "#D0322F",
+            "#CD133B",
+        ],
     )
     fig_bar.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
