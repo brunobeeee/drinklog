@@ -11,8 +11,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import (CreateView, DeleteView, FormView,
-                                       UpdateView)
+from django.views.generic.edit import (CreateView, DeleteView, FormView, UpdateView)
 from django.views.generic.list import ListView
 
 from .models import Log
@@ -125,12 +124,11 @@ def logplot(request):
 
     print(df_current_user['color'])
 
-    # Erstellen des Barplots
+    # Creation of the plot
     fig_bar = px.bar(
         df_current_user,
         x="date",
         y="intensity",
-        title="Drinklog Plot",
         labels={"intensity": "Intensity", "date": "Date"},
         color = df_current_user["color"],
         color_continuous_scale=["black",
@@ -144,6 +142,7 @@ def logplot(request):
         font_color="white",
         title_font_family="Jost",
         modebar_orientation="v",
+        coloraxis_showscale=False,
     )
     bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False)
 
