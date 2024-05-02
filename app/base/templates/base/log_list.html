@@ -18,20 +18,24 @@
     </div>
 
     <div id="search-add-wrapper">
-        <form method="GET" id="search" class="d-flex">
-            <div class="input-group">
+        <form method="GET" class="d-flex">
+            <div class="input-group d-flex">
                 <input
-                    class="form-control rounded-pill"
                     type="text"
                     name="search-area"
+                    id="search-input"
                     placeholder="Search your log dates"
                     value="{{ search_query }}"
                 />
-                <span class="input-group-append">
-                    <button class="btn rounded-pill" type="submit">
-                        <i class="fa fa-search"></i>
+                
+                {% if search_query %}
+                    <button class="btn" onclick="document.getElementById('search-input').value = ''">
+                        <i class="fa fa-xmark"></i>
                     </button>
-                </span>
+                {% endif %}
+                <button class="btn" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
             </div>
         </form>
         
@@ -46,9 +50,6 @@
         ></a>
         {% endif %}
 
-        {% if search_query %}
-            <a class="h5 text-primary text-center w-100 mt-3" href="{% url 'logs' %}">Delete Search</a>
-        {% endif %}
 
     </div>
 

@@ -103,7 +103,7 @@ input[type="date"],
 textarea {
     color: $dark;
     background-color: $light;
-    border: 1px solid #dee2e6;
+    border: 1px solid $secondary;
     border-radius: 50rem;
     padding: 2.5px 10px;
 }
@@ -161,16 +161,33 @@ input[type=range]::-moz-range-thumb {
         width: 50%;
     }
 
-    .input-group-append button {
-        z-index: 5;
-        border-top-left-radius: 0 !important;
-        border-bottom-left-radius: 0 !important;
-        margin-left: -39px;
-        border: none!important;
-        &:hover {
-            background-color: $secondary;
+    input#search-input {
+        flex: auto;
+        width: 1%;
+        border-radius: var(--bs-border-radius-pill) 0 0 var(--bs-border-radius-pill);
+        background-color: transparent;
+        border: none;
+    }
+
+    .input-group {
+        color: $dark;
+        background-color: $light;
+        border: 1px solid $secondary;
+        border-radius: var(--bs-border-radius-pill);
+
+        button {
+            z-index: 5;
+            border: none!important;
+            &:hover {
+                background-color: $secondary;
+            }
+            &:last-child {
+                border-top-right-radius: var(--bs-border-radius-pill);
+                border-bottom-right-radius: var(--bs-border-radius-pill);
+            }
         }
     }
+
 }
 
 
