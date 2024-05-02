@@ -7,7 +7,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.detail import DetailView
@@ -73,8 +73,19 @@ class LogCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("logs")
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(LogCreate, self).form_valid(form)
+        date = form.cleaned_data['date']
+
+        # Check if a log with this date exists
+        existing_log = Log.objects.filter(date=date, user=self.request.user).first()
+
+        if existing_log: # Combine them
+            existing_log.intensity = min(existing_log.intensity + form.cleaned_data['intensity'], 25)
+            existing_log.overdrive = existing_log.overdrive or form.cleaned_data['overdrive']
+            existing_log.save()
+            return redirect(self.success_url)
+        else: # Create a new one
+            form.instance.user = self.request.user
+            return super(LogCreate, self).form_valid(form)
 
     def get_initial(self):
         initial = super().get_initial()
