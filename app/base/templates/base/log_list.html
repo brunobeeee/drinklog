@@ -18,7 +18,7 @@
     </div>
 
     <div id="search-add-wrapper">
-        <form method="GET" class="d-flex">
+        <form method="GET" id="search" class="d-flex">
             <div class="input-group">
                 <input
                     class="form-control rounded-pill"
@@ -46,10 +46,14 @@
         ></a>
         {% endif %}
 
+        {% if search_query %}
+            <a class="h5 text-primary text-center w-100 mt-3" href="{% url 'logs' %}">Delete Search</a>
+        {% endif %}
+
     </div>
 
+
     {% if logs|length > 0 %}
-    <p>{{search_input}}</p>
     <table id="loglist" class="table card-table">
         <thead>
             <th>Date</th>
