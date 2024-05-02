@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objs as go
 from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -133,6 +134,8 @@ class DeleteView(LoginRequiredMixin, DeleteView):
         return self.model.objects.filter(user=owner)
 
 
+from datetime import datetime, timedelta
+
 def logplot(request):
     current_user = request.user
 
@@ -158,10 +161,8 @@ def logplot(request):
         lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
     )
 
-    print(df_current_user["color"])
-
-    # Creation of the plot
-    fig_bar = px.bar(
+    # Creation of the plot for all data
+    fig_bar_all = px.bar(
         df_current_user,
         x="date",
         y="intensity",
@@ -180,7 +181,7 @@ def logplot(request):
             "#CD133B",
         ],
     )
-    fig_bar.update_layout(
+    fig_bar_all.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font_color="white",
@@ -188,6 +189,51 @@ def logplot(request):
         modebar_orientation="v",
         coloraxis_showscale=False,
     )
-    bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False)
+    bar_chart_all = fig_bar_all.to_html(full_html=False, include_plotlyjs=False)
 
-    return render(request, "base/log_plot.html", {"bar_chart": bar_chart})
+    # Erstellen eines Datumsbereichs für eine ganze Woche
+    start_date = date.today() - timedelta(days=date.today().weekday())  # Montag dieser Woche
+    end_date = start_date + timedelta(days=6)  # Sonntag dieser Woche
+
+    # Filter data for the current week
+    current_week_logs = df_current_user[(df_current_user["date"] >= start_date) & (df_current_user["date"] <= end_date)]
+
+    # Creation of the plot for the current week
+    fig_bar_current_week = px.bar(
+        current_week_logs,
+        x="date",
+        y="intensity",
+        labels={"intensity": "Intensity", "date": "Date"},
+        color=current_week_logs["color"],
+        color_continuous_scale=[
+            "black",
+            "#00B86B",
+            "#36AE53",
+            "#6CA43A",
+            "#A29A22",
+            "#D78F09",
+            "#D57016",
+            "#D25122",
+            "#D0322F",
+            "#CD133B",
+        ],
+    )
+
+    # Manuelle Festlegung des Bereichs der x-Achse auf eine ganze Woche
+    fig_bar_current_week.update_xaxes(range=[start_date, end_date])
+
+    fig_bar_current_week.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font_color="white",
+        title_font_family="Jost",
+        modebar_orientation="v",
+        coloraxis_showscale=False,
+    )
+    bar_chart_last_week = fig_bar_current_week.to_html(full_html=False, include_plotlyjs=False)
+
+    return render(
+        request,
+        "base/log_plot.html",
+        {"bar_chart_all": bar_chart_all, "bar_chart_last_week": bar_chart_last_week},
+    )
