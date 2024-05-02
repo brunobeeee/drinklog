@@ -108,7 +108,9 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields["date"].widget = forms.DateInput(attrs={"type": "date"})
+        form.fields["date"].disabled = True
+        form.fields["date"].widget.attrs['readonly'] = True
+        form.fields["date"].widget = forms.DateInput(attrs={"type": "date", "readonly": "readonly"})
         form.fields["intensity"].widget = forms.TextInput(
             attrs={"type": "range", "min": "0", "max": "25", "value": "0"}
         )
