@@ -17,10 +17,62 @@
             </a>
         </div>
 
-            {% autoescape off %}
+        <!-- Select crop range of plot -->
+        <div class="menu-v" id="menu">
+            <button class="menu-btn" id="week" onclick="navigate('week')">W</button>
+            <button class="menu-btn" id="month" onclick="navigate('month')">M</button>
+            <button class="menu-btn" id="year" onclick="navigate('year')">Y</button>
+            <button class="menu-btn" id="all" onclick="navigate('all')">All</button>
+        </div>
 
-            {{ bar_chart }}
-            
-            {% endautoescape %}
+        {% autoescape off %}
+        {{ bar_chart }}
+        {% endautoescape %}
+        
     </div>
+
+
+    <script>
+        function navigate(section) {
+            // Mark current button as active
+            var menuBtns = document.getElementsByClassName('menu-btn');
+            for (var i = 0; i < menuBtns.length; i++) {
+                menuBtns[i].classList.remove('active');
+            }
+            document.getElementById(section).classList.add('active');
+
+            // Aktuelle URL abrufen
+            var currentUrl = window.location.href;
+            // Überprüfen, ob ein Abschnittsparameter vorhanden ist
+            var sectionIndex = currentUrl.indexOf('?section=');
+            if (sectionIndex !== -1) {
+                // Abschnittsparameter extrahieren
+                var currentSection = currentUrl.substring(sectionIndex);
+                // URL für die Navigation erstellen und weiterleiten
+                window.location.href = currentUrl.replace(currentSection, '?section=' + section);
+                console.log(window.location.href)
+            } else {
+                // Wenn kein Abschnittsparameter vorhanden ist, einfach nur weiterleiten
+                window.location.href += '?section='+section;
+            }
+        }
+
+        // Beim Laden der Seite prüfen, ob ein Abschnittsparameter vorhanden ist und entsprechenden Knopf markieren
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentUrl = window.location.href;
+            var sectionIndex = currentUrl.indexOf('?section=');
+            if (sectionIndex !== -1) {
+                var currentSection = currentUrl.substring(sectionIndex + 9);
+                var sectionBtn = document.getElementById(currentSection);
+                if (sectionBtn) {
+                    sectionBtn.classList.add('active');
+                }
+                else {
+                    document.getElementById('month').classList.add('active');
+                }
+            } else {
+                document.getElementById('month').classList.add('active');
+            }
+        });
+    </script>
 {% endblock content %}
