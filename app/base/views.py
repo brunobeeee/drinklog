@@ -1,7 +1,9 @@
-from datetime import datetime, timedelta
+import calendar
+from datetime import date, datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objs as go
 from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -133,6 +135,9 @@ class DeleteView(LoginRequiredMixin, DeleteView):
         return self.model.objects.filter(user=owner)
 
 
+from datetime import datetime, timedelta
+
+
 def logplot(request):
     current_user = request.user
 
@@ -151,22 +156,48 @@ def logplot(request):
             "overdrive": overdrives,
         }
     )
-    df_current_user = df[df["user"] == current_user]
+    # Filter for current user
+    df = df[df["user"] == current_user]
 
-    # Add color column with black values when overdrive==True
-    df_current_user["color"] = df_current_user.apply(
+    # Add color column with black color when overdrive==True
+    df["color"] = df.apply(
         lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
     )
 
-    print(df_current_user["color"])
+    # Get the requested section to crop the plot accordingly
+    section = request.GET.get("section", None)
+
+    if section == "week":
+        start_date = date.today() - timedelta(
+            days=date.today().weekday()
+        )  # Monday current week
+        end_date = start_date + timedelta(days=6)  # Sunday
+        title = start_date.strftime("%m/%d/%Y") + " - " + end_date.strftime("%m/%d/%Y")
+    elif section == "month":
+        start_date = date.today().replace(day=1)
+        month_days = calendar.monthrange(start_date.year, start_date.month)[1]
+        end_date = start_date.replace(day=month_days)
+        title = start_date.strftime("%B") + " " + start_date.strftime("%Y")
+    elif section == "year":
+        start_date = date.today().replace(month=1, day=1)
+        end_date = start_date.replace(month=12, day=31)
+        title = start_date.year
+    elif section == "all":
+        title = "All Time"
+    else:  # Month
+        start_date = date.today().replace(day=1)
+        month_days = calendar.monthrange(start_date.year, start_date.month)[1]
+        end_date = start_date.replace(day=month_days)
+        title = start_date.strftime("%B") + " " + start_date.strftime("%Y")
 
     # Creation of the plot
     fig_bar = px.bar(
-        df_current_user,
+        df,
         x="date",
         y="intensity",
+        title=title,
         labels={"intensity": "Intensity", "date": "Date"},
-        color=df_current_user["color"],
+        color=df["color"],
         color_continuous_scale=[
             "black",
             "#00B86B",
@@ -187,7 +218,17 @@ def logplot(request):
         title_font_family="Jost",
         modebar_orientation="v",
         coloraxis_showscale=False,
+        title_x=0.5,
     )
-    bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False)
+    if section != "all":
+        fig_bar.update_xaxes(range=[start_date, end_date])
 
-    return render(request, "base/log_plot.html", {"bar_chart": bar_chart})
+    bar_chart = fig_bar.to_html(
+        full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
+    )
+
+    return render(
+        request,
+        "base/log_plot.html",
+        {"bar_chart": bar_chart},
+    )
