@@ -163,11 +163,32 @@ def logplot(request):
         lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
     )
 
+
+    # Get the requested section to crop the plot accordingly 
+    section = request.GET.get('section', None)
+
+    if section == 'weekly':
+        start_date = date.today() - timedelta(days=date.today().weekday())  # Monday current week
+        end_date = start_date + timedelta(days=6)  # Sunday
+        title = start_date.strftime("%m/%d/%Y") + " - " + end_date.strftime("%m/%d/%Y")
+    elif section == 'yearly':
+        start_date = date.today().replace(month=1, day=1)
+        end_date = start_date.replace(month=12, day=31)
+        title = start_date.year
+    elif section == 'all':
+        title = "All Time"
+    else: # Monthly
+        start_date = date.today().replace(day=1)
+        month_days = calendar.monthrange(start_date.year, start_date.month)[1]
+        end_date = start_date.replace(day=month_days)
+        title = start_date.strftime("%B") + " " + start_date.strftime("%Y")
+
     # Creation of the plot
     fig_bar = px.bar(
         df,
         x="date",
         y="intensity",
+        title=title,
         labels={"intensity": "Intensity", "date": "Date"},
         color=df["color"],
         color_continuous_scale=[
@@ -191,24 +212,7 @@ def logplot(request):
         modebar_orientation="v",
         coloraxis_showscale=False,
     )
-
-    # Get the requested section to crop the plot accordingly 
-    section = request.GET.get('section', None)
-
-    if section == 'weekly':
-        start_date = date.today() - timedelta(days=date.today().weekday())  # Monday current week
-        end_date = start_date + timedelta(days=6)  # Sunday
-        fig_bar.update_xaxes(range=[start_date, end_date])
-    elif section == 'yearly':
-        start_date = date.today().replace(month=1, day=1)
-        end_date = start_date.replace(month=12, day=31)
-        fig_bar.update_xaxes(range=[start_date, end_date])
-    elif section == 'all':
-        pass
-    else: # Monthly
-        start_date = date.today().replace(day=1)
-        month_days = calendar.monthrange(start_date.year, start_date.month)[1]
-        end_date = start_date.replace(day=month_days)
+    if section:
         fig_bar.update_xaxes(range=[start_date, end_date])
 
     bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False, config = {'displayModeBar': False})
