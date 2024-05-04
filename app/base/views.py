@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, date
+import calendar
 
 import pandas as pd
 import plotly.express as px
@@ -154,20 +155,21 @@ def logplot(request):
             "overdrive": overdrives,
         }
     )
-    df_current_user = df[df["user"] == current_user]
+    # Filter for current user
+    df = df[df["user"] == current_user]
 
-    # Add color column with black values when overdrive==True
-    df_current_user["color"] = df_current_user.apply(
+    # Add color column with black color when overdrive==True
+    df["color"] = df.apply(
         lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
     )
 
-    # Creation of the plot for all data
-    fig_bar_all = px.bar(
-        df_current_user,
+    # Creation of the plot
+    fig_bar = px.bar(
+        df,
         x="date",
         y="intensity",
         labels={"intensity": "Intensity", "date": "Date"},
-        color=df_current_user["color"],
+        color=df["color"],
         color_continuous_scale=[
             "black",
             "#00B86B",
@@ -181,7 +183,7 @@ def logplot(request):
             "#CD133B",
         ],
     )
-    fig_bar_all.update_layout(
+    fig_bar.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font_color="white",
@@ -189,51 +191,30 @@ def logplot(request):
         modebar_orientation="v",
         coloraxis_showscale=False,
     )
-    bar_chart_all = fig_bar_all.to_html(full_html=False, include_plotlyjs=False)
 
-    # Erstellen eines Datumsbereichs für eine ganze Woche
-    start_date = date.today() - timedelta(days=date.today().weekday())  # Montag dieser Woche
-    end_date = start_date + timedelta(days=6)  # Sonntag dieser Woche
+    # Get the requested section to crop the plot accordingly 
+    section = request.GET.get('section', None)
 
-    # Filter data for the current week
-    current_week_logs = df_current_user[(df_current_user["date"] >= start_date) & (df_current_user["date"] <= end_date)]
+    if section == 'weekly':
+        start_date = date.today() - timedelta(days=date.today().weekday())  # Monday current week
+        end_date = start_date + timedelta(days=6)  # Sunday
+        fig_bar.update_xaxes(range=[start_date, end_date])
+    elif section == 'yearly':
+        start_date = date.today().replace(month=1, day=1)
+        end_date = start_date.replace(month=12, day=31)
+        fig_bar.update_xaxes(range=[start_date, end_date])
+    elif section == 'all':
+        pass
+    else: # Monthly
+        start_date = date.today().replace(day=1)
+        month_days = calendar.monthrange(start_date.year, start_date.month)[1]
+        end_date = start_date.replace(day=month_days)
+        fig_bar.update_xaxes(range=[start_date, end_date])
 
-    # Creation of the plot for the current week
-    fig_bar_current_week = px.bar(
-        current_week_logs,
-        x="date",
-        y="intensity",
-        labels={"intensity": "Intensity", "date": "Date"},
-        color=current_week_logs["color"],
-        color_continuous_scale=[
-            "black",
-            "#00B86B",
-            "#36AE53",
-            "#6CA43A",
-            "#A29A22",
-            "#D78F09",
-            "#D57016",
-            "#D25122",
-            "#D0322F",
-            "#CD133B",
-        ],
-    )
-
-    # Manuelle Festlegung des Bereichs der x-Achse auf eine ganze Woche
-    fig_bar_current_week.update_xaxes(range=[start_date, end_date])
-
-    fig_bar_current_week.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font_color="white",
-        title_font_family="Jost",
-        modebar_orientation="v",
-        coloraxis_showscale=False,
-    )
-    bar_chart_last_week = fig_bar_current_week.to_html(full_html=False, include_plotlyjs=False)
+    bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False, config = {'displayModeBar': False})
 
     return render(
         request,
         "base/log_plot.html",
-        {"bar_chart_all": bar_chart_all, "bar_chart_last_week": bar_chart_last_week},
+        {"bar_chart": bar_chart},
     )
