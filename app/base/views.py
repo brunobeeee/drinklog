@@ -1,5 +1,5 @@
-from datetime import datetime, timedelta, date
 import calendar
+from datetime import date, datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
@@ -137,6 +137,7 @@ class DeleteView(LoginRequiredMixin, DeleteView):
 
 from datetime import datetime, timedelta
 
+
 def logplot(request):
     current_user = request.user
 
@@ -163,26 +164,27 @@ def logplot(request):
         lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
     )
 
+    # Get the requested section to crop the plot accordingly
+    section = request.GET.get("section", None)
 
-    # Get the requested section to crop the plot accordingly 
-    section = request.GET.get('section', None)
-
-    if section == 'week':
-        start_date = date.today() - timedelta(days=date.today().weekday())  # Monday current week
+    if section == "week":
+        start_date = date.today() - timedelta(
+            days=date.today().weekday()
+        )  # Monday current week
         end_date = start_date + timedelta(days=6)  # Sunday
         title = start_date.strftime("%m/%d/%Y") + " - " + end_date.strftime("%m/%d/%Y")
-    elif section == 'month':
+    elif section == "month":
         start_date = date.today().replace(day=1)
         month_days = calendar.monthrange(start_date.year, start_date.month)[1]
         end_date = start_date.replace(day=month_days)
         title = start_date.strftime("%B") + " " + start_date.strftime("%Y")
-    elif section == 'year':
+    elif section == "year":
         start_date = date.today().replace(month=1, day=1)
         end_date = start_date.replace(month=12, day=31)
         title = start_date.year
-    elif section == 'all':
+    elif section == "all":
         title = "All Time"
-    else: # Month
+    else:  # Month
         start_date = date.today().replace(day=1)
         month_days = calendar.monthrange(start_date.year, start_date.month)[1]
         end_date = start_date.replace(day=month_days)
@@ -218,10 +220,12 @@ def logplot(request):
         coloraxis_showscale=False,
         title_x=0.5,
     )
-    if (section != "all"):
+    if section != "all":
         fig_bar.update_xaxes(range=[start_date, end_date])
 
-    bar_chart = fig_bar.to_html(full_html=False, include_plotlyjs=False, config = {'displayModeBar': False})
+    bar_chart = fig_bar.to_html(
+        full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
+    )
 
     return render(
         request,
