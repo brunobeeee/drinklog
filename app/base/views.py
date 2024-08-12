@@ -4,6 +4,7 @@ from datetime import date, datetime, timedelta
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
+import json
 from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -227,8 +228,11 @@ def logplot(request):
         full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
     )
 
+    logs_json = df[['date', 'intensity']].to_json(orient='records', date_format='iso')
+
     return render(
         request,
         "base/log_plot.html",
-        {"bar_chart": bar_chart},
+        {"bar_chart": bar_chart,
+        "logs_json": logs_json},
     )
