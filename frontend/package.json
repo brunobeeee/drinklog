@@ -17,6 +17,7 @@
     "bootstrap": "^5.3.3",
     "favicons": "^7.2.0",
     "parcel": "^2.12.0",
+    "plotly.js-dist": "^2.34.0",
     "pretty-checkbox": "^3.0.3",
     "youtube-background": "^1.1.7"
   },
