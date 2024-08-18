@@ -22,6 +22,9 @@
             
         </div>
 
+        <button id="prev" onclick="shiftPlotView(-1)">←</button>
+        <button id="next" onclick="shiftPlotView(1)">→</button>
+
         <!-- Select x axis range of plot -->
         <div class="menu-v" id="menu">
             <button class="menu-btn" id="week" onclick="navigate('week')">W</button>
@@ -40,6 +43,9 @@
 
 
     <script>
+        let lastXRange = [null, null];
+        let activeSection = "month";
+
         function displayTotalDrinks(startDate = null, endDate = null) {
             let xStart, xEnd;
             var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
@@ -100,20 +106,64 @@
                 var endDate = new Date(startDate);
                 endDate.setDate(startDate.getDate() + 6);
                 Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
+                activeSection = "week";
             }
-            else if  (section == 'month') {
+            else if (section == 'month') {
                 var startDate = new Date(today.getFullYear(), today.getMonth(), 1);
                 var endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
                 Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
+                activeSection = "month";
             } 
-            else if  (section == 'year') {
+            else if (section == 'year') {
                 var startDate = new Date(today.getFullYear(), 0, 1);
                 var endDate = new Date(today.getFullYear(), 11, 31);
                 Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
+                activeSection = "year";
             }
             else {
                 Plotly.relayout(plot, {'xaxis.autorange': true});
+                activeSection = "all";
             }
+        }
+
+
+        function shiftPlotView(direction) {
+            if (lastXRange[0] && lastXRange[1]) {
+                var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
+
+                const xStart = lastXRange[0];
+                const xEnd = lastXRange[1];
+
+                let newStart, newEnd;
+
+                // Calculate the new xaxis-range with specified interval
+                switch (activeSection) {
+                    case 'month':
+                        newStart = new Date(xStart.getFullYear(), xStart.getMonth() + direction, 1);
+                        newEnd = new Date(xEnd.getFullYear(), xEnd.getMonth() + direction + 1, 0);
+                        break;
+                    case 'year':
+                        newStart = new Date(xStart.getFullYear() + direction, 0, 1);
+                        newEnd = new Date(xStart.getFullYear() + direction, 11, 31);
+                        break;
+                    case 'week':
+                        const diff = xEnd - xStart;
+                        console.log(diff);
+                        newStart = new Date(xStart.getTime() + (diff + 24 * 60 * 60 * 1000) * direction);
+                        newEnd = new Date(xEnd.getTime() + (diff + 24 * 60 * 60 * 1000) * direction);
+                        break;
+                    default:
+                        console.error("Unknown time interval: " + activeSection);
+                        return;
+                }
+
+                const update = {
+                    'xaxis.range': [newStart, newEnd]
+                };
+
+                Plotly.relayout(plot, update);
+            }
+
         }
 
 
@@ -127,15 +177,18 @@
 
             plot.on('plotly_relayout', function(eventdata) {
                 // For whatever reason the programmed plotly_relayout event and the plotly_relayout event raised by user interaction use a different syntax to access the data. So we have to check for it
-                if (eventdata['xaxis.autorange'] == true) {
-                    displayTotalDrinks(eventdata['xaxis.range[0]'], eventdata['xaxis.range[1]']);
-                }
-                else if ((eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]'])) {
-                    displayTotalDrinks(eventdata['xaxis.range[0]'], eventdata['xaxis.range[1]']);
+                if ((eventdata['xaxis.autorange'] == true) || (eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]'])) {
+                    startDate = eventdata['xaxis.range[0]'];
+                    endDate = eventdata['xaxis.range[1]'];
                 }
                 else if (eventdata['xaxis.range'][0] && eventdata['xaxis.range'][1]) {
-                    displayTotalDrinks(eventdata['xaxis.range'][0], eventdata['xaxis.range'][1]);
+                    startDate = eventdata['xaxis.range'][0];
+                    endDate = eventdata['xaxis.range'][1];
                 }
+                displayTotalDrinks(startDate, endDate);
+                // Save range for further use (mainly shiftPlotView)
+                lastXRange = [new Date(startDate), new Date(endDate)];
+                console.log(lastXRange);
             });
         });
     </script>
