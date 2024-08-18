@@ -1,6 +1,6 @@
 {% extends 'base/main.html' %} 
 {% block content %}
-<div class="video-bg" data-vbg-start-at="30" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>
+<!--<div class="video-bg" data-vbg-start-at="30" data-vbg="https://www.youtube.com/watch?v=eNQRmNe7Tg4"></div>-->
 
     <head>
         <!-- Use cdn to use plotly -->
@@ -15,7 +15,14 @@
             </a>
         </div>
 
-        <!-- Select crop range of plot -->
+        <div class="card-body">
+            <p class="h4">
+                <span id="total-drinks">0</span> Drinks
+            </p>
+            
+        </div>
+
+        <!-- Select x axis range of plot -->
         <div class="menu-v" id="menu">
             <button class="menu-btn" id="week" onclick="navigate('week')">W</button>
             <button class="menu-btn" id="month" onclick="navigate('month')">M</button>
@@ -24,13 +31,57 @@
         </div>
 
         {% autoescape off %}
-        {{ bar_chart }}
+        <div id="plot-container">
+            {{ bar_chart }}
+        </div>
         {% endautoescape %}
         
     </div>
 
 
     <script>
+        function displayTotalDrinks(startDate = null, endDate = null) {
+            let xStart, xEnd;
+            var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
+            
+            // If start- & endDate are given use them
+            // Else use the first and last Date in the plot data
+            if (startDate && endDate) {
+                xStart = new Date(startDate);
+                xEnd = new Date(endDate);
+            } else {
+                const drinksData = plot.data[0];
+
+                xStart = new Date(Math.min.apply(null, drinksData.x.map(date => new Date(date))));
+                xEnd = new Date(Math.max.apply(null, drinksData.x.map(date => new Date(date))));
+            }
+
+            // Get data from the plot
+            const drinksData = plot.data[0];
+            let totalDrinks = 0;
+
+            // Iterate over data and count the drinks inside the timeframe
+            for (let i = 0; i < drinksData.x.length; i++) {
+                const entryDate = new Date(drinksData.x[i]);
+                if (entryDate >= xStart && entryDate <= xEnd) {
+                    totalDrinks += drinksData.y[i];
+                }
+            }
+
+            document.getElementById('total-drinks').innerText = totalDrinks;
+        }
+
+
+
+        function getMonday(d) { // see https://stackoverflow.com/questions/4156434/javascript-get-the-first-day-of-the-week-from-current-date#answer-4156516
+            d = new Date(d);
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff));
+        }
+
+
+
         function navigate(section) {
             // Mark current button as active
             var menuBtns = document.getElementsByClassName('menu-btn');
@@ -39,38 +90,53 @@
             }
             document.getElementById(section).classList.add('active');
 
-            // Aktuelle URL abrufen
-            var currentUrl = window.location.href;
-            // Überprüfen, ob ein Abschnittsparameter vorhanden ist
-            var sectionIndex = currentUrl.indexOf('?section=');
-            if (sectionIndex !== -1) {
-                // Abschnittsparameter extrahieren
-                var currentSection = currentUrl.substring(sectionIndex);
-                // URL für die Navigation erstellen und weiterleiten
-                window.location.href = currentUrl.replace(currentSection, '?section=' + section);
-                console.log(window.location.href)
-            } else {
-                // Wenn kein Abschnittsparameter vorhanden ist, einfach nur weiterleiten
-                window.location.href += '?section='+section;
+            // Get current date and plot-div for the calculations
+            var today = new Date();
+            var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
+
+            // Calculate startDate & endDate for each section and relayout the plot
+            if (section == 'week') {
+                var startDate = getMonday(today);
+                var endDate = new Date(startDate);
+                endDate.setDate(startDate.getDate() + 6);
+                Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
+            }
+            else if  (section == 'month') {
+                var startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                var endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
+            } 
+            else if  (section == 'year') {
+                var startDate = new Date(today.getFullYear(), 0, 1);
+                var endDate = new Date(today.getFullYear(), 11, 31);
+                Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
+            }
+            else {
+                Plotly.relayout(plot, {'xaxis.autorange': true});
             }
         }
 
-        // Beim Laden der Seite prüfen, ob ein Abschnittsparameter vorhanden ist und entsprechenden Knopf markieren
+
+
         document.addEventListener('DOMContentLoaded', function () {
-            var currentUrl = window.location.href;
-            var sectionIndex = currentUrl.indexOf('?section=');
-            if (sectionIndex !== -1) {
-                var currentSection = currentUrl.substring(sectionIndex + 9);
-                var sectionBtn = document.getElementById(currentSection);
-                if (sectionBtn) {
-                    sectionBtn.classList.add('active');
+            // Add a listener for the relayout event to calculate the total drinks in that timeframe
+            var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
+
+            // Trigger the calculation of diplayTotalDrinks()
+            navigate("month");
+
+            plot.on('plotly_relayout', function(eventdata) {
+                // For whatever reason the programmed plotly_relayout event and the plotly_relayout event raised by user interaction use a different syntax to access the data. So we have to check for it
+                if (eventdata['xaxis.autorange'] == true) {
+                    displayTotalDrinks(eventdata['xaxis.range[0]'], eventdata['xaxis.range[1]']);
                 }
-                else {
-                    document.getElementById('month').classList.add('active');
+                else if ((eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]'])) {
+                    displayTotalDrinks(eventdata['xaxis.range[0]'], eventdata['xaxis.range[1]']);
                 }
-            } else {
-                document.getElementById('month').classList.add('active');
-            }
+                else if (eventdata['xaxis.range'][0] && eventdata['xaxis.range'][1]) {
+                    displayTotalDrinks(eventdata['xaxis.range'][0], eventdata['xaxis.range'][1]);
+                }
+            });
         });
     </script>
 {% endblock content %}
