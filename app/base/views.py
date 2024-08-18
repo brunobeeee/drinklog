@@ -1,10 +1,10 @@
 import calendar
+import json
 from datetime import date, datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-import json
 from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -193,7 +193,7 @@ def logplot(request):
         title_font_family="Jost",
         coloraxis_showscale=False,
         xaxis_title=None,
-        yaxis_title=None
+        yaxis_title=None,
     )
 
     bar_chart = fig_bar.to_html(
