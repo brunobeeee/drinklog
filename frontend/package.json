@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "npm run generate:favicons && parcel watch src/index.js",
+    "fast": "parcel build src/index.js",
     "prod": "npm run generate:favicons && parcel build src/index.js",
     "generate:favicons": "node --experimental-modules generate-favicons.mjs",
     "help": "parcel build -h"

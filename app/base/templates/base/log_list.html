@@ -16,85 +16,87 @@
         {% else %} <a href="{% url 'login' %}">Login</a> {% endif %}
     </div>
 
-    <div id="search-add-wrapper">
-        <form method="GET" class="d-flex">
-            <div class="input-group d-flex">
-                <input
-                    type="text"
-                    name="search-area"
-                    id="search-input"
-                    placeholder="Search your log dates"
-                    value="{{ search_query }}"
-                />
-                
-                {% if search_query %}
-                    <button class="btn" onclick="document.getElementById('search-input').value = ''">
-                        <i class="fa fa-xmark"></i>
+    <div class="card-body">
+        <div id="search-add-wrapper">
+            <form method="GET" class="d-flex">
+                <div class="input-group d-flex">
+                    <input
+                        type="text"
+                        name="search-area"
+                        id="search-input"
+                        placeholder="Search your log dates"
+                        value="{{ search_query }}"
+                    />
+                    
+                    {% if search_query %}
+                        <button class="btn" onclick="document.getElementById('search-input').value = ''">
+                            <i class="fa fa-xmark"></i>
+                        </button>
+                    {% endif %}
+                    <button class="btn" type="submit">
+                        <i class="fa fa-search"></i>
                     </button>
-                {% endif %}
-                <button class="btn" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-        </form>
-        
-        {% if logs|length > 0 %}
-        <a class="d-flex ms-1 text-decoration-none text-dark" href="{% url 'log-plot' %}">
-            Show Plot
-            <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
-        </a>
+                </div>
+            </form>
+            
+            {% if logs|length > 0 %}
+            <a class="d-flex ms-1 text-decoration-none" href="{% url 'log-plot' %}">
+                Show Plot
+                <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
+            </a>
 
-        <a class="d-flex me-1 text-decoration-none text-dark" href="{% url 'log-create' %}"
-        ><i class="fa-solid fa-plus fa-2xl m-auto"></i
-        ></a>
-        {% endif %}
+            <a class="d-flex me-1 text-decoration-none" href="{% url 'log-create' %}"
+            ><i class="fa-solid fa-plus fa-2xl m-auto"></i
+            ></a>
+            {% endif %}
 
 
-    </div>
-
-
-    {% if logs|length > 0 %}
-    <table id="loglist" class="table card-table">
-        <thead>
-            <th>Date</th>
-            <th>Intensity</th>
-            <th>Overdrive</th>
-            <th></th>
-        </thead>
-        {% endif %} {% for log in logs %}
-        <tr
-            onclick="window.location='{% url 'log-update' log.id %}';"
-            style="cursor: pointer"
-        >
-            <td>{{log.date|date:"d.m.Y"}}</td>
-            <td>{{log.intensity}}</td>
-            <td>
-                {% if log.overdrive %}
-                <i class="fa-solid fa-check fa-lg text-danger"></i> {% else %}
-                <i class="fa-solid fa-xmark fa-lg"></i> {% endif %}
-            </td>
-            <td style="vertical-align: middle">
-                <a
-                    class="d-flex text-decoration-none"
-                    href="{% url 'log-delete' log.id %}"
-                    ><i class="fa-solid fa-trash-can fa-xl text-danger m-auto" style="margin-right: 3px!important;"></i
-                ></a>
-            </td>
-        </tr>
-
-        {% empty %}
-        <div class="mt-2 pb-3 text-center">
-            <p class="h4">No logs are created or were matching your query.</p>
-            <p class="h4">
-                Create a
-                <a class="text-primary-light text-decoration-none"
-                    href="{% url 'log-create' %}"
-                    >new log</a
-                >!
-            </p>
         </div>
-        {% endfor %}
-    </table>
+
+
+        {% if logs|length > 0 %}
+        <table id="loglist" class="table card-table">
+            <thead>
+                <th>Date</th>
+                <th>Intensity</th>
+                <th>Overdrive</th>
+                <th></th>
+            </thead>
+            {% endif %} {% for log in logs %}
+            <tr
+                onclick="window.location='{% url 'log-update' log.id %}';"
+                style="cursor: pointer"
+            >
+                <td>{{log.date|date:"d.m.Y"}}</td>
+                <td>{{log.intensity}}</td>
+                <td>
+                    {% if log.overdrive %}
+                    <i class="fa-solid fa-check fa-lg text-danger"></i> {% else %}
+                    <i class="fa-solid fa-xmark fa-lg"></i> {% endif %}
+                </td>
+                <td style="vertical-align: middle">
+                    <a
+                        class="d-flex text-decoration-none"
+                        href="{% url 'log-delete' log.id %}"
+                        ><i class="fa-solid fa-trash-can text-dark fa-xl m-auto" style="margin-right: 3px!important;"></i
+                    ></a>
+                </td>
+            </tr>
+
+            {% empty %}
+            <div class="mt-2 pb-3 text-center">
+                <p class="h4">No logs are created or were matching your query.</p>
+                <p class="h4">
+                    Create a
+                    <a class="text-primary-light text-decoration-none"
+                        href="{% url 'log-create' %}"
+                        >new log</a
+                    >!
+                </p>
+            </div>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
 <script>
