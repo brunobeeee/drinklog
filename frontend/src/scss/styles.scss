@@ -14,7 +14,7 @@ body {
     padding-top: 5rem;
     padding-bottom: 5rem;
     color: $dark;
-    background-color: $light;
+    background-color: $secondary;
 }
 
 h1,
@@ -39,9 +39,7 @@ a {
     margin: 0 auto;
     max-width: 576px;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: rgba(255, 255, 255, .15)!important;
-    --webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background-color: $light;
 
     &.login {
         max-width: 350px;

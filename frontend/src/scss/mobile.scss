@@ -39,6 +39,14 @@
 
         .card-header {
             border-radius: 0 !important;
+            background: rgba($secondary, .25);
+            
+            %headings,
+            a {
+                color: $dark;
+                text-decoration: none;
+                margin-bottom: 0!important;
+            }
 
             &.banner h1 {
                 font-size: calc(2rem + 1.5vw);
