@@ -194,6 +194,13 @@ def logplot(request):
         zerolinecolor='#D2DADA',
     )
 
+    fig.update_traces(hoverlabel=dict(
+        font_size=16,
+        font_family="Helvetica Neue, Jost, sans-serif",
+    ))
+
+    fig.update_traces(hovertemplate='<b>Intensity: %{y}</b><br>%{x}<extra></extra>')
+
     bar_chart = fig.to_html(
         full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
     )
