@@ -22,9 +22,6 @@
             
         </div>
 
-        <button id="prev" onclick="shiftPlotView(-1)">←</button>
-        <button id="next" onclick="shiftPlotView(1)">→</button>
-
         <!-- Select x axis range of plot -->
         <div class="menu-v" id="menu">
             <button class="menu-btn" id="week" onclick="navigate('week')">W</button>
@@ -32,6 +29,13 @@
             <button class="menu-btn" id="year" onclick="navigate('year')">Y</button>
             <button class="menu-btn" id="all" onclick="navigate('all')">All</button>
         </div>
+
+        <button id="prev" onclick="shiftPlotView(-1)" class="button" style="position: fixed; bottom: 5px; left: 10px; z-index: 5;">
+            <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </button>
+        <button id="next" onclick="shiftPlotView(1)" class="button" style="position: fixed; bottom: 5px; right: 10px; z-index: 5;">
+            <i class="fa-solid fa-arrow-right fa-xl"></i>
+        </button>
 
         {% autoescape off %}
         <div id="plot-container">
@@ -89,12 +93,18 @@
 
 
 
+        function resetBtnStates(buttons) {
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+        }
+
+
+
         function navigate(section) {
             // Mark current button as active
             var menuBtns = document.getElementsByClassName('menu-btn');
-            for (var i = 0; i < menuBtns.length; i++) {
-                menuBtns[i].classList.remove('active');
-            }
+            resetBtnStates(menuBtns);
             document.getElementById(section).classList.add('active');
 
             // Get current date and plot-div for the calculations
@@ -125,7 +135,8 @@
                 activeSection = "year";
             }
             else {
-                codeInitiatedRelayout = true;
+                // "all" does not set codeInitiatedRelayout bc the arrow buttons have to be disablen here also
+                // codeInitiatedRelayout = true;
                 Plotly.relayout(plot, {'xaxis.autorange': true});
                 activeSection = null;
             }
@@ -196,8 +207,14 @@
 
                 if (codeInitiatedRelayout) {
                     console.log("Code initiated relayout");
+                    document.getElementById('prev').disabled = false;
+                    document.getElementById('next').disabled = false;
                 } else {
                     console.log("User initiated relayout");
+                    var menuBtns = document.getElementsByClassName('menu-btn');
+                    resetBtnStates(menuBtns);
+                    document.getElementById('prev').disabled = true;
+                    document.getElementById('next').disabled = true;
                 }
                 codeInitiatedRelayout = false;
             });
