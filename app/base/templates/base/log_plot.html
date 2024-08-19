@@ -43,8 +43,9 @@
 
 
     <script>
-        let lastXRange = [null, null];
-        let activeSection = "month";
+        let lastXRange = [null, null]; // represents the xaxis-range that the user can see right now
+        let activeSection = "month"; // null if the user changed xaxis-range by hand or if section is "all"
+        let codeInitiatedRelayout = false; // is true when a plotly_relayout event is triggered by code, else false; so we know if the user changed the xaxis-range by hand or via the buttons
 
         function displayTotalDrinks(startDate = null, endDate = null) {
             let xStart, xEnd;
@@ -105,24 +106,28 @@
                 var startDate = getMonday(today);
                 var endDate = new Date(startDate);
                 endDate.setDate(startDate.getDate() + 6);
+                codeInitiatedRelayout = true;
                 Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
                 activeSection = "week";
             }
             else if (section == 'month') {
                 var startDate = new Date(today.getFullYear(), today.getMonth(), 1);
                 var endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                codeInitiatedRelayout = true;
                 Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
                 activeSection = "month";
             } 
             else if (section == 'year') {
                 var startDate = new Date(today.getFullYear(), 0, 1);
                 var endDate = new Date(today.getFullYear(), 11, 31);
+                codeInitiatedRelayout = true;
                 Plotly.relayout(plot, 'xaxis.range', [startDate, endDate]);
                 activeSection = "year";
             }
             else {
+                codeInitiatedRelayout = true;
                 Plotly.relayout(plot, {'xaxis.autorange': true});
-                activeSection = "all";
+                activeSection = null;
             }
         }
 
@@ -148,7 +153,6 @@
                         break;
                     case 'week':
                         const diff = xEnd - xStart;
-                        console.log(diff);
                         newStart = new Date(xStart.getTime() + (diff + 24 * 60 * 60 * 1000) * direction);
                         newEnd = new Date(xEnd.getTime() + (diff + 24 * 60 * 60 * 1000) * direction);
                         break;
@@ -161,6 +165,7 @@
                     'xaxis.range': [newStart, newEnd]
                 };
 
+                codeInitiatedRelayout = true;
                 Plotly.relayout(plot, update);
             }
 
@@ -188,7 +193,13 @@
                 displayTotalDrinks(startDate, endDate);
                 // Save range for further use (mainly shiftPlotView)
                 lastXRange = [new Date(startDate), new Date(endDate)];
-                console.log(lastXRange);
+
+                if (codeInitiatedRelayout) {
+                    console.log("Code initiated relayout");
+                } else {
+                    console.log("User initiated relayout");
+                }
+                codeInitiatedRelayout = false;
             });
         });
     </script>
