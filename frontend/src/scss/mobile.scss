@@ -4,6 +4,16 @@
 
     body {
         padding: 0;
+        background: #EFF0F5;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @extend %headings !optional;
     }
 
 
@@ -13,8 +23,7 @@
         box-shadow: none;
         min-height: 100vh!important;
         max-width: unset!important;
-        --webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
+        background: transparent;
         
         &.login {
             form {
@@ -39,10 +48,32 @@
 
         .card-header {
             border-radius: 0 !important;
+            background: transparent;
+            min-height: 50px;
+            
+            %headings,
+            a {
+                color: $dark!important;
+                text-decoration: none;
+                margin-bottom: 0!important;
+                position: fixed;
+            }
+
+            a {
+                right: 16px;
+                top: 10px;
+            }
 
             &.banner h1 {
                 font-size: calc(2rem + 1.5vw);
             }
+        }
+
+        .card-body {
+            border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
+            background-color: $light;
+            box-shadow: var(--bs-box-shadow-lg);
+            z-index: 1;
         }
     }
 

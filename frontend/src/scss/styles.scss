@@ -13,6 +13,8 @@ body {
     min-height: 100vh;
     padding-top: 5rem;
     padding-bottom: 5rem;
+    color: $dark;
+    background-color: $secondary;
 }
 
 h1,
@@ -23,29 +25,18 @@ h5,
 h6 {
     @extend %headings !optional;
     font-family: "Jost", sans-serif;
-    color: $light;
 }
 
-a,
-p,
-i {
-    color: $light;
-}
 
 a {
     font-weight: 600;
 }
 
 .card {
-    &:before {
-        box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-    }
     margin: 0 auto;
     max-width: 576px;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: rgba(255, 255, 255, .15)!important;
-    --webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background-color: $light;
 
     &.login {
         max-width: 350px;
@@ -67,26 +58,26 @@ a {
             darken($primary, .1) 100%
         );
 
+        %headings,
         a {
             color: $light;
             text-decoration: none;
+            margin-bottom: 0!important;
         }
+    }
+    .banner {
+        background: transparent;
+        color: $light;
+        margin: 3rem;
+        margin-bottom: 0;
+        text-align: center;
+        flex-direction: column;
 
-        %headings {margin-bottom: 0!important;}
-
-        &.banner {
-            background: transparent;
-            margin: 3rem;
-            margin-bottom: 0;
-            text-align: center;
-            flex-direction: column;
-
-            i {
-                color: $primary;
-                box-shadow: var(--bs-box-shadow-lg);
-                margin-right: 20px;
-                margin-bottom: 30px;
-            }
+        i {
+            color: $primary;
+            box-shadow: var(--bs-box-shadow-lg);
+            margin-right: 20px;
+            margin-bottom: 30px;
         }
     }
 }
@@ -104,7 +95,7 @@ input[type="date"],
 textarea {
     color: $dark;
     background-color: $light;
-    border: 1px solid $secondary;
+    border: 1px solid rgba($dark, .5);
     border-radius: 50rem;
     padding: 2.5px 10px;
 }
@@ -116,7 +107,7 @@ input[type=range] {
     appearance: none;
     width: 100%;
     height: 10px;
-    background-color: $light;
+    background-color: rgba($dark, .25);
     cursor: pointer;
     border-radius: 10px;
     border: none;
@@ -138,7 +129,7 @@ input[type=range]::-moz-range-thumb {
 .pretty { 
     .state label {
         &::before {
-            border-color: $light;
+            border-color: rgba($dark, .5);
         }
         &::before, &::after {
             width: 20px;
@@ -193,7 +184,6 @@ input[type=range]::-moz-range-thumb {
 #menu {
     display: flex;
     justify-content: space-around;
-    border: $light 1px solid;
     border-top: none;
     border-radius: 0 0 10px 10px;
     margin: 0 .5rem .5rem .5rem;
@@ -201,7 +191,7 @@ input[type=range]::-moz-range-thumb {
     margin: 0 auto;
 
     &.menu-v {
-        border: $light 1px solid;
+        border: $dark 1px solid;
         border-right: none;
         border-radius:  .35em 0 0 .35em;
         flex-direction: column;
@@ -215,16 +205,16 @@ input[type=range]::-moz-range-thumb {
     button {
         background-color: transparent;
         border: none;
-        color: $light;
+        color: $dark;
         border-radius: .25em;
         padding: .25em;
         margin: .25em;
         &:hover, &:active {
-            background-color: rgba($secondary, .15);
+            background-color: rgba($primary, .15);
         }
     }
     .active {
-        background-color: rgba($secondary, .15);
+        background-color: rgba($primary, .15);
     }
 }
 
@@ -242,7 +232,6 @@ label {
 table td,
 table th {
     padding: 1rem!important;
-    color: $light!important;
     background: transparent!important;
 }
 
@@ -262,9 +251,10 @@ table th {
 }
 
 .button {
-    color: $light;
+    color: inherit;
     background-color: transparent;
-    border: 1px solid $secondary;
+    border: 1px solid;
+    border-color: inherit;
     margin-top: .5rem;
     margin-bottom: .5rem;
     padding: 2.5px 10px;
@@ -276,9 +266,9 @@ table th {
     }
     &[disabled] {
         cursor: not-allowed;
-        border-color: rgba($light, .25)!important;
+        border-color: rgba($dark, .25)!important;
         i {
-            color: rgba($light, .25)!important;
+            color: rgba($dark, .25)!important;
         }
     }
 }
@@ -303,4 +293,14 @@ table th {
     100% {
         opacity: 1;
     }
+}
+
+// Rounded corners border radius bar chart
+div.js-plotly-plot > div > div > svg > g.cartesianlayer > g > g.plot > g > g > g > g > path {
+    clip-path: inset(0% 0% 0% 0% round 1em 1em 0 0);
+}
+
+// Push down xaxis labels a bit
+div.js-plotly-plot g.xaxislayer-above {
+    transform: translateY(5px);
 }
