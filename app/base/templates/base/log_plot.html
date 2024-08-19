@@ -19,6 +19,7 @@
             <p class="h4">
                 <span id="total-drinks">0</span> Drinks
             </p>
+            <p id="timespan-label" class="h5"></p>
             
         </div>
 
@@ -61,10 +62,9 @@
                 xStart = new Date(startDate);
                 xEnd = new Date(endDate);
             } else {
-                const drinksData = plot.data[0];
-
-                xStart = new Date(Math.min.apply(null, drinksData.x.map(date => new Date(date))));
-                xEnd = new Date(Math.max.apply(null, drinksData.x.map(date => new Date(date))));
+                plotRange = getMaxPlotRange('plot-container');
+                xStart = plotRange[0];
+                xEnd = plotRange[1];
             }
 
             // Get data from the plot
@@ -80,6 +80,35 @@
             }
 
             document.getElementById('total-drinks').innerText = totalDrinks;
+        }
+
+
+        function displayTimespan(startDate, endDate, labelID) {
+            var label = document.getElementById(labelID);
+            let xStart = new Date(startDate);
+            let xEnd = new Date(endDate);
+
+            if (activeSection == "month") {
+                label.innerHTML = xStart.toLocaleDateString('en-gb', {year:"numeric", month:"long"});
+            } else if (activeSection == "year") {
+                label.innerHTML = xStart.toLocaleDateString('en-gb', {year:"numeric"});
+            } else {
+                const newStartDate = xStart.toLocaleDateString('en-gb', {weekday:"long", year:"numeric", month:"numeric", day:"numeric"});
+                const newEndDate = xEnd.toLocaleDateString('en-gb', {weekday:"long", year:"numeric", month:"numeric", day:"numeric"});
+                label.innerText = `${newStartDate} - ${newEndDate}`;
+            }
+        }
+
+
+
+        function getMaxPlotRange(plotContntainerID) {
+            var plot = document.getElementById(plotContntainerID).getElementsByClassName('plotly-graph-div')[0];
+            const plotData = plot.data[0];
+            
+            xStart = new Date(Math.min.apply(null, plotData.x.map(date => new Date(date))));
+            xEnd = new Date(Math.max.apply(null, plotData.x.map(date => new Date(date))));
+
+            return [xStart, xEnd];
         }
 
 
@@ -136,7 +165,7 @@
             }
             else {
                 // "all" does not set codeInitiatedRelayout bc the arrow buttons have to be disablen here also
-                // codeInitiatedRelayout = true;
+                // not doing: codeInitiatedRelayout = true;
                 Plotly.relayout(plot, {'xaxis.autorange': true});
                 activeSection = null;
             }
@@ -192,8 +221,13 @@
             navigate("month");
 
             plot.on('plotly_relayout', function(eventdata) {
-                // For whatever reason the programmed plotly_relayout event and the plotly_relayout event raised by user interaction use a different syntax to access the data. So we have to check for it
-                if ((eventdata['xaxis.autorange'] == true) || (eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]'])) {
+                // Decide how the start- & endDate are obtained from the eventdata
+                if (eventdata['xaxis.autorange'] == true) {
+                    plotRange = getMaxPlotRange('plot-container');
+                    startDate = plotRange[0];
+                    endDate = plotRange[1];
+                }
+                else if ((eventdata['xaxis.range[0]'] && eventdata['xaxis.range[1]'])) {
                     startDate = eventdata['xaxis.range[0]'];
                     endDate = eventdata['xaxis.range[1]'];
                 }
@@ -201,21 +235,24 @@
                     startDate = eventdata['xaxis.range'][0];
                     endDate = eventdata['xaxis.range'][1];
                 }
-                displayTotalDrinks(startDate, endDate);
+
                 // Save range for further use (mainly shiftPlotView)
                 lastXRange = [new Date(startDate), new Date(endDate)];
 
                 if (codeInitiatedRelayout) {
-                    console.log("Code initiated relayout");
                     document.getElementById('prev').disabled = false;
                     document.getElementById('next').disabled = false;
                 } else {
-                    console.log("User initiated relayout");
                     var menuBtns = document.getElementsByClassName('menu-btn');
                     resetBtnStates(menuBtns);
                     document.getElementById('prev').disabled = true;
                     document.getElementById('next').disabled = true;
+                    activeSection = null;
                 }
+
+                displayTotalDrinks(startDate, endDate);
+                displayTimespan(startDate, endDate, "timespan-label");
+
                 codeInitiatedRelayout = false;
             });
         });
