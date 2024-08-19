@@ -190,6 +190,8 @@ def logplot(request):
         showgrid=True,
         gridwidth=1,
         gridcolor='#D2DADA',
+        zeroline=True,
+        zerolinecolor='#D2DADA',
     )
 
     bar_chart = fig.to_html(

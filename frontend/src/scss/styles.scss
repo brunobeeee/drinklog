@@ -64,20 +64,20 @@ a {
             text-decoration: none;
             margin-bottom: 0!important;
         }
+    }
+    .banner {
+        background: transparent;
+        color: $light;
+        margin: 3rem;
+        margin-bottom: 0;
+        text-align: center;
+        flex-direction: column;
 
-        &.banner {
-            background: transparent;
-            margin: 3rem;
-            margin-bottom: 0;
-            text-align: center;
-            flex-direction: column;
-
-            i {
-                color: $primary;
-                box-shadow: var(--bs-box-shadow-lg);
-                margin-right: 20px;
-                margin-bottom: 30px;
-            }
+        i {
+            color: $primary;
+            box-shadow: var(--bs-box-shadow-lg);
+            margin-right: 20px;
+            margin-bottom: 30px;
         }
     }
 }
