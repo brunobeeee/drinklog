@@ -27,7 +27,8 @@ h6 {
 }
 
 a,
-p {
+p,
+i {
     color: $light;
 }
 
@@ -272,6 +273,13 @@ table th {
     text-decoration: none;
     &:hover, &:active {
         background-color: rgba($secondary, .15);
+    }
+    &[disabled] {
+        cursor: not-allowed;
+        border-color: rgba($light, .25)!important;
+        i {
+            color: rgba($light, .25)!important;
+        }
     }
 }
 
