@@ -160,9 +160,7 @@ def logplot(request):
     df = df[df["user"] == current_user]
 
     # Add color column with black color when overdrive==True
-    df["color"] = df["overdrive"].apply(
-        lambda x: 'black' if x else 'yellow'
-    )
+    df["color"] = df["overdrive"].apply(lambda x: "black" if x else "yellow")
 
     # Creation of the plot
     fig = px.bar(
@@ -172,7 +170,7 @@ def logplot(request):
         title="",
         labels={"intensity": "Intensity", "date": "Date"},
         color="color",
-        color_discrete_map={'black': '#090B0B', 'yellow': '#D78F09'},
+        color_discrete_map={"black": "#090B0B", "yellow": "#D78F09"},
     )
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
@@ -189,17 +187,19 @@ def logplot(request):
     fig.update_yaxes(
         showgrid=True,
         gridwidth=1,
-        gridcolor='#D2DADA',
+        gridcolor="#D2DADA",
         zeroline=True,
-        zerolinecolor='#D2DADA',
+        zerolinecolor="#D2DADA",
     )
 
-    fig.update_traces(hoverlabel=dict(
-        font_size=16,
-        font_family="Helvetica Neue, Jost, sans-serif",
-    ))
+    fig.update_traces(
+        hoverlabel=dict(
+            font_size=16,
+            font_family="Helvetica Neue, Jost, sans-serif",
+        )
+    )
 
-    fig.update_traces(hovertemplate='<b>Intensity: %{y}</b><br>%{x}<extra></extra>')
+    fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
 
     bar_chart = fig.to_html(
         full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
