@@ -4,7 +4,6 @@ from datetime import date, datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objs as go
 from django import forms
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -161,42 +160,39 @@ def logplot(request):
     df = df[df["user"] == current_user]
 
     # Add color column with black color when overdrive==True
-    df["color"] = df.apply(
-        lambda row: 0 if row["overdrive"] else row["intensity"], axis=1
+    df["color"] = df["overdrive"].apply(
+        lambda x: 'black' if x else 'yellow'
     )
 
     # Creation of the plot
-    fig_bar = px.bar(
+    fig = px.bar(
         df,
         x="date",
         y="intensity",
         title="",
         labels={"intensity": "Intensity", "date": "Date"},
-        color=df["color"],
-        color_continuous_scale=[
-            "black",
-            "#00B86B",
-            "#36AE53",
-            "#6CA43A",
-            "#A29A22",
-            "#D78F09",
-            "#D57016",
-            "#D25122",
-            "#D0322F",
-            "#CD133B",
-        ],
+        color="color",
+        color_discrete_map={'black': '#090B0B', 'yellow': '#D78F09'},
     )
-    fig_bar.update_layout(
+    fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font_color="white",
+        font_color="#090B0B",
         title_font_family="Jost",
         coloraxis_showscale=False,
         xaxis_title=None,
         yaxis_title=None,
+        showlegend=False,
+        margin=dict(l=0, r=30, t=20, b=100),
     )
 
-    bar_chart = fig_bar.to_html(
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='#D2DADA',
+    )
+
+    bar_chart = fig.to_html(
         full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
     )
 

@@ -39,12 +39,12 @@
         </form>
         
         {% if logs|length > 0 %}
-        <a class="d-flex ms-1 text-decoration-none" href="{% url 'log-plot' %}">
+        <a class="d-flex ms-1 text-decoration-none text-dark" href="{% url 'log-plot' %}">
             Show Plot
             <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
         </a>
 
-        <a class="d-flex me-1 text-decoration-none" href="{% url 'log-create' %}"
+        <a class="d-flex me-1 text-decoration-none text-dark" href="{% url 'log-create' %}"
         ><i class="fa-solid fa-plus fa-2xl m-auto"></i
         ></a>
         {% endif %}
