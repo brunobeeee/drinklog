@@ -10,13 +10,13 @@
         </div>
 
         {% if request.user.is_authenticated %}
-        <a class="d-flex ms-auto" href="{% url 'logout' %}"
+        <a class="d-flex ms-auto" href="{% url 'logout' %}" style="top: 24px;"
             ><i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i
         ></a>
         {% else %} <a href="{% url 'login' %}">Login</a> {% endif %}
     </div>
 
-    <div class="card-body">
+    <div class="card-body p-0">
         <div id="search-add-wrapper">
             <form method="GET" class="d-flex">
                 <div class="input-group d-flex">
@@ -71,7 +71,7 @@
                 <td>{{log.intensity}}</td>
                 <td>
                     {% if log.overdrive %}
-                    <i class="fa-solid fa-check fa-lg text-danger"></i> {% else %}
+                    <i class="fa-solid fa-check fa-lg text-primary"></i> {% else %}
                     <i class="fa-solid fa-xmark fa-lg"></i> {% endif %}
                 </td>
                 <td style="vertical-align: middle">

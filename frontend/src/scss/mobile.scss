@@ -4,6 +4,7 @@
 
     body {
         padding: 0;
+        background: rgba($secondary, .5);
     }
 
     h1,
@@ -22,8 +23,7 @@
         box-shadow: none;
         min-height: 100vh!important;
         max-width: unset!important;
-        background: rgba($secondary, .5);
-        z-index: -2;
+        background: transparent;
         
         &.login {
             form {
@@ -53,16 +53,15 @@
             
             %headings,
             a {
-                color: $dark;
+                color: $dark!important;
                 text-decoration: none;
                 margin-bottom: 0!important;
                 position: fixed;
-                z-index: -2;
             }
 
             a {
                 right: 16px;
-                top: 24px;
+                top: 10px;
             }
 
             &.banner h1 {
@@ -73,6 +72,8 @@
         .card-body {
             border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
             background-color: $light;
+            box-shadow: var(--bs-box-shadow-lg);
+            z-index: 1;
         }
     }
 
