@@ -195,7 +195,7 @@ def logplot(request):
     fig.update_traces(
         hoverlabel=dict(
             font_size=16,
-            font_family="Helvetica Neue, Jost, sans-serif",
+            font_family="Montserrat, Jost, sans-serif",
         )
     )
 
