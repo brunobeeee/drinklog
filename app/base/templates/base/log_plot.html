@@ -69,25 +69,18 @@
 
             let totalDrinks = 0;
 
-            // The plot data is split into two lists; one for each color
-            // We have to count both lists
-            let drinksData = plot.data[0];
+            // The plot data is split into multiple lists; one for each color
             // Iterate over data and count the drinks inside the timeframe
-            for (let i = 0; i < drinksData.x.length; i++) {
-                const entryDate = new Date(drinksData.x[i]);
-                if (entryDate >= xStart && entryDate <= xEnd) {
-                    totalDrinks += drinksData.y[i];
+            for (let i = 0; i < plot.data.length; i++) {
+                for (let j = 0; j < plot.data[i].x.length; j++) {
+                    const entryDate = new Date(plot.data[i].x[j]);
+
+                    if (entryDate >= xStart && entryDate <= xEnd) {
+                        totalDrinks += plot.data[i].y[j];
+                    }
                 }
             }
 
-            drinksData = plot.data[1];
-            // Iterate over data and count the drinks inside the timeframe
-            for (let i = 0; i < drinksData.x.length; i++) {
-                const entryDate = new Date(drinksData.x[i]);
-                if (entryDate >= xStart && entryDate <= xEnd) {
-                    totalDrinks += drinksData.y[i];
-                }
-            }
 
             document.getElementById('total-drinks').innerText = totalDrinks;
         }
@@ -118,10 +111,17 @@
 
         function getMaxPlotRange(plotContntainerID) {
             var plot = document.getElementById(plotContntainerID).getElementsByClassName('plotly-graph-div')[0];
-            const plotData = plot.data[0];
-            
-            xStart = new Date(Math.min.apply(null, plotData.x.map(date => new Date(date))));
-            xEnd = new Date(Math.max.apply(null, plotData.x.map(date => new Date(date))));
+
+            let allDates = [];
+            for (let i = 0; i < plot.data.length; i++) {
+                let dates = plot.data[i].x.map(date => new Date(date));
+                allDates = allDates.concat(dates);
+            }
+
+            xStart = new Date(Math.min.apply(null, allDates));
+            xEnd = new Date(Math.max.apply(null, allDates));
+
+            console.log(xStart)
 
             return [xStart, xEnd];
         }
