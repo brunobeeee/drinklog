@@ -34,10 +34,10 @@
             
             <!-- Select x axis range of plot -->
             <div class="menu-v" id="menu">
-                <button class="menu-btn" id="week" onclick="navigate('week')">W</button>
-                <button class="menu-btn" id="month" onclick="navigate('month')">M</button>
-                <button class="menu-btn" id="year" onclick="navigate('year')">Y</button>
-                <button class="menu-btn" id="all" onclick="navigate('all')">All</button>
+                <button class="menu-btn" id="week" onclick="renderPlot('week')">W</button>
+                <button class="menu-btn" id="month" onclick="renderPlot('month')">M</button>
+                <button class="menu-btn" id="year" onclick="renderPlot('year')">Y</button>
+                <button class="menu-btn" id="all" onclick="renderPlot('all')">All</button>
             </div>
 
             <div id="plot-container">
@@ -53,9 +53,11 @@
         let lastXRange = [null, null]; // represents the xaxis-range that the user can see right now
         let activeSection = "month"; // null if the user changed xaxis-range by hand or if section is "all"
         let codeInitiatedRelayout = false; // is true when a plotly_relayout event is triggered by code, else false; so we know if the user changed the xaxis-range by hand or via the buttons
+
         var plot = document.getElementById('plot-container');
         var plotData = {{ plot | safe }};
         var plotYearData = {{ plot_year | safe }};
+        var plotConfig = { displayModeBar: false };
 
         function displayTotalDrinks(startDate = null, endDate = null) {
             let xStart, xEnd;
@@ -147,6 +149,28 @@
 
 
 
+        async function renderPlot(section) {
+            try {
+                // "user navigates away from year section"
+                if (section != 'year') {
+                    await Plotly.purge('plot-container');
+                    plot = await Plotly.newPlot('plot-container', plotData.data, plotData.layout, plotConfig);
+                }
+                // "user navigates to the year section"
+                else {
+                    await Plotly.purge('plot-container');
+                    plot = await Plotly.newPlot('plot-container', plotYearData.data, plotYearData.layout, plotConfig);
+                }
+                listenOnRelayout(plot);
+                navigate(section);
+
+            } catch (error) {
+                console.error('Error whilst rendering the plot:', error);
+            }
+        }
+
+
+
         function navigate(section) {
             // Mark current button as active
             var menuBtns = document.getElementsByClassName('menu-btn');
@@ -228,14 +252,8 @@
 
 
 
-        document.addEventListener('DOMContentLoaded', function () {
-            // Render plot
-            Plotly.newPlot('plot-container', plotData.data, plotData.layout, {displayModeBar: false});
-            // A reference is stored globally in `var plot`
-
-            // Trigger the calculation of diplayTotalDrinks()
-            navigate("month");
-
+        // Create a listener on the plot that includes all the logic when the plot gets relayouted
+        function listenOnRelayout(plot) {
             plot.on('plotly_relayout', function(eventdata) {
                 // Decide how the start- & endDate are obtained from the eventdata
                 if (eventdata['xaxis.autorange'] == true) {
@@ -271,6 +289,13 @@
 
                 codeInitiatedRelayout = false;
             });
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Render the default section
+            renderPlot("month");
         });
     </script>
 {% endblock content %}
