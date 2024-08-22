@@ -212,8 +212,12 @@ def logplot(request):
 
     fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
 
+
+    df2 = px.data.iris()  # Example data for second plot
+    fig2 = px.scatter(df2, x='sepal_width', y='sepal_length', title='Plot 2')
+
     plot = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    plot_year = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    plot_year = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
 
     context = {
         'plot': plot,
