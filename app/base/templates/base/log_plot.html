@@ -15,10 +15,22 @@
         </div>
 
         <div class="card-body">
-            <label class="h4 mb-0">
-                <span id="total-drinks" class="text-primary">0</span> Drinks
-            </label>
-            <label id="timespan-label" class="text-muted"></label>
+            <div class="row">
+                <div class="col-9">
+                    <label class="h4 mb-0 p-0">
+                        <span id="total-drinks" class="text-primary">0</span> Drinks
+                    </label>
+                    <label id="timespan-label" class="text-muted"></label>
+                </div>
+                <div class="col-3 d-flex justify-content-end">
+                    <button id="prev" onclick="shiftPlotView(-1)" class="button" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-right-width: .5px; max-height: 40px;">
+                        <i class="fa-solid fa-arrow-left fa-xl"></i>
+                    </button>
+                    <button id="next" onclick="shiftPlotView(1)" class="button" style="border-top-left-radius: 0; border-bottom-left-radius: 0; border-left-width: .5px; max-height: 40px;">
+                        <i class="fa-solid fa-arrow-right fa-xl"></i>
+                    </button>        
+                </div>
+            </div>
             
             <!-- Select x axis range of plot -->
             <div class="menu-v" id="menu">
@@ -27,13 +39,6 @@
                 <button class="menu-btn" id="year" onclick="navigate('year')">Y</button>
                 <button class="menu-btn" id="all" onclick="navigate('all')">All</button>
             </div>
-
-            <button id="prev" onclick="shiftPlotView(-1)" class="button" style="position: absolute; bottom: 5px; left: 10px; z-index: 5;">
-                <i class="fa-solid fa-arrow-left fa-xl"></i>
-            </button>
-            <button id="next" onclick="shiftPlotView(1)" class="button" style="position: absolute; bottom: 5px; right: 10px; z-index: 5;">
-                <i class="fa-solid fa-arrow-right fa-xl"></i>
-            </button>
 
             {% autoescape off %}
             <div id="plot-container">
