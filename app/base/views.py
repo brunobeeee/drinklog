@@ -1,7 +1,7 @@
 import calendar
 import json
-from datetime import date, datetime, timedelta
 import random
+from datetime import date, datetime, timedelta
 
 import pandas as pd
 import plotly.express as px
@@ -64,19 +64,17 @@ class LogList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["search_query"] = self.request.GET.get(
-            "search-area", ""
-        )
+        context["search_query"] = self.request.GET.get("search-area", "")
 
         # Choose a random icon for the overdrive col
         icons = [
-            'fa-person-falling-burst',
-            'fa-skull',
-            'fa-skull-crossbones',
-            'fa-bolt'
+            "fa-person-falling-burst",
+            "fa-skull",
+            "fa-skull-crossbones",
+            "fa-bolt",
         ]
 
-        context['random_icon'] = random.choice(icons)
+        context["random_icon"] = random.choice(icons)
 
         return context
 
