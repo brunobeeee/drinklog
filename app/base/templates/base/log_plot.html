@@ -160,6 +160,7 @@
                 else {
                     await Plotly.purge('plot-container');
                     plot = await Plotly.newPlot('plot-container', plotYearData.data, plotYearData.layout, plotConfig);
+                    console.log(plotYearData);
                 }
                 listenOnRelayout(plot);
                 navigate(section);

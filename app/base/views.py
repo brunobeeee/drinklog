@@ -4,6 +4,7 @@ import random
 from datetime import date, datetime, timedelta
 
 import pandas as pd
+import numpy as np
 import plotly
 import plotly.express as px
 from django import forms
@@ -167,9 +168,14 @@ def logplot(request):
             "overdrive": overdrives,
         }
     )
+
     # Filter for current user
     df = df[df["user"] == current_user]
 
+    # Deepcopy df for later use in year section
+    df_year = df.copy(deep=True)
+    df_year = df_year.drop(columns=['user'])
+    
     # Add color column with black color when overdrive==True
     df["color"] = df["overdrive"].apply(lambda x: "black" if x else "yellow")
 
@@ -213,8 +219,58 @@ def logplot(request):
     fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
 
 
-    df2 = px.data.iris()  # Example data for second plot
-    fig2 = px.scatter(df2, x='sepal_width', y='sepal_length', title='Plot 2')
+    df_year['date'] = pd.to_datetime(df_year['date'])
+    df_year.set_index('date', inplace=True)
+
+    monthly_avg = df_year.resample('M').apply(lambda x: x.fillna(0).mean())
+    monthly_avg = monthly_avg[['intensity']]
+    monthly_avg = df_year.resample('M').mean()
+    monthly_avg['date'] = monthly_avg.index
+
+    monthly_avg['date'] = monthly_avg['date'].dt.strftime('%Y-%m')
+    
+    print(monthly_avg)
+
+    fig2 = px.bar(
+        monthly_avg,
+        x="date",
+        y="intensity",
+        title="",
+        labels={"intensity": "Intensity", "date": "Date"},
+    )
+
+    fig2.update_traces(marker_color='blue')
+
+    fig2.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font_color="#090B0B",
+        title_font_family="Jost",
+        coloraxis_showscale=False,
+        xaxis_title=None,
+        yaxis_title=None,
+        showlegend=False,
+        margin=dict(l=0, r=30, t=20, b=100),
+    )
+
+    fig2.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor="#D2DADA",
+        zeroline=True,
+        zerolinecolor="#D2DADA",
+    )
+
+    fig2.update_traces(
+        hoverlabel=dict(
+            font_size=16,
+            font_family="Montserrat, Jost, sans-serif",
+        )
+    )
+
+    fig2.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
+
+
 
     plot = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     plot_year = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
