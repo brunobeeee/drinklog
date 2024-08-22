@@ -4,6 +4,7 @@ import random
 from datetime import date, datetime, timedelta
 
 import pandas as pd
+import plotly
 import plotly.express as px
 from django import forms
 from django.contrib.auth import login
@@ -211,12 +212,12 @@ def logplot(request):
 
     fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
 
-    bar_chart = fig.to_html(
-        full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
-    )
+    plot = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    plot_year = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render(
-        request,
-        "base/log_plot.html",
-        {"bar_chart": bar_chart},
-    )
+    context = {
+        'plot': plot,
+        'plot_year': plot_year,
+    }
+
+    return render(request, "base/log_plot.html", context)

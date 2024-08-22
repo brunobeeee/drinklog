@@ -40,11 +40,8 @@
                 <button class="menu-btn" id="all" onclick="navigate('all')">All</button>
             </div>
 
-            {% autoescape off %}
             <div id="plot-container">
-                {{ bar_chart }}
             </div>
-            {% endautoescape %}
 
         </div>
 
@@ -56,10 +53,12 @@
         let lastXRange = [null, null]; // represents the xaxis-range that the user can see right now
         let activeSection = "month"; // null if the user changed xaxis-range by hand or if section is "all"
         let codeInitiatedRelayout = false; // is true when a plotly_relayout event is triggered by code, else false; so we know if the user changed the xaxis-range by hand or via the buttons
+        var plot = document.getElementById('plot-container');
+        var plotData = {{ plot | safe }};
+        var plotYearData = {{ plot_year | safe }};
 
         function displayTotalDrinks(startDate = null, endDate = null) {
             let xStart, xEnd;
-            var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
             
             // If start- & endDate are given use them
             // Else use the first and last Date in the plot data
@@ -115,8 +114,6 @@
 
 
         function getMaxPlotRange(plotContntainerID) {
-            var plot = document.getElementById(plotContntainerID).getElementsByClassName('plotly-graph-div')[0];
-
             let allDates = [];
             for (let i = 0; i < plot.data.length; i++) {
                 let dates = plot.data[i].x.map(date => new Date(date));
@@ -158,7 +155,6 @@
 
             // Get current date and plot-div for the calculations
             var today = new Date();
-            var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
 
             // Calculate startDate & endDate for each section and relayout the plot
             if (section == 'week') {
@@ -194,7 +190,6 @@
 
         function shiftPlotView(direction) {
             if (lastXRange[0] && lastXRange[1]) {
-                var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
 
                 const xStart = lastXRange[0];
                 const xEnd = lastXRange[1];
@@ -234,8 +229,9 @@
 
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Add a listener for the relayout event to calculate the total drinks in that timeframe
-            var plot = document.getElementById('plot-container').getElementsByClassName('plotly-graph-div')[0];
+            // Render plot
+            Plotly.newPlot('plot-container', plotData.data, plotData.layout, {displayModeBar: false});
+            // A reference is stored globally in `var plot`
 
             // Trigger the calculation of diplayTotalDrinks()
             navigate("month");
