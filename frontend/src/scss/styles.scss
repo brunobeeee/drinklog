@@ -1,15 +1,18 @@
 @import "./abstracts/variables";
 @import "~/node_modules/bootstrap/scss/bootstrap";
 @import '~/node_modules/pretty-checkbox/src/pretty-checkbox';
-// Jost Font
+
+// Fonts
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
     --bs-card-inner-border-radius: 10rem!important;
 }
 
 body {
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
     min-height: 100vh;
     padding-top: 5rem;
     padding-bottom: 5rem;
@@ -164,7 +167,7 @@ input[type=range]::-moz-range-thumb {
     .input-group {
         color: $dark;
         background-color: $light;
-        border: 1px solid $secondary;
+        border: 1px solid rgba($dark, .5);
         border-radius: var(--bs-border-radius-pill);
 
         button {
@@ -229,14 +232,19 @@ label {
     opacity: 0.5;
 }
 
-table td,
-table th {
-    padding: 1rem!important;
-    background: transparent!important;
-}
-
 .card-table {
     margin-bottom: 0;
+
+
+    th, td {
+        padding: 1rem!important;
+        background: transparent!important;
+    }
+
+    th {
+        padding-bottom: .25rem!important;
+    }
+
     tr:last-child {
         td {
             border-width: 0;
