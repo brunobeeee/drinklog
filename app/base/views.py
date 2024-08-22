@@ -1,5 +1,6 @@
 import calendar
 import json
+import random
 from datetime import date, datetime, timedelta
 
 import pandas as pd
@@ -63,9 +64,18 @@ class LogList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["search_query"] = self.request.GET.get(
-            "search-area", ""
-        )  # Suchtext an das Template übergeben
+        context["search_query"] = self.request.GET.get("search-area", "")
+
+        # Choose a random icon for the overdrive col
+        icons = [
+            "fa-person-falling-burst",
+            "fa-skull",
+            "fa-skull-crossbones",
+            "fa-bolt",
+        ]
+
+        context["random_icon"] = random.choice(icons)
+
         return context
 
 
@@ -195,7 +205,7 @@ def logplot(request):
     fig.update_traces(
         hoverlabel=dict(
             font_size=16,
-            font_family="Helvetica Neue, Jost, sans-serif",
+            font_family="Montserrat, Jost, sans-serif",
         )
     )
 

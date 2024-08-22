@@ -57,9 +57,9 @@
         {% if logs|length > 0 %}
         <table id="loglist" class="table card-table">
             <thead>
-                <th>Date</th>
-                <th>Intensity</th>
-                <th>Overdrive</th>
+                <th><i class="fa-solid fa-calendar-day"></i> Date</th>
+                <th><i class="fa-solid fa-martini-glass-citrus"></i> <span class="hide-on-mobile">Intensity</span></th>
+                <th class="text-center text-sm-start"><i class="fa-solid fa-gauge-simple-high"></i> <span class="hide-on-mobile">Overdrive</span></th>
                 <th></th>
             </thead>
             {% endif %} {% for log in logs %}
@@ -69,10 +69,12 @@
             >
                 <td>{{log.date|date:"d.m.Y"}}</td>
                 <td>{{log.intensity}}</td>
-                <td>
+                <td class="text-center text-sm-start">
                     {% if log.overdrive %}
-                    <i class="fa-solid fa-check fa-lg text-primary"></i> {% else %}
-                    <i class="fa-solid fa-xmark fa-lg"></i> {% endif %}
+                            <i class="fa-solid {{ random_icon }} fa-lg text-primary"></i>
+                    {% else %}
+                        <i class="fa-solid fa-xmark fa-lg"></i>
+                    {% endif %}
                 </td>
                 <td style="vertical-align: middle">
                     <a
