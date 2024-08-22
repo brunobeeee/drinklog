@@ -3,7 +3,9 @@ import json
 import random
 from datetime import date, datetime, timedelta
 
+import numpy as np
 import pandas as pd
+import plotly
 import plotly.express as px
 from django import forms
 from django.contrib.auth import login
@@ -166,13 +168,14 @@ def logplot(request):
             "overdrive": overdrives,
         }
     )
+
     # Filter for current user
     df = df[df["user"] == current_user]
 
     # Add color column with black color when overdrive==True
     df["color"] = df["overdrive"].apply(lambda x: "black" if x else "yellow")
 
-    # Creation of the plot
+    # Normal plot
     fig = px.bar(
         df,
         x="date",
@@ -182,6 +185,70 @@ def logplot(request):
         color="color",
         color_discrete_map={"black": "#090B0B", "yellow": "#D78F09"},
     )
+    pre_format_fig(fig)
+    fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
+
+    fig.update_xaxes(
+        tickformat="%b %d",  # '%b' for short month names
+    )
+
+    # Year-section plot
+    df["date"] = pd.to_datetime(df["date"])
+
+    min_date = df["date"].min()
+    max_date = df["date"].max()
+
+    # Create a df with all dates in the years touched by the df
+    date_range = pd.date_range(
+        start=min_date.replace(month=1, day=1),
+        end=max_date.replace(month=12, day=31),
+        freq="D",
+    )
+    full_df = pd.DataFrame(date_range, columns=["date"])
+
+    # Merge dates
+    full_df = pd.merge(full_df, df, on="date", how="left")
+
+    # Fill 'intensity' with 0
+    full_df["intensity"].fillna(0, inplace=True)
+
+    # Create plot
+    fig2 = px.histogram(
+        full_df,
+        x="date",
+        y="intensity",
+        histfunc="avg",
+        title="",
+        nbins=12,
+    )
+    pre_format_fig(fig2)
+    fig2.update_layout(bargap=0.1)
+
+    fig2.update_traces(
+        xbins_size="M1",
+        marker_color="#D78F09",
+        hovertemplate="<b>Avg Intensity: %{y}</b><extra></extra>",
+    )
+
+    fig2.update_xaxes(
+        tickformat="%b",  # '%b' for short month names
+        dtick="M1",  # show a tick for every month
+        tick0="2000-01-15",  # places the ticklabels in the middle of the month
+    )
+
+    # Serialize plots
+    plot = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    plot_year = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
+
+    context = {
+        "plot": plot,
+        "plot_year": plot_year,
+    }
+
+    return render(request, "base/log_plot.html", context)
+
+
+def pre_format_fig(fig):
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
@@ -191,7 +258,7 @@ def logplot(request):
         xaxis_title=None,
         yaxis_title=None,
         showlegend=False,
-        margin=dict(l=0, r=30, t=20, b=100),
+        margin=dict(l=0, r=30, t=20, b=30),
     )
 
     fig.update_yaxes(
@@ -207,16 +274,4 @@ def logplot(request):
             font_size=16,
             font_family="Montserrat, Jost, sans-serif",
         )
-    )
-
-    fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
-
-    bar_chart = fig.to_html(
-        full_html=False, include_plotlyjs=False, config={"displayModeBar": False}
-    )
-
-    return render(
-        request,
-        "base/log_plot.html",
-        {"bar_chart": bar_chart},
     )
