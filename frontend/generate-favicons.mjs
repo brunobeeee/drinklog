@@ -12,8 +12,8 @@ const configuration = {
   appName: "drinklog",
   appDescription: "A habit tracker for tracking water intake",
   lang: "en-US",
-  background: "#FBFCFF",
-  theme_color: "#FBFCFF",
+  background: "#E6E8F0",
+  theme_color: "#E6E8F0",
   start_url: "/",
   shortcuts: [
     // Your applications's Shortcuts (see: https://developer.mozilla.org/docs/Web/Manifest/shortcuts)
