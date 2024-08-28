@@ -13,7 +13,7 @@ const configuration = {
   appDescription: "A habit tracker for tracking water intake",
   lang: "en-US",
   background: "#FBFCFF",
-  theme_color: "#D78F09",
+  theme_color: "#FBFCFF",
   start_url: "/",
   shortcuts: [
     // Your applications's Shortcuts (see: https://developer.mozilla.org/docs/Web/Manifest/shortcuts)
