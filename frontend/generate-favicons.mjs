@@ -10,7 +10,28 @@ const htmlBasename = "index.html"; // HTML file basename.
 const configuration = {
   path: "static/favicons",
   appName: "drinklog",
-  appDescription: "A habit tracker for tracking water intake.",
+  appDescription: "A habit tracker for tracking water intake",
+  lang: "en-US",
+  background: "#FBFCFF",
+  theme_color: "#D78F09",
+  start_url: "/",
+  shortcuts: [
+    // Your applications's Shortcuts (see: https://developer.mozilla.org/docs/Web/Manifest/shortcuts)
+    {
+      name: "Create new log",
+      short_name: "new",
+      description: "Create a new drinklog",
+      url: "/log-create",
+      icon: "./src/favicon.svg",
+    },
+    {
+      name: "View plot",
+      short_name: "plot",
+      description: "View the plot of your logs",
+      url: "/log-plot",
+      icon: "./src/favicon.svg",
+    },
+  ],
 };
 
 // Below is the processing.
