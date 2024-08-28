@@ -14,6 +14,7 @@ const configuration = {
   lang: "en-US",
   background: "#E6E8F0",
   theme_color: "#E6E8F0",
+  appleStatusBarStyle: "default",
   start_url: "/",
   shortcuts: [
     // Your applications's Shortcuts (see: https://developer.mozilla.org/docs/Web/Manifest/shortcuts)
