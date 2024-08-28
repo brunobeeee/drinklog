@@ -210,7 +210,7 @@ def logplot(request):
     full_df = pd.merge(full_df, df, on="date", how="left")
 
     # Fill 'intensity' with 0
-    full_df["intensity"].fillna(0, inplace=True)
+    full_df.fillna({"intensity": 0}, inplace=True)
 
     # Create plot
     fig2 = px.histogram(
