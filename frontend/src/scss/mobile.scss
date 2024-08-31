@@ -72,7 +72,7 @@
         .card-body {
             border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
             background-color: $light;
-            box-shadow: var(--bs-box-shadow-lg);
+            box-shadow: var(--bs-box-shadow-sm);
             z-index: 1;
         }
     }
