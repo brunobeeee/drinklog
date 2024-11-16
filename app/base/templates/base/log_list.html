@@ -1,59 +1,51 @@
 {% extends 'base/main.html' %} {% block content %}
 
 <div class="card">
-    <div class="card-header">
-        <div>
-            <h1 class="m-0">
-                <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
-                Drinklog
-            </h1>
+    <div class="card-header" style="min-height: 105px;">
+        <div class="row mb-3">
+            <div class="col-11">
+                <h1 class="m-0">
+                    <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
+                    Drinklog
+                </h1>
+            </div>
+            <div class="col-1 pt-2 ps-2">
+                <a href="{% url 'logout' %}">
+                    <i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i>
+                </a>
+            </div>
         </div>
 
-        {% if request.user.is_authenticated %}
-        <a class="d-flex ms-auto" href="{% url 'logout' %}" style="top: 24px;"
-            ><i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i
-        ></a>
-        {% else %} <a href="{% url 'login' %}">Login</a> {% endif %}
+        <div class="row mb-3">
+            <div class="col-12 ps-2 pe-3" id="search-add-wrapper">
+                <form method="GET" class="d-flex">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            name="search-area"
+                            id="search-input"
+                            class="form-control"
+                            placeholder="Search your log dates"
+                            value="{{ search_query }}"
+                        />
+                        
+                        {% if search_query %}
+                            <button class="btn" onclick="document.getElementById('search-input').value = ''">
+                                <i class="fa fa-xmark"></i>
+                            </button>
+                        {% endif %}
+                        <button class="btn" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
     </div>
 
-    <div class="card-body p-0">
-        <div id="search-add-wrapper">
-            <form method="GET" class="d-flex">
-                <div class="input-group d-flex">
-                    <input
-                        type="text"
-                        name="search-area"
-                        id="search-input"
-                        placeholder="Search your log dates"
-                        value="{{ search_query }}"
-                    />
-                    
-                    {% if search_query %}
-                        <button class="btn" onclick="document.getElementById('search-input').value = ''">
-                            <i class="fa fa-xmark"></i>
-                        </button>
-                    {% endif %}
-                    <button class="btn" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </form>
-            
-            {% if logs|length > 0 %}
-            <a class="d-flex ms-1 text-decoration-none" href="{% url 'log-plot' %}">
-                Show Plot
-                <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
-            </a>
-
-            <a class="d-flex me-1 text-decoration-none" href="{% url 'log-create' %}"
-            ><i class="fa-solid fa-plus fa-2xl m-auto"></i
-            ></a>
-            {% endif %}
-
-
-        </div>
-
-
+    <div class="card-body p-0 pb-5">
+        
         {% if logs|length > 0 %}
         <table id="loglist" class="table card-table">
             <thead>
@@ -98,13 +90,9 @@
             </div>
             {% endfor %}
         </table>
+
     </div>
 </div>
 
-<script>
-    
-
-    
-</script>
-
+{% include "components/quick_menu.html"%}
 {% endblock content %}
