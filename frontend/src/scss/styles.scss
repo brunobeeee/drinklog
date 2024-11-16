@@ -104,7 +104,7 @@ textarea {
     color: $dark;
     background-color: $light;
     border: 1px solid rgba($dark, .5);
-    border-radius: .5rem;
+    border-radius: .65rem;
     padding: 2.5px 10px;
 }
 
@@ -163,7 +163,7 @@ input[type=range]::-moz-range-thumb {
     .input-group {
         color: $dark;
         background-color: $light;
-        border: 1px solid rgba($dark, .5);
+        box-shadow: var(--bs-box-shadow);
         border-radius: var(--bs-border-radius-pill);
 
         button {
@@ -221,7 +221,7 @@ input[type=range]::-moz-range-thumb {
 .quick-menu {
     z-index: 10;
     position: fixed;
-    width: 75%;
+    width: 100%;
     bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
@@ -265,7 +265,7 @@ input[type=range]::-moz-range-thumb {
         font-size: 12px;
         position: absolute;
         left: 50%;
-        bottom: 22px;
+        bottom: 21px;
         margin-left: 20px; /* move pill to the right */
         &:hover {
             background-color: darken($secondary, 10%);
