@@ -23,7 +23,7 @@
         box-shadow: none;
         min-height: 100vh!important;
         max-width: unset!important;
-        background: transparent;
+        background-color: transparent;
         
         &.login {
             form {
@@ -31,7 +31,6 @@
                 margin-left: auto;
                 margin-right: auto;
                 padding: 1rem;
-                border: 1px $light solid;
                 border-radius: 1rem;
             }
 
@@ -50,7 +49,12 @@
             border-radius: 0 !important;
             background: transparent;
             min-height: 50px;
-            
+
+            #search-add-wrapper {
+                position: fixed;
+                top: 55px;
+            }
+
             %headings,
             a {
                 color: $dark!important;

@@ -45,9 +45,11 @@ a {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     background-color: $light;
 
-    &.login {
+    &.card-login {
         max-width: 350px;
         padding: .5rem;
+        background-color: transparent;
+        box-shadow: none;
 
         input[type="text"],
         input[type="password"] {
@@ -56,7 +58,6 @@ a {
     }
     
     .card-header {
-        display: flex !important;
         border: none !important;
         background: linear-gradient(
             90deg,
@@ -103,7 +104,7 @@ textarea {
     color: $dark;
     background-color: $light;
     border: 1px solid rgba($dark, .5);
-    border-radius: 50rem;
+    border-radius: .5rem;
     padding: 2.5px 10px;
 }
 
@@ -149,21 +150,12 @@ input[type=range]::-moz-range-thumb {
 }
 
 #search-add-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    
+
     form {
-        width: 50%;
+        width: 100%;
     }
 
     input#search-input {
-        flex: auto;
-        width: 1%;
-        border-radius: var(--bs-border-radius-pill) 0 0 var(--bs-border-radius-pill);
         background-color: transparent;
         border: none;
     }
@@ -222,6 +214,62 @@ input[type=range]::-moz-range-thumb {
     }
     .active {
         background-color: rgba($primary, .15);
+    }
+}
+
+// Hovering menu on the bottom
+.quick-menu {
+    z-index: 10;
+    position: fixed;
+    width: 75%;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+
+    .menu-link {
+        text-decoration: none;
+        color: white;
+        box-shadow: var(--bs-box-shadow);
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .circle-link {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        color: $light;
+        background-color: $primary;
+        font-size: 18px;
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        transform: translateX(-50%);
+        z-index: 2;
+        &:hover {
+            background-color: darken($primary, 10%);
+        }
+    }
+    
+    .pill-link {
+        padding: 10px 20px;
+        border-radius: 0 25px 25px 0;
+        color: $dark;
+        background-color: darken($secondary, .25);
+        font-size: 12px;
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        margin-left: 20px; /* move pill to the right */
+        &:hover {
+            background-color: darken($secondary, 10%);
+        }
     }
 }
 
