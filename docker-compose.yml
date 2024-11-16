@@ -5,7 +5,7 @@ services:
     container_name: drinklog-frontend-dev
     image: node:lts-alpine3.19
     working_dir: /frontend
-    entrypoint: /bin/sh -c "npm install --no-update-notifier --no-fund && npm run dev"
+    entrypoint: /bin/sh -c "npm install --no-update-notifier --no-fund && npx update-browserslist-db@latest && npm run dev"
     volumes:
       - ./frontend:/frontend
 
