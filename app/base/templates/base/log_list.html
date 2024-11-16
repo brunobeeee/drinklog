@@ -2,16 +2,17 @@
 
 <div class="card">
     <div class="card-header" style="min-height: 105px;">
-        <div class="row mb-3">
-            <div class="col-11">
+        <div class="row">
+            <div class="col-6">
                 <h1 class="m-0">
                     <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
-                    Drinklog
+                    Drinklog 
                 </h1>
             </div>
-            <div class="col-1 pt-2 ps-2">
-                <a href="{% url 'logout' %}">
-                    <i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i>
+            <div class="col-6">
+                <a href="{% url 'logout' %}" style="margin-top: 4px;">
+                    Hi, <strong>{{ username }}</strong>👋🏻
+                    <!--<i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i>-->
                 </a>
             </div>
         </div>
