@@ -4,8 +4,8 @@
 FROM python:3.12.2-alpine AS builder
 
 # Set environment variables to prevent caching
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
