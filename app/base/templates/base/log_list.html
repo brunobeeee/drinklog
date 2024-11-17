@@ -1,46 +1,50 @@
 {% extends 'base/main.html' %} {% block content %}
 
-<div class="row mt-5 mb-2 px-2">
-    <a href="{% url 'logout' %}" class="h1 ms-1">
-        Welcome, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
-    </a>
-</div>
+<div class="dashboard-wrapper">
 
-<div class="row d-none mb-4">
-    <div class="col-12" id="search-wrapper" style="padding-left: .6rem; padding-right: .6rem;">
+    <div class="greeting">
+        <a href="{% url 'logout' %}" class="h1">
+            Welcome, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
+        </a>
+    </div>
 
-        <form method="GET" class="d-flex">
-            <input
-                type="text"
-                name="search-area"
-                id="search-input"
-                class="form-control"
-                placeholder="Search your log dates"
-                value="{{ search_query }}"
-            />
-            
-            {% if search_query %}
-                <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
-                    <i class="fa-regular fa-circle-xmark"></i>
+    <div class="row d-none mb-4">
+        <div class="col-12" id="search-wrapper" style="padding-left: .6rem; padding-right: .6rem;">
+
+            <form method="GET" class="d-flex">
+                <input
+                    type="text"
+                    name="search-area"
+                    id="search-input"
+                    class="form-control"
+                    placeholder="Search your log dates"
+                    value="{{ search_query }}"
+                />
+                
+                {% if search_query %}
+                    <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </button>
+                {% endif %}
+                <button class="btn search-submit" type="submit">
+                    <i class="fa fa-search"></i>
                 </button>
-            {% endif %}
-            <button class="btn search-submit" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
+            </form>
 
-    </div>
-</div>
-
-<div class="insight-wrapper">
-    <div class="insight-card">
-        <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
-        <h3><strong>8</strong> days since your last entry</h3>
+        </div>
     </div>
 
-    <div class="insight-card">
-        <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
-        <h3><strong>8</strong> days since your last entry</h3>
+    <div class="insight-wrapper">
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
+            <h3><strong>8</strong> days since your last entry</h3>
+        </div>
+
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-gauge-simple-high"></i> Average</p>
+            <h3><strong>8</strong> drinks last week</h3>
+            <h3><strong>26</strong> drinks last month</h3>
+        </div>
     </div>
 </div>
 
@@ -48,9 +52,12 @@
 <div class="card">
     <div class="card-body" style="padding: .75rem; padding-bottom: 100px;">
 
-        <h1 class="ps-1">
-            <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i> Drinklog 
-        </h1>
+        <div class="d-flex">
+            <h4 class="text-muted mt-auto ps-1">Your logs</h4>
+            <h1 class="ms-auto mb-2">
+                <i class="fa-solid fa-sm fa-beer-mug-empty" style="transform: translateY(.5px) scaleX(-1);"></i>Drinklog 
+            </h1>
+        </div>
         
         {% if logs|length > 0 %}
         <table id="loglist" class="table card-table">

@@ -65,13 +65,6 @@
                 font-size: calc(2rem + 1.5vw);
             }
         }
-
-        .card-body {
-            border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
-            background-color: $light;
-            box-shadow: var(--bs-box-shadow-sm);
-            z-index: 1;
-        }
     }
 
 

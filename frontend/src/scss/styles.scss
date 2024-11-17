@@ -11,7 +11,7 @@
 }
 
 html {
-    background-color: $background;
+    background-color: $card-background;
 }
 
 body {
@@ -40,16 +40,33 @@ a {
     text-decoration: none;
 }
 
+.dashboard-wrapper {
+    color: $light;
+    background-color: $background;
+    padding: 2rem 1rem 1rem 1rem;
+    border-bottom-left-radius: $card-border-radius;
+    border-bottom-right-radius: $card-border-radius;
+
+    .greeting {
+        margin-left: .25rem;
+        margin-bottom: 1rem;
+    }
+}
+
 .insight-wrapper {
     .insight-card {
         color: $primary-text;
-        padding: 15px;
-        margin: .5rem .7rem;
-        border-radius: $card-border-radius;
+        margin-bottom: .7rem;
+        padding: 1rem 1.5rem;
+        border-radius: 1.5rem; // $card-border-radius - padding
         overflow: hidden;
 
-        > div {
-            z-index: 1;
+        > p {
+            margin-bottom: .75rem;
+        }
+
+        > *:last-child {
+            margin-bottom: 0;
         }
 
         &:nth-child(1) {
@@ -61,13 +78,15 @@ a {
         &:nth-child(3) {
             background-color: $tertiary;
         }
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 
 .card {
     margin: 0 auto;
     max-width: 576px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 
     &.card-login {
         max-width: 350px;
@@ -285,15 +304,15 @@ input[type=range]::-moz-range-thumb {
     .pill-link {
         padding: 10px 20px;
         border-radius: 0 25px 25px 0;
-        color: $dark;
-        background-color: darken($secondary, .25);
+        color: $light;
+        background-color: $dark;
         font-size: 12px;
         position: absolute;
         left: 50%;
         bottom: 21px;
         margin-left: 20px; /* move pill to the right */
         &:hover {
-            background-color: darken($secondary, 10%);
+            background-color: lighten($dark, 10%);
         }
     }
 }
@@ -320,6 +339,12 @@ label {
 
     th {
         padding-bottom: .25rem!important;
+    }
+
+    tr:first-child {
+        td {
+            border-top-width: 1px;
+        }
     }
 
     tr:last-child {

@@ -6,14 +6,15 @@ $danger: #EA1F4B;
 $muted: #F8F7F2;
 $light: #FFFFFF;
 $dark: #272727;
-$background: #F1EEE5;
+$background: $dark;
 
 $primary-text: $dark;
 $primary-icon: #EBC95C;
 
 
-$card-border-radius: 1rem;
+$card-border-radius: 2.5rem;
 $card-border-width: 0;
 $card-inner-border-radius: 1rem;
+$card-background: #F1EEE5;
 
 $table-border-color: rgba($dark, .25)
