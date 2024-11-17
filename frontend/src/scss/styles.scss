@@ -152,22 +152,12 @@ input[type=range]::-moz-range-thumb {
 #search-add-wrapper {
 
     form {
-        width: 100%;
-    }
-
-    input#search-input {
-        background-color: transparent;
-        border: none;
-        border-radius: var(--bs-border-radius-pill);
-        width: 100%;
-    }
-
-    .input-group {
         color: $dark;
         background-color: $light;
         box-shadow: var(--bs-box-shadow);
         border-radius: var(--bs-border-radius-pill);
         min-height: 35px;
+        width: 100%;
 
         button {
             z-index: 5;
@@ -177,14 +167,21 @@ input[type=range]::-moz-range-thumb {
                 background-color: $secondary;
             }
             &.search-clear {
-                right: 25px;
+                right: 40px;
             }
             &.search-submit {
-                right: 2px;
+                right: 17px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }
         }
+    }
+
+    input#search-input {
+        background-color: transparent;
+        border: none;
+        border-radius: var(--bs-border-radius-pill);
+        width: 100%;
     }
 }
 
