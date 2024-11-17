@@ -18,7 +18,6 @@
 
     .card {
         margin: 0;
-        padding-top: 300px; // create space for the fixed header
         border-radius: 0 !important;
         box-shadow: none;
         min-height: 100vh!important;
@@ -55,16 +54,11 @@
             left: 0;
             width: 100%;
 
-
-            %headings,
-            a {
-                text-decoration: none;
-            }
-
             a {
                 right: 16px;
                 top: 14px;
                 color: inherit;
+                text-decoration: none;
             }
 
             &.banner h1 {

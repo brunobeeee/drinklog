@@ -1,60 +1,61 @@
 {% extends 'base/main.html' %} {% block content %}
 
-<div class="card">
-    <div class="card-header" style="min-height: 300px;">
-        <div class="row mb-2">
-            <div class="col-6">
-                <h1 class="fw-semibold m-0">
-                    <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
-                    Drinklog 
-                </h1>
-            </div>
-            <div class="col-6 d-flex align-items-center justify-content-end">
-                <a href="{% url 'logout' %}">
-                    Hi, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
-                </a>
-            </div>
+<div class="fixed-wrapper">
+
+    <div class="row mb-2">
+        <div class="col-6">
+            <h1 class="fw-semibold m-0">
+                <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
+                Drinklog 
+            </h1>
         </div>
-
-        <div class="row mb-5">
-            <div class="col-12 ps-2 pe-3" id="search-wrapper">
-
-                <form method="GET" class="d-flex">
-                    <input
-                        type="text"
-                        name="search-area"
-                        id="search-input"
-                        class="form-control"
-                        placeholder="Search your log dates"
-                        value="{{ search_query }}"
-                    />
-                    
-                    {% if search_query %}
-                        <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
-                            <i class="fa-regular fa-circle-xmark"></i>
-                        </button>
-                    {% endif %}
-                    <button class="btn search-submit" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <h1><i class="fa-solid fa-martini-glass-citrus"></i> Drinks</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h3>Last week: <strong>8</strong></h3>
-                <h3>Last month: <strong>26</strong></h3>
-            </div>
+        <div class="col-6 d-flex align-items-center justify-content-end">
+            <a href="{% url 'logout' %}">
+                Hi, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
+            </a>
         </div>
     </div>
 
+    <div class="row mb-4">
+        <div class="col-12" id="search-wrapper" style="padding-left: .6rem; padding-right: .6rem;">
+
+            <form method="GET" class="d-flex">
+                <input
+                    type="text"
+                    name="search-area"
+                    id="search-input"
+                    class="form-control"
+                    placeholder="Search your log dates"
+                    value="{{ search_query }}"
+                />
+                
+                {% if search_query %}
+                    <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </button>
+                {% endif %}
+                <button class="btn search-submit" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="insight-wrapper">
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
+            <h3><strong>8</strong> days since your last entry</h3>
+        </div>
+
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
+            <h3><strong>8</strong> days since your last entry</h3>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 500px; background-color: transparent;">
     <div class="card-body" style="padding: .75rem; padding-bottom: 100px;">
         
         {% if logs|length > 0 %}

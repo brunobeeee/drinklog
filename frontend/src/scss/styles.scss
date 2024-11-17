@@ -11,7 +11,7 @@
 }
 
 html {
-    background-color: $secondary;
+    background-color: $background;
 }
 
 body {
@@ -21,7 +21,6 @@ body {
     padding-top: 5rem;
     padding-bottom: 5rem;
     color: $dark;
-    background-color: $background;
 }
 
 h1,
@@ -37,6 +36,48 @@ h6 {
 
 a {
     font-weight: 600;
+}
+
+.fixed-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 576px;
+    padding: .5rem .7rem;
+
+    color: $primary-text;
+
+    a {
+        right: 16px;
+        top: 14px;
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+.insight-wrapper {
+    .insight-card {
+        color: $primary-text;
+        padding: 15px;
+        margin-bottom: 1.5rem;
+        border-radius: $card-border-radius;
+        overflow: hidden;
+
+        > div {
+            z-index: 1;
+        }
+
+        &:nth-child(1) {
+            background-color: $primary;
+        }
+        &:nth-child(2) {
+            background-color: $secondary;
+        }
+        &:nth-child(3) {
+            background-color: $tertiary;
+        }
+    }
 }
 
 .card {
@@ -169,10 +210,10 @@ input[type=range]::-moz-range-thumb {
                 background-color: $secondary;
             }
             &.search-clear {
-                right: 45px;
+                right: 40px;
             }
             &.search-submit {
-                right: 20px;
+                right: 15px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }
@@ -246,7 +287,7 @@ input[type=range]::-moz-range-thumb {
         height: 60px;
         border-radius: 50%;
         color: $light;
-        background-color: $primary;
+        background-color: $primary-icon;
         font-size: 18px;
         position: absolute;
         left: 50%;
@@ -254,7 +295,7 @@ input[type=range]::-moz-range-thumb {
         transform: translateX(-50%);
         z-index: 2;
         &:hover {
-            background-color: darken($primary, 10%);
+            background-color: darken($primary-icon, 10%);
         }
     }
     
