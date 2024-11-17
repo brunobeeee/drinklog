@@ -21,6 +21,7 @@ body {
     padding-top: 5rem;
     padding-bottom: 5rem;
     color: $dark;
+    background-color: transparent;
 }
 
 h1,
@@ -36,6 +37,22 @@ h6 {
 
 a {
     font-weight: 600;
+}
+
+header {
+    color: $primary-text;
+    background-color: $background;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    a {
+        text-decoration: none;
+    }
 }
 
 .fixed-wrapper {

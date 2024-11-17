@@ -1,22 +1,21 @@
 {% extends 'base/main.html' %} {% block content %}
 
+<header>
+    <a href="{% url 'logs' %}" class="fw-semibold h1 m-0">
+        <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
+        Drinklog 
+    </a>
+</header>
+
 <div class="fixed-wrapper">
 
-    <div class="row mb-2">
-        <div class="col-6">
-            <h1 class="fw-semibold m-0">
-                <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
-                Drinklog 
-            </h1>
-        </div>
-        <div class="col-6 d-flex align-items-center justify-content-end">
-            <a href="{% url 'logout' %}">
-                Hi, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
-            </a>
-        </div>
+    <div class="row mt-5 mb-2">
+        <a href="{% url 'logout' %}" class="h1">
+            Welcome, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
+        </a>
     </div>
 
-    <div class="row mb-4">
+    <div class="row d-none mb-4">
         <div class="col-12" id="search-wrapper" style="padding-left: .6rem; padding-right: .6rem;">
 
             <form method="GET" class="d-flex">
