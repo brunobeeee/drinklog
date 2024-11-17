@@ -4,7 +4,7 @@
 
     body {
         padding: 0;
-        background: $secondary;
+        background: $primary;
     }
 
     h1,
@@ -46,7 +46,7 @@
         }
 
         .card-header {
-            color: $dark;
+            color: $primary-text;
             background: transparent;
             min-height: 50px;
             border-radius: 0 !important;

@@ -1,10 +1,12 @@
-$primary: #D78F09;
+$primary: #DAB16A;
 $secondary: #E6E8F0;
 $warning: #E3CE78;
 $danger: #EA1F4B;
 $muted: #D2DADA;
 $light: #FBFCFF;
 $dark: #1C2222;
+
+$primary-text: darken($primary, 45%);
 
 $card-border-radius: 1rem;
 $card-border-width: 0;
