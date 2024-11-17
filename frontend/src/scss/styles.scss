@@ -21,7 +21,7 @@ body {
     padding-top: 5rem;
     padding-bottom: 5rem;
     color: $dark;
-    background-color: $secondary;
+    background-color: $background;
 }
 
 h1,
@@ -66,11 +66,6 @@ a {
             darken($primary, .1) 50%,
             darken($primary, .1) 100%
         );
-
-        %headings,
-        a {
-            margin-bottom: 0!important;
-        }
     }
     .banner {
         background: transparent;
@@ -151,37 +146,39 @@ input[type=range]::-moz-range-thumb {
 #search-wrapper {
 
     form {
-        color: $dark;
-        background-color: $light;
-        box-shadow: var(--bs-box-shadow);
+        color: $primary-text;
+        background-color: transparent;
+        border: 1px $primary-text solid;
         border-radius: var(--bs-border-radius-pill);
         min-height: 35px;
         width: 100%;
 
+        input#search-input {
+            background-color: transparent;
+            border: none;
+            border-radius: inherit;
+        }
+
         button {
+            color: inherit;
             z-index: 5;
             border: none!important;
             position: absolute;
+            padding-top: 5px;
             &:hover {
                 background-color: $secondary;
             }
             &.search-clear {
-                right: 40px;
+                right: 45px;
             }
             &.search-submit {
-                right: 17px;
+                right: 20px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }
         }
     }
 
-    input#search-input {
-        background-color: transparent;
-        border: none;
-        border-radius: var(--bs-border-radius-pill);
-        width: 100%;
-    }
 }
 
 #menu {

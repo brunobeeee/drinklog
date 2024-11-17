@@ -4,7 +4,6 @@
 
     body {
         padding: 0;
-        background: $primary;
     }
 
     h1,
@@ -19,6 +18,7 @@
 
     .card {
         margin: 0;
+        padding-top: 300px; // create space for the fixed header
         border-radius: 0 !important;
         box-shadow: none;
         min-height: 100vh!important;
@@ -50,17 +50,15 @@
             background: transparent;
             min-height: 50px;
             border-radius: 0 !important;
-
-            #search-wrapper {
-                position: fixed;
-                top: 55px;
-            }
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
 
 
             %headings,
             a {
                 text-decoration: none;
-                position: fixed;
             }
 
             a {
