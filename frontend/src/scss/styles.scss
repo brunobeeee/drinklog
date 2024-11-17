@@ -159,6 +159,7 @@ input[type=range]::-moz-range-thumb {
         background-color: transparent;
         border: none;
         border-radius: var(--bs-border-radius-pill);
+        width: 100%;
     }
 
     .input-group {
@@ -166,14 +167,20 @@ input[type=range]::-moz-range-thumb {
         background-color: $light;
         box-shadow: var(--bs-box-shadow);
         border-radius: var(--bs-border-radius-pill);
+        min-height: 35px;
 
         button {
             z-index: 5;
             border: none!important;
+            position: absolute;
             &:hover {
                 background-color: $secondary;
             }
-            &:last-child {
+            &.search-clear {
+                right: 25px;
+            }
+            &.search-submit {
+                right: 2px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }

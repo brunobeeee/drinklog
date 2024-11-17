@@ -31,11 +31,11 @@
                         />
                         
                         {% if search_query %}
-                            <button class="btn" onclick="document.getElementById('search-input').value = ''">
-                                <i class="fa fa-xmark"></i>
+                            <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
+                                <i class="fa-regular fa-circle-xmark"></i>
                             </button>
                         {% endif %}
-                        <button class="btn" type="submit">
+                        <button class="btn search-submit" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
