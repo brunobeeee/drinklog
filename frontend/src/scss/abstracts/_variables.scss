@@ -1,14 +1,16 @@
-$primary: #DAB16A;
-$secondary: #E6E8F0;
+$primary: #EFD47F;
+$secondary: #A69CFF;
+$tertiary: #BECBB3;
 $warning: #E3CE78;
 $danger: #EA1F4B;
 $muted: #D2DADA;
 $light: #FBFCFF;
-$dark: #081221;
+$dark: #272727;
+$background: #F6F6EF;
 
-$primary-text: darken($primary, 50%);
+$primary-text: $dark;
+$primary-icon: #EBC95C;
 
-$background: #DEE9F7;
 
 $card-border-radius: 1rem;
 $card-border-width: 0;
