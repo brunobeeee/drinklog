@@ -67,7 +67,7 @@ class LogList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["search_query"] = self.request.GET.get("search-area", "")
-        context['username'] = self.request.user.username
+        context["username"] = self.request.user.username
 
         # Choose a random icon for the overdrive col
         icons = [
