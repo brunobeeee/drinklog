@@ -158,6 +158,7 @@ input[type=range]::-moz-range-thumb {
     input#search-input {
         background-color: transparent;
         border: none;
+        border-radius: var(--bs-border-radius-pill);
     }
 
     .input-group {
