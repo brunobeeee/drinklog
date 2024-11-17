@@ -46,9 +46,10 @@
         }
 
         .card-header {
-            border-radius: 0 !important;
+            color: $dark;
             background: transparent;
             min-height: 50px;
+            border-radius: 0 !important;
 
             #search-wrapper {
                 position: fixed;
@@ -58,15 +59,14 @@
 
             %headings,
             a {
-                color: $dark!important;
                 text-decoration: none;
-                margin-bottom: 0!important;
                 position: fixed;
             }
 
             a {
                 right: 16px;
-                top: 10px;
+                top: 14px;
+                color: inherit;
             }
 
             &.banner h1 {

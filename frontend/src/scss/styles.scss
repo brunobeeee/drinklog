@@ -58,6 +58,7 @@ a {
     }
     
     .card-header {
+        color: $light;
         border: none !important;
         background: linear-gradient(
             90deg,
@@ -68,8 +69,6 @@ a {
 
         %headings,
         a {
-            color: $light;
-            text-decoration: none;
             margin-bottom: 0!important;
         }
     }
