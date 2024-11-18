@@ -248,7 +248,8 @@ input[type=range]::-moz-range-thumb {
 
 .search-wrapper {
     width: 100%;
-    margin: 25px;
+    max-width: 576px;
+    padding: 25px;
     position: relative;
 
     form {
@@ -256,7 +257,7 @@ input[type=range]::-moz-range-thumb {
         background-color: $light;
         box-shadow: var(--bs-box-shadow-sm);
         border-radius: var(--bs-border-radius-pill);
-        min-height: 40px;
+        height: 35px;
 
         input#search-input {
             background-color: transparent;
@@ -273,11 +274,8 @@ input[type=range]::-moz-range-thumb {
             &:hover {
                 background-color: $secondary;
             }
-            &.search-clear {
-                right: 30px;
-            }
             &.search-submit {
-                right: 5px;
+                right: 24px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }
@@ -288,12 +286,6 @@ input[type=range]::-moz-range-thumb {
 
 .search-overlay.active {
     display: flex;
-}
-
-#search-wrapper {
-
-    
-
 }
 
 #menu {
