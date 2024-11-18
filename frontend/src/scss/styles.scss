@@ -10,6 +10,11 @@
     --bs-card-inner-border-radius: 10rem!important;
 }
 
+header {
+    padding: .5rem;
+    min-height: 50px;
+}
+
 body {
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
@@ -33,7 +38,7 @@ h6 {
 .logo {
     font-family: "Jost", sans-serif;
     i {
-        transform: translateY(.5px) scaleX(-1);
+        transform: translateY(.3px) scaleX(-1);
     }
 }
 
@@ -44,6 +49,7 @@ a {
 }
 
 .dashboard-wrapper {
+    margin-bottom: 1rem;
     padding: 2rem .75rem .75rem .75rem;
 
     .greeting {
@@ -54,7 +60,7 @@ a {
 
 .insight-wrapper {
     .insight-card {
-        color: $primary-text;
+        color: $dark;
         margin-bottom: .7rem;
         padding: 1rem 1.5rem;
         border-radius: 1.5rem; // $card-border-radius - padding
@@ -111,6 +117,15 @@ a {
 
 
 
+.content-wrapper {
+    @extend .log-wrapper;
+    min-height: calc(100vh - 50px);
+
+    #total-drinks {
+        color: $primary-text;
+    }
+}
+
 .card {
     margin: 0 auto;
     max-width: 576px;
@@ -146,7 +161,7 @@ a {
         flex-direction: column;
 
         i {
-            color: $primary;
+            color: $primary-icon;
             box-shadow: var(--bs-box-shadow-lg);
             margin-right: 20px;
             margin-bottom: 30px;
@@ -216,9 +231,9 @@ input[type=range]::-moz-range-thumb {
 #search-wrapper {
 
     form {
-        color: $primary-text;
+        color: $dark;
         background-color: transparent;
-        border: 1px $primary-text solid;
+        border: 1px $dark solid;
         border-radius: var(--bs-border-radius-pill);
         min-height: 35px;
         width: 100%;
@@ -280,11 +295,13 @@ input[type=range]::-moz-range-thumb {
         padding: .25em;
         margin: .25em;
         &:hover, &:active {
-            background-color: rgba($primary, .15);
+            color: $light;
+            background-color: $primary-icon;
         }
     }
     .active {
-        background-color: rgba($primary, .15);
+        color: $light;
+        background-color: $primary-icon;
     }
 }
 

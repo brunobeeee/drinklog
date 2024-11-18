@@ -184,7 +184,7 @@ def logplot(request):
         title="",
         labels={"intensity": "Intensity", "date": "Date"},
         color="color",
-        color_discrete_map={"black": "#090B0B", "yellow": "#D78F09"},
+        color_discrete_map={"black": "#272727", "yellow": "#C8C2FF"},
     )
     pre_format_fig(fig)
     fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
@@ -227,7 +227,7 @@ def logplot(request):
 
     fig2.update_traces(
         xbins_size="M1",
-        marker_color="#D78F09",
+        marker_color="#C8C2FF",
         hovertemplate="<b>Avg Intensity: %{y}</b><extra></extra>",
     )
 
