@@ -7,7 +7,6 @@ from .views import (CustomLoginView, DeleteView, LogCreate, LogList, LogUpdate,
 urlpatterns = [
     path("login/", CustomLoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
-    path("register/", RegisterPage.as_view(), name="register"),
     path("", LogList.as_view(), name="logs"),
     path("log-create/", LogCreate.as_view(), name="log-create"),
     path("log-update/<int:pk>/", LogUpdate.as_view(), name="log-update"),
