@@ -6,47 +6,45 @@
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
 
-    <div class="card">
-        <div class="card-header">
-            <a class="h1" href="{% url 'logs' %}">
-                <i class="fa-solid fa-arrow-left"></i>
-                Go Back
-            </a>
+    <header>
+        <a class="h1" href="{% url 'logs' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+            Your Plot
+        </a>
+    </header>
+
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-9">
+                <label class="h4 mb-0 p-0 ps-1">
+                    <span id="total-drinks">0</span> Drinks
+                </label>
+                <label id="timespan-label" class="text-muted"></label>
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+                <button id="prev" onclick="shiftPlotView(-1)" class="button" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-right-width: 0; max-height: 40px;">
+                    <i class="fa-solid fa-arrow-left fa-xl"></i>
+                </button>
+                <button id="next" onclick="shiftPlotView(1)" class="button" style="border-top-left-radius: 0; border-bottom-left-radius: 0; max-height: 40px;">
+                    <i class="fa-solid fa-arrow-right fa-xl"></i>
+                </button>        
+            </div>
         </div>
-
-        <div class="card-body">
-            <div class="row">
-                <div class="col-9">
-                    <label class="h4 mb-0 p-0">
-                        <span id="total-drinks" class="text-primary">0</span> Drinks
-                    </label>
-                    <label id="timespan-label" class="text-muted"></label>
-                </div>
-                <div class="col-3 d-flex justify-content-end">
-                    <button id="prev" onclick="shiftPlotView(-1)" class="button" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-right-width: .5px; max-height: 40px;">
-                        <i class="fa-solid fa-arrow-left fa-xl"></i>
-                    </button>
-                    <button id="next" onclick="shiftPlotView(1)" class="button" style="border-top-left-radius: 0; border-bottom-left-radius: 0; border-left-width: .5px; max-height: 40px;">
-                        <i class="fa-solid fa-arrow-right fa-xl"></i>
-                    </button>        
-                </div>
-            </div>
-            
-            <!-- Select x axis range of plot -->
-            <div class="menu-v" id="menu">
-                <button class="menu-btn" id="week" onclick="renderPlot('week')">W</button>
-                <button class="menu-btn" id="month" onclick="renderPlot('month')">M</button>
-                <button class="menu-btn" id="year" onclick="renderPlot('year')">Y</button>
-                <button class="menu-btn" id="all" onclick="renderPlot('all')">All</button>
-            </div>
-
-            <div id="plot-container">
-            </div>
-
-        </div>
-
         
+        <!-- Select x axis range of plot -->
+        <div class="menu-v" id="menu">
+            <button class="menu-btn" id="week" onclick="renderPlot('week')">W</button>
+            <button class="menu-btn" id="month" onclick="renderPlot('month')">M</button>
+            <button class="menu-btn" id="year" onclick="renderPlot('year')">Y</button>
+            <button class="menu-btn" id="all" onclick="renderPlot('all')">All</button>
+        </div>
+
+        <div id="plot-container">
+        </div>
     </div>
+
+    {% include "components/quick_menu.html"%}
 
 
     <script>

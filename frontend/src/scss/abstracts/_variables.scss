@@ -1,13 +1,21 @@
-$primary: #D78F09;
-$secondary: #E6E8F0;
-$warning: #E3CE78;
-$danger: #EA1F4B;
-$muted: #D2DADA;
-$light: #FBFCFF;
-$dark: #1C2222;
+$primary: #EFD47F;
+$secondary: #C8C2FF;
+$tertiary: #BECBB3;
+$info: #84C2EB;
+$warning: $primary;
+$danger: #C51B29;
+$muted: #F8F7F2;
+$light: #FFFFFF;
+$dark: #272727;
+$background: #F6F6EF;
 
-$card-border-radius: 1rem;
+$primary-text: #E6BD37;
+$primary-icon: #EBC95C;
+
+
+$card-border-radius: 2.5rem;
 $card-border-width: 0;
 $card-inner-border-radius: 1rem;
+$card-background: #F1EEE5;
 
 $table-border-color: rgba($dark, .25)

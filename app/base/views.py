@@ -12,8 +12,10 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
@@ -30,24 +32,6 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("logs")
-
-
-class RegisterPage(FormView):
-    template_name = "base/register.html"
-    form_class = UserCreationForm
-    redirect_authenticated_user = True
-    success_url = reverse_lazy("logs")
-
-    def form_valid(self, form):
-        user = form.save()
-        if user is not None:
-            login(self.request, user)
-        return super(RegisterPage, self).form_valid(form)
-
-    def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect("logs")
-        return super(RegisterPage, self).get(*args, **kwargs)
 
 
 class LogList(LoginRequiredMixin, ListView):
@@ -68,6 +52,7 @@ class LogList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["search_query"] = self.request.GET.get("search-area", "")
         context["username"] = self.request.user.username
+        context["show_pill_links"] = True
 
         # Choose a random icon for the overdrive col
         icons = [
@@ -78,6 +63,35 @@ class LogList(LoginRequiredMixin, ListView):
         ]
 
         context["random_icon"] = random.choice(icons)
+
+        # Calculate #days since last log
+        latest_log = self.get_queryset().first()
+        if latest_log and latest_log.intensity > 0:
+            days_since_last_log = (timezone.now().date() - latest_log.date).days
+            context["days_since_last_log"] = days_since_last_log
+        else:
+            context["days_since_last_log"] = None
+
+        # Sum all intensities of last week/month
+        today = timezone.now().date()
+        week_ago = today - timedelta(days=7)
+        month_ago = today - timedelta(days=30)
+
+        week_intensity_sum = (
+            self.get_queryset()
+            .filter(date__gte=week_ago)
+            .aggregate(Sum("intensity"))["intensity__sum"]
+            or 0
+        )
+        month_intensity_sum = (
+            self.get_queryset()
+            .filter(date__gte=month_ago)
+            .aggregate(Sum("intensity"))["intensity__sum"]
+            or 0
+        )
+
+        context["week_intensity_sum"] = week_intensity_sum
+        context["month_intensity_sum"] = month_intensity_sum
 
         return context
 
@@ -127,8 +141,8 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields["date"].disabled = True
-        form.fields["date"].widget.attrs["readonly"] = True
+        form.fields["date"].disabled = False
+        form.fields["date"].widget.attrs["readonly"] = False
         form.fields["date"].widget = forms.DateInput(
             attrs={"type": "date", "readonly": "readonly"}
         )
@@ -184,7 +198,7 @@ def logplot(request):
         title="",
         labels={"intensity": "Intensity", "date": "Date"},
         color="color",
-        color_discrete_map={"black": "#090B0B", "yellow": "#D78F09"},
+        color_discrete_map={"black": "#272727", "yellow": "#C8C2FF"},
     )
     pre_format_fig(fig)
     fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
@@ -227,7 +241,7 @@ def logplot(request):
 
     fig2.update_traces(
         xbins_size="M1",
-        marker_color="#D78F09",
+        marker_color="#C8C2FF",
         hovertemplate="<b>Avg Intensity: %{y}</b><extra></extra>",
     )
 

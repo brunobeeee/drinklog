@@ -1,98 +1,203 @@
 {% extends 'base/main.html' %} {% block content %}
 
-<div class="card">
-    <div class="card-header" style="min-height: 105px;">
-        <div class="row">
-            <div class="col-6">
-                <h1 class="m-0">
-                    <i class="fa-solid fa-beer-mug-empty fa-flip-horizontal"></i>
-                    Drinklog 
-                </h1>
-            </div>
-            <div class="col-6">
-                <a href="{% url 'logout' %}" style="margin-top: 4px;">
-                    Hi, <strong>{{ username }}</strong>👋🏻
-                    <!--<i class="fa-solid fa-xl fa-arrow-right-from-bracket m-auto"></i>-->
-                </a>
-            </div>
-        </div>
+<div class="dashboard-wrapper">
 
-        <div class="row mb-3">
-            <div class="col-12 ps-2 pe-3" id="search-wrapper">
+    <div class="greeting">
+        <a href="{% url 'logout' %}" class="h1">
+            Welcome, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
+        </a>
+    </div>
 
-                <form method="GET" class="d-flex">
-                    <input
-                        type="text"
-                        name="search-area"
-                        id="search-input"
-                        class="form-control"
-                        placeholder="Search your log dates"
-                        value="{{ search_query }}"
-                    />
-                    
-                    {% if search_query %}
-                        <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
-                            <i class="fa-regular fa-circle-xmark"></i>
-                        </button>
-                    {% endif %}
-                    <button class="btn search-submit" type="submit">
-                        <i class="fa fa-search"></i>
+    <div class="row d-none mb-4">
+        <div class="col-12" id="search-wrapper" style="padding-left: .6rem; padding-right: .6rem;">
+
+            <form method="GET" class="d-flex">
+                <input
+                    type="text"
+                    name="search-area"
+                    id="search-input"
+                    class="form-control"
+                    placeholder="Search your log dates"
+                    value="{{ search_query }}"
+                />
+                
+                {% if search_query %}
+                    <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
+                        <i class="fa-regular fa-circle-xmark"></i>
                     </button>
-                </form>
+                {% endif %}
+                <button class="btn search-submit" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
 
-            </div>
         </div>
     </div>
 
-    <div class="card-body" style="padding: .75rem; padding-bottom: 100px;">
-        
-        {% if logs|length > 0 %}
-        <table id="loglist" class="table card-table">
-            <thead>
-                <th><i class="fa-solid fa-calendar-day"></i> Date</th>
-                <th><i class="fa-solid fa-martini-glass-citrus"></i> <span class="hide-on-mobile">Intensity</span></th>
-                <th class="text-center text-sm-start"><i class="fa-solid fa-gauge-simple-high"></i> <span class="hide-on-mobile">Overdrive</span></th>
-                <th></th>
-            </thead>
-            {% endif %} {% for log in logs %}
-            <tr
-                onclick="window.location='{% url 'log-update' log.id %}';"
-                style="cursor: pointer"
-            >
-                <td>{{log.date|date:"d.m.Y"}}</td>
-                <td>{{log.intensity}}</td>
-                <td class="text-center text-sm-start">
-                    {% if log.overdrive %}
-                            <i class="fa-solid {{ random_icon }} fa-lg text-primary"></i>
-                    {% else %}
-                        <i class="fa-solid fa-xmark fa-lg"></i>
-                    {% endif %}
-                </td>
-                <td style="vertical-align: middle">
-                    <a
-                        class="d-flex text-decoration-none"
-                        href="{% url 'log-delete' log.id %}"
-                        ><i class="fa-regular fa-trash-can text-dark fa-md m-auto" style="margin-right: 3px!important;"></i
-                    ></a>
-                </td>
-            </tr>
+    <div class="insight-wrapper">
 
-            {% empty %}
-            <div class="mt-2 pb-3 text-center">
-                <p class="h4">No logs are created or were matching your query.</p>
-                <p class="h4">
-                    Create a
-                    <a class="text-primary-light text-decoration-none"
-                        href="{% url 'log-create' %}"
-                        >new log</a
-                    >!
-                </p>
-            </div>
-            {% endfor %}
-        </table>
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-gauge-simple-high"></i> Average</p>
+            <h3><strong>{{ week_intensity_sum }}</strong> weekly drinks <span class="text-muted fw-normal">(last 7 days)</span></h3>
+            {% if week_intensity_sum != month_intensity_sum %}
+            <h3><strong>{{ month_intensity_sum }}</strong> monthly drinks <span class="text-muted fw-normal">(last 31 days)</span></h3>
+            {% endif %}
+        </div>
 
+        {% if days_since_last_log > 3 %}
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
+            <h3><strong>{{ days_since_last_log }}</strong> days since your last entry</h3>
+        </div>
+        {% endif %}
     </div>
 </div>
+
+
+
+<div class="log-wrapper">
+    <div class="d-flex">
+        <h4 class="mt-auto ms-2">Your logs</h4>
+        <h1 class="logo ms-auto mb-1 me-2">
+            <i class="fa-solid fa-sm fa-beer-mug-empty"></i>Drinklog 
+        </h1>
+    </div>
+
+    <div id="search-active-banner" class="alert alert-info alert-dismissible fade mb-2" role="alert" style="display: none; border: none; border-radius: 1rem;">
+        <strong>Active search:</strong> <span id="search-term"></span>
+        <button type="button" class="btn-close" aria-label="Close" id="clear-search-btn"></button>
+    </div>
+    
+    {% if logs|length > 0 %}
+    <table id="loglist" class="log-list">
+    {% endif %} {% for log in logs %}
+        <tr onclick="window.location='{% url 'log-update' log.id %}';" style="cursor: pointer">
+
+            <td>{{log.date|date:"d. M y"}}</td>
+            <td>{{log.intensity}} <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
+            <td class="text-center text-sm-start">
+                {% if log.overdrive %}
+                    <i class="fa-solid {{ random_icon }} fa-lg" style="color: #E6BD37; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px; opacity: .25;"></i>
+                {% endif %}
+            </td>
+            <td style="vertical-align: middle">
+                <a
+                    class="d-flex text-decoration-none"
+                    href="{% url 'log-delete' log.id %}"
+                    ><i class="fa-regular fa-trash-can text-dark fa-md m-auto" style="margin-right: 3px!important;"></i
+                ></a>
+            </td>
+        </tr>
+
+        {% empty %}
+        <div class="mt-2 pb-3 text-center">
+            <p class="h4">No logs are created or were matching your query.</p>
+            <p class="h4">
+                Create a
+                <a class="text-primary-light text-decoration-none"
+                    href="{% url 'log-create' %}"
+                    >new log</a
+                >!
+            </p>
+        </div>
+        {% endfor %}
+    {% if logs|length > 0 %}
+    </table>
+    {% endif %}
+</div>
+
+
+
+<div id="search-overlay" class="search-overlay">
+    <div class="search-wrapper">
+        <form method="GET" class="d-flex">
+        <input
+            type="text"
+            name="search-area"
+            id="search-input"
+            class="form-control"
+            placeholder="Search your log dates"
+            value="{{ search_query }}"
+        />
+
+        <button class="btn search-submit" type="submit">
+            <i class="fa fa-search"></i>
+        </button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const showSearchBtn = document.getElementById('show-search-btn');
+    const searchOverlay = document.getElementById('search-overlay');
+    const searchContainer = document.querySelector('.search-wrapper');
+    const searchInput = document.getElementById('search-input');
+    const searchActiveBanner = document.getElementById('search-active-banner');
+    const searchTermSpan = document.getElementById('search-term');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const searchForm = document.querySelector('form');
+
+    showSearchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        searchOverlay.classList.add('active');
+        searchInput.focus();
+    });
+
+    searchOverlay.addEventListener('click', function(e) {
+        if (!searchContainer.contains(e.target)) {
+            searchOverlay.classList.remove('active');
+        }
+    });
+
+    // Prevent that clicking on the search form closes the overlay
+    searchContainer.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    function showSearchBanner(searchTerm) {
+        searchTermSpan.textContent = searchTerm;
+        searchActiveBanner.style.display = 'block';
+        setTimeout(() => {
+        searchActiveBanner.classList.add('show');
+        }, 10);
+    }
+
+    function hideSearchBanner() {
+        searchActiveBanner.classList.remove('show');
+        setTimeout(() => {
+        searchActiveBanner.style.display = 'none';
+        }, 300);
+    }
+
+    // Check if search is active on site loading
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeSearch = urlParams.get('search-area');
+    if (activeSearch) {
+        showSearchBanner(activeSearch);
+    }
+
+    // event listener for submitting the search form
+    searchForm.addEventListener('submit', function(e) {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+        showSearchBanner(searchTerm);
+        }
+    });
+
+    // event listener for clear button in banner
+    clearSearchBtn.addEventListener('click', function() {
+        hideSearchBanner();
+        searchInput.value = '';
+        // Optional: Formular absenden, um die Suche zurückzusetzen
+        searchForm.submit();
+    });
+});
+</script>
+
+
 
 {% include "components/quick_menu.html"%}
 {% endblock content %}

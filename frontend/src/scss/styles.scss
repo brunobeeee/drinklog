@@ -10,18 +10,21 @@
     --bs-card-inner-border-radius: 10rem!important;
 }
 
-html {
-    background-color: $secondary;
+header {
+    padding: .5rem;
+    min-height: 50px;
 }
 
 body {
+    color: $dark;
+    background-color: $background;
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
     min-height: 100vh;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    color: $dark;
-    background-color: $secondary;
+    max-width: 576px;
+    margin: 0 auto; // x-auto
+    display: flex;
+    flex-direction: column;
 }
 
 h1,
@@ -31,19 +34,106 @@ h4,
 h5,
 h6 {
     @extend %headings !optional;
+    font-family: "Montserrat", sans-serif;
+}
+
+.logo {
     font-family: "Jost", sans-serif;
+    i {
+        transform: translateY(.3px) scaleX(-1);
+    }
 }
 
 
 a {
     font-weight: 600;
+    text-decoration: none;
+}
+
+.dashboard-wrapper {
+    margin-bottom: 1rem;
+    padding: 2rem .75rem .75rem .75rem;
+    flex-shrink: 0;
+
+    .greeting {
+        margin-left: .25rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.insight-wrapper {
+    .insight-card {
+        color: $dark;
+        margin-bottom: .7rem;
+        padding: 1rem 1.5rem;
+        border-radius: 1.5rem; // $card-border-radius - padding
+        overflow: hidden;
+
+        > p {
+            margin-bottom: .75rem;
+        }
+
+        > *:last-child {
+            margin-bottom: 0;
+        }
+
+        &:nth-child(1) {
+            background-color: $primary;
+        }
+        &:nth-child(2) {
+            background-color: $secondary;
+        }
+        &:nth-child(3) {
+            background-color: $tertiary;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+
+.log-wrapper {
+    background-color: $light;
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+    box-shadow: var(--bs-box-shadow-sm);
+    max-width: 576px;
+    padding: .75rem;
+    padding-top: 1rem;
+    padding-bottom: 100px;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    .log-list {
+        color: inherit;
+        margin-bottom: 0;
+        width: 100%;
+    
+        td {
+            padding: 1rem .5rem!important;
+            background: transparent!important;
+            border-top-width: 1px;
+        }
+    }
+    
+}
+
+
+
+.content-wrapper {
+    @extend .log-wrapper;
+    position: relative;
+
+    #total-drinks {
+        color: $primary-text;
+    }
 }
 
 .card {
     margin: 0 auto;
     max-width: 576px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: $light;
 
     &.card-login {
         max-width: 350px;
@@ -58,6 +148,7 @@ a {
     }
     
     .card-header {
+        color: $light;
         border: none !important;
         background: linear-gradient(
             90deg,
@@ -65,13 +156,6 @@ a {
             darken($primary, .1) 50%,
             darken($primary, .1) 100%
         );
-
-        %headings,
-        a {
-            color: $light;
-            text-decoration: none;
-            margin-bottom: 0!important;
-        }
     }
     .banner {
         background: transparent;
@@ -82,7 +166,7 @@ a {
         flex-direction: column;
 
         i {
-            color: $primary;
+            color: $primary-icon;
             box-shadow: var(--bs-box-shadow-lg);
             margin-right: 20px;
             margin-bottom: 30px;
@@ -126,7 +210,7 @@ input[type=range]::-moz-range-thumb {
     appearance: none;
     width: 20px;
     height: 20px;
-    background-color: $primary;
+    background-color: $primary-icon;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -149,40 +233,59 @@ input[type=range]::-moz-range-thumb {
     }
 }
 
-#search-wrapper {
+.search-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-wrapper {
+    width: 100%;
+    max-width: 576px;
+    padding: 25px;
+    position: relative;
 
     form {
         color: $dark;
         background-color: $light;
-        box-shadow: var(--bs-box-shadow);
+        box-shadow: var(--bs-box-shadow-sm);
         border-radius: var(--bs-border-radius-pill);
-        min-height: 35px;
-        width: 100%;
+        height: 35px;
+
+        input#search-input {
+            background-color: transparent;
+            border: none;
+            border-radius: inherit;
+        }
 
         button {
+            color: inherit;
             z-index: 5;
             border: none!important;
             position: absolute;
+            padding-top: 5px;
             &:hover {
                 background-color: $secondary;
             }
-            &.search-clear {
-                right: 40px;
-            }
             &.search-submit {
-                right: 17px;
+                right: 24px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }
         }
     }
+    
+}
 
-    input#search-input {
-        background-color: transparent;
-        border: none;
-        border-radius: var(--bs-border-radius-pill);
-        width: 100%;
-    }
+.search-overlay.active {
+    display: flex;
 }
 
 #menu {
@@ -201,9 +304,8 @@ input[type=range]::-moz-range-thumb {
         flex-direction: column;
         position: absolute;
         z-index: 5;
+        top: 200px;
         right: 0px;
-        top: 50%;
-        transform: translateY(-50%);
     }
 
     button {
@@ -214,11 +316,13 @@ input[type=range]::-moz-range-thumb {
         padding: .25em;
         margin: .25em;
         &:hover, &:active {
-            background-color: rgba($primary, .15);
+            color: $light;
+            background-color: $primary-icon;
         }
     }
     .active {
-        background-color: rgba($primary, .15);
+        color: $light;
+        background-color: $primary-icon;
     }
 }
 
@@ -250,7 +354,7 @@ input[type=range]::-moz-range-thumb {
         height: 60px;
         border-radius: 50%;
         color: $light;
-        background-color: $primary;
+        background-color: $primary-icon;
         font-size: 18px;
         position: absolute;
         left: 50%;
@@ -258,22 +362,29 @@ input[type=range]::-moz-range-thumb {
         transform: translateX(-50%);
         z-index: 2;
         &:hover {
-            background-color: darken($primary, 10%);
+            background-color: darken($primary-icon, 10%);
         }
     }
     
     .pill-link {
-        padding: 10px 20px;
-        border-radius: 0 25px 25px 0;
-        color: $dark;
-        background-color: darken($secondary, .25);
+        color: $light;
+        background-color: $dark;
         font-size: 12px;
+        width: 130px;
+        padding: 10px 20px;
         position: absolute;
         left: 50%;
         bottom: 21px;
-        margin-left: 20px; /* move pill to the right */
+        &.pill-link-right {
+            border-radius: 0 25px 25px 0;
+            margin-left: 20px; /* move pill to the right */
+        }
+        &.pill-link-left {
+            border-radius: 25px 0 0 25px;
+            margin-left: -150px; /* move pill to the left */
+        }
         &:hover {
-            background-color: darken($secondary, 10%);
+            background-color: lighten($dark, 10%);
         }
     }
 }
@@ -287,32 +398,6 @@ label {
 ::placeholder {
     font-weight: 300;
     opacity: 0.5;
-}
-
-.card-table {
-    margin-bottom: 0;
-
-
-    th, td {
-        padding: 1rem!important;
-        background: transparent!important;
-    }
-
-    th {
-        padding-bottom: .25rem!important;
-    }
-
-    tr:last-child {
-        td {
-            border-width: 0;
-        }
-        td:first-child {
-            border-radius: 0 0 0 .3rem;
-        }
-        td:last-child {
-            border-radius: 0 0 .3rem 0;
-        }
-    }
 }
 
 .button {
@@ -347,8 +432,8 @@ label {
 }
 
 
-.text-primary-light {
-    color: lighten($primary, 15%);
+.color-primary-icon {
+    color: $primary-icon;
 }
 
 @keyframes fadeInAnimation {
