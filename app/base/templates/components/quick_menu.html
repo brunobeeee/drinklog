@@ -1,9 +1,11 @@
 <div class="quick-menu">
-    <a class="text-decoration-none menu-link circle-link" href="{% url 'log-create' %}"
+    <a href="#" id="show-search-btn" class="menu-link pill-link pill-link-left"><i class="fa-solid fa-lg fa-flip-horizontal fa-magnifying-glass me-2"></i> Search</a>
+
+    <a class="menu-link circle-link" href="{% url 'log-create' %}"
     ><i class="fa-solid fa-plus fa-xl m-auto"></i
     ></a>
 
-    <a class="text-decoration-none menu-link pill-link" href="{% url 'log-plot' %}">
+    <a class="menu-link pill-link pill-link-right" href="{% url 'log-plot' %}">
     Show Plot
     <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
     </a>

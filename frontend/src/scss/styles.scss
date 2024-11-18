@@ -16,13 +16,15 @@ header {
 }
 
 body {
+    color: $dark;
+    background-color: $background;
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
     min-height: 100vh;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    color: $dark;
-    background-color: $background;
+    max-width: 576px;
+    margin: 0 auto; // x-auto
+    display: flex;
+    flex-direction: column;
 }
 
 h1,
@@ -51,6 +53,7 @@ a {
 .dashboard-wrapper {
     margin-bottom: 1rem;
     padding: 2rem .75rem .75rem .75rem;
+    flex-shrink: 0;
 
     .greeting {
         margin-left: .25rem;
@@ -100,6 +103,8 @@ a {
     padding: .75rem;
     padding-top: 1rem;
     padding-bottom: 100px;
+    flex-grow: 1;
+    overflow-y: auto;
 
     .log-list {
         color: inherit;
@@ -119,7 +124,7 @@ a {
 
 .content-wrapper {
     @extend .log-wrapper;
-    min-height: calc(100vh - 50px);
+    position: relative;
 
     #total-drinks {
         color: $primary-text;
@@ -228,15 +233,30 @@ input[type=range]::-moz-range-thumb {
     }
 }
 
-#search-wrapper {
+.search-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-wrapper {
+    width: 100%;
+    margin: 25px;
+    position: relative;
 
     form {
         color: $dark;
-        background-color: transparent;
-        border: 1px $dark solid;
+        background-color: $light;
+        box-shadow: var(--bs-box-shadow-sm);
         border-radius: var(--bs-border-radius-pill);
         min-height: 35px;
-        width: 100%;
 
         input#search-input {
             background-color: transparent;
@@ -254,15 +274,25 @@ input[type=range]::-moz-range-thumb {
                 background-color: $secondary;
             }
             &.search-clear {
-                right: 40px;
+                right: 30px;
             }
             &.search-submit {
-                right: 15px;
+                right: 5px;
                 border-top-right-radius: var(--bs-border-radius-pill);
                 border-bottom-right-radius: var(--bs-border-radius-pill);
             }
         }
     }
+    
+}
+
+.search-overlay.active {
+    display: flex;
+}
+
+#search-wrapper {
+
+    
 
 }
 
@@ -282,9 +312,8 @@ input[type=range]::-moz-range-thumb {
         flex-direction: column;
         position: absolute;
         z-index: 5;
+        top: 200px;
         right: 0px;
-        top: 50%;
-        transform: translateY(-50%);
     }
 
     button {
@@ -346,15 +375,22 @@ input[type=range]::-moz-range-thumb {
     }
     
     .pill-link {
-        padding: 10px 20px;
-        border-radius: 0 25px 25px 0;
         color: $light;
         background-color: $dark;
         font-size: 12px;
+        width: 130px;
+        padding: 10px 20px;
         position: absolute;
         left: 50%;
         bottom: 21px;
-        margin-left: 20px; /* move pill to the right */
+        &.pill-link-right {
+            border-radius: 0 25px 25px 0;
+            margin-left: 20px; /* move pill to the right */
+        }
+        &.pill-link-left {
+            border-radius: 25px 0 0 25px;
+            margin-left: -150px; /* move pill to the left */
+        }
         &:hover {
             background-color: lighten($dark, 10%);
         }

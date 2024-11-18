@@ -19,6 +19,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 from django.views.generic.list import ListView
+from django.utils import timezone
+from django.db.models import Sum
 
 from .models import Log
 
@@ -61,6 +63,25 @@ class LogList(LoginRequiredMixin, ListView):
         ]
 
         context["random_icon"] = random.choice(icons)
+
+        # Calculate #days since last log
+        latest_log = self.get_queryset().first()
+        if latest_log:
+            days_since_last_log = (timezone.now().date() - latest_log.date).days
+            context["days_since_last_log"] = days_since_last_log
+        else:
+            context["days_since_last_log"] = None
+
+        # Sum all intensities of last week/month
+        today = timezone.now().date()
+        week_ago = today - timedelta(days=7)
+        month_ago = today - timedelta(days=30)
+
+        week_intensity_sum = self.get_queryset().filter(date__gte=week_ago).aggregate(Sum('intensity'))['intensity__sum'] or 0
+        month_intensity_sum = self.get_queryset().filter(date__gte=month_ago).aggregate(Sum('intensity'))['intensity__sum'] or 0
+
+        context["week_intensity_sum"] = week_intensity_sum
+        context["month_intensity_sum"] = month_intensity_sum
 
         return context
 
