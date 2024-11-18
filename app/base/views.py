@@ -53,6 +53,7 @@ class LogList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["search_query"] = self.request.GET.get("search-area", "")
         context["username"] = self.request.user.username
+        context["show_pill_links"] = True
 
         # Choose a random icon for the overdrive col
         icons = [
@@ -66,7 +67,7 @@ class LogList(LoginRequiredMixin, ListView):
 
         # Calculate #days since last log
         latest_log = self.get_queryset().first()
-        if latest_log:
+        if latest_log and latest_log.intensity > 0:
             days_since_last_log = (timezone.now().date() - latest_log.date).days
             context["days_since_last_log"] = days_since_last_log
         else:
@@ -131,8 +132,8 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields["date"].disabled = True
-        form.fields["date"].widget.attrs["readonly"] = True
+        form.fields["date"].disabled = False
+        form.fields["date"].widget.attrs["readonly"] = False
         form.fields["date"].widget = forms.DateInput(
             attrs={"type": "date", "readonly": "readonly"}
         )

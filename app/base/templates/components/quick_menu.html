@@ -1,12 +1,17 @@
 <div class="quick-menu">
+
+    {% if show_pill_links %}
     <a href="#" id="show-search-btn" class="menu-link pill-link pill-link-left"><i class="fa-solid fa-lg fa-flip-horizontal fa-magnifying-glass me-2"></i> Search</a>
+    {% endif %}
 
     <a class="menu-link circle-link" href="{% url 'log-create' %}"
     ><i class="fa-solid fa-plus fa-xl m-auto"></i
     ></a>
 
+    {% if show_pill_links %}
     <a class="menu-link pill-link pill-link-right" href="{% url 'log-plot' %}">
     Show Plot
     <i class="fa-solid fa-compass-drafting fa-lg m-auto ms-2"></i>
     </a>
+    {% endif %}
 </div>

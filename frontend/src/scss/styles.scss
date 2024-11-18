@@ -210,7 +210,7 @@ input[type=range]::-moz-range-thumb {
     appearance: none;
     width: 20px;
     height: 20px;
-    background-color: $primary;
+    background-color: $primary-icon;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -256,7 +256,7 @@ input[type=range]::-moz-range-thumb {
         background-color: $light;
         box-shadow: var(--bs-box-shadow-sm);
         border-radius: var(--bs-border-radius-pill);
-        min-height: 35px;
+        min-height: 40px;
 
         input#search-input {
             background-color: transparent;

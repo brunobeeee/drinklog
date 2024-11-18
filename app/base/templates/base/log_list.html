@@ -35,12 +35,6 @@
     </div>
 
     <div class="insight-wrapper">
-        {% if days_since_last_log > 3 %}
-        <div class="insight-card">
-            <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
-            <h3><strong>{{ days_since_last_log }}</strong> days since your last entry</h3>
-        </div>
-        {% endif %}
 
         <div class="insight-card">
             <p class="fw-semibold"><i class="fa-solid fa-gauge-simple-high"></i> Average</p>
@@ -49,6 +43,13 @@
             <h3><strong>{{ month_intensity_sum }}</strong> monthly drinks <span class="text-muted fw-normal">(last 31 days)</span></h3>
             {% endif %}
         </div>
+
+        {% if days_since_last_log > 3 %}
+        <div class="insight-card">
+            <p class="fw-semibold"><i class="fa-solid fa-person-running"></i> Streak</p>
+            <h3><strong>{{ days_since_last_log }}</strong> days since your last entry</h3>
+        </div>
+        {% endif %}
     </div>
 </div>
 
