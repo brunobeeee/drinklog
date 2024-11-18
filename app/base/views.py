@@ -12,15 +12,15 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 from django.views.generic.list import ListView
-from django.utils import timezone
-from django.db.models import Sum
 
 from .models import Log
 
@@ -32,7 +32,6 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("logs")
-
 
 
 class LogList(LoginRequiredMixin, ListView):
@@ -78,8 +77,18 @@ class LogList(LoginRequiredMixin, ListView):
         week_ago = today - timedelta(days=7)
         month_ago = today - timedelta(days=30)
 
-        week_intensity_sum = self.get_queryset().filter(date__gte=week_ago).aggregate(Sum('intensity'))['intensity__sum'] or 0
-        month_intensity_sum = self.get_queryset().filter(date__gte=month_ago).aggregate(Sum('intensity'))['intensity__sum'] or 0
+        week_intensity_sum = (
+            self.get_queryset()
+            .filter(date__gte=week_ago)
+            .aggregate(Sum("intensity"))["intensity__sum"]
+            or 0
+        )
+        month_intensity_sum = (
+            self.get_queryset()
+            .filter(date__gte=month_ago)
+            .aggregate(Sum("intensity"))["intensity__sum"]
+            or 0
+        )
 
         context["week_intensity_sum"] = week_intensity_sum
         context["month_intensity_sum"] = month_intensity_sum
