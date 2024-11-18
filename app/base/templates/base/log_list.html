@@ -49,57 +49,56 @@
 </div>
 
 
-<div class="card">
-    <div class="card-body" style="padding: .75rem; padding-bottom: 100px;">
 
-        <div class="d-flex">
-            <h4 class="text-muted mt-auto ps-1">Your logs</h4>
-            <h1 class="ms-auto mb-2">
-                <i class="fa-solid fa-sm fa-beer-mug-empty" style="transform: translateY(.5px) scaleX(-1);"></i>Drinklog 
-            </h1>
-        </div>
-        
-        {% if logs|length > 0 %}
-        <table id="loglist" class="table card-table">
-        {% endif %} {% for log in logs %}
-            <tr onclick="window.location='{% url 'log-update' log.id %}';" style="cursor: pointer">
-
-                <td>{{log.date|date:"d. M y"}}</td>
-                <td>{{log.intensity}} <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
-                <td class="text-center text-sm-start">
-                    {% if log.overdrive %}
-                        <i class="fa-solid {{ random_icon }} fa-lg" style="color: #E6BD37; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"></i>
-                    {% else %}
-                        <i class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px; opacity: .25;"></i>
-                    {% endif %}
-                </td>
-                <td style="vertical-align: middle">
-                    <a
-                        class="d-flex text-decoration-none"
-                        href="{% url 'log-delete' log.id %}"
-                        ><i class="fa-regular fa-trash-can text-dark fa-md m-auto" style="margin-right: 3px!important;"></i
-                    ></a>
-                </td>
-            </tr>
-
-            {% empty %}
-            <div class="mt-2 pb-3 text-center">
-                <p class="h4">No logs are created or were matching your query.</p>
-                <p class="h4">
-                    Create a
-                    <a class="text-primary-light text-decoration-none"
-                        href="{% url 'log-create' %}"
-                        >new log</a
-                    >!
-                </p>
-            </div>
-            {% endfor %}
-        {% if logs|length > 0 %}
-        </table>
-        {% endif %}
-
+<div class="log-wrapper">
+    <div class="d-flex">
+        <h4 class="mt-auto ms-2">Your logs</h4>
+        <h1 class="logo ms-auto mb-1 me-2">
+            <i class="fa-solid fa-sm fa-beer-mug-empty"></i>Drinklog 
+        </h1>
     </div>
+    
+    {% if logs|length > 0 %}
+    <table id="loglist" class="log-list">
+    {% endif %} {% for log in logs %}
+        <tr onclick="window.location='{% url 'log-update' log.id %}';" style="cursor: pointer">
+
+            <td>{{log.date|date:"d. M y"}}</td>
+            <td>{{log.intensity}} <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
+            <td class="text-center text-sm-start">
+                {% if log.overdrive %}
+                    <i class="fa-solid {{ random_icon }} fa-lg" style="color: #E6BD37; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px; opacity: .25;"></i>
+                {% endif %}
+            </td>
+            <td style="vertical-align: middle">
+                <a
+                    class="d-flex text-decoration-none"
+                    href="{% url 'log-delete' log.id %}"
+                    ><i class="fa-regular fa-trash-can text-dark fa-md m-auto" style="margin-right: 3px!important;"></i
+                ></a>
+            </td>
+        </tr>
+
+        {% empty %}
+        <div class="mt-2 pb-3 text-center">
+            <p class="h4">No logs are created or were matching your query.</p>
+            <p class="h4">
+                Create a
+                <a class="text-primary-light text-decoration-none"
+                    href="{% url 'log-create' %}"
+                    >new log</a
+                >!
+            </p>
+        </div>
+        {% endfor %}
+    {% if logs|length > 0 %}
+    </table>
+    {% endif %}
 </div>
+
+
 
 {% include "components/quick_menu.html"%}
 {% endblock content %}

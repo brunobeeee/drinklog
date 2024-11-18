@@ -10,10 +10,6 @@
     --bs-card-inner-border-radius: 10rem!important;
 }
 
-html {
-    background-color: $card-background;
-}
-
 body {
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
@@ -21,7 +17,7 @@ body {
     padding-top: 5rem;
     padding-bottom: 5rem;
     color: $dark;
-    background-color: transparent;
+    background-color: $background;
 }
 
 h1,
@@ -31,7 +27,14 @@ h4,
 h5,
 h6 {
     @extend %headings !optional;
+    font-family: "Montserrat", sans-serif;
+}
+
+.logo {
     font-family: "Jost", sans-serif;
+    i {
+        transform: translateY(.5px) scaleX(-1);
+    }
 }
 
 
@@ -41,11 +44,7 @@ a {
 }
 
 .dashboard-wrapper {
-    color: $light;
-    background-color: $background;
-    padding: 2rem 1rem 1rem 1rem;
-    border-bottom-left-radius: $card-border-radius;
-    border-bottom-right-radius: $card-border-radius;
+    padding: 2rem .75rem .75rem .75rem;
 
     .greeting {
         margin-left: .25rem;
@@ -83,6 +82,34 @@ a {
         }
     }
 }
+
+
+
+.log-wrapper {
+    background-color: $light;
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+    box-shadow: var(--bs-box-shadow-sm);
+    max-width: 576px;
+    padding: .75rem;
+    padding-top: 1rem;
+    padding-bottom: 100px;
+
+    .log-list {
+        color: inherit;
+        margin-bottom: 0;
+        width: 100%;
+    
+        td {
+            padding: 1rem .5rem!important;
+            background: transparent!important;
+            border-top-width: 1px;
+        }
+    }
+    
+}
+
+
 
 .card {
     margin: 0 auto;
@@ -326,32 +353,6 @@ label {
 ::placeholder {
     font-weight: 300;
     opacity: 0.5;
-}
-
-.card-table {
-    margin-bottom: 0;
-
-
-    th, td {
-        padding: 1rem .5rem!important;
-        background: transparent!important;
-    }
-
-    th {
-        padding-bottom: .25rem!important;
-    }
-
-    tr:first-child {
-        td {
-            border-top-width: 1px;
-        }
-    }
-
-    tr:last-child {
-        td {
-            border-width: 0;
-        }
-    }
 }
 
 .button {
