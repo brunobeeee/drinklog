@@ -52,21 +52,30 @@ a {
 
 .dashboard-wrapper {
     margin-bottom: 1rem;
-    padding: 2rem .75rem .75rem .75rem;
+    padding: 2.5rem .75rem .75rem .75rem;
     flex-shrink: 0;
 
     .greeting {
+        font-size: calc(1.625rem + 1.5vw);
+        text-transform: capitalize;
         margin-left: .25rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        a {
+            color: $dark;
+        }
     }
 }
 
 .insight-wrapper {
+    > %headings {
+        margin-left: .5rem;
+    }
     .insight-card {
-        color: $dark;
-        margin-bottom: .7rem;
-        padding: 1rem 1.5rem;
-        border-radius: 1.5rem; // $card-border-radius - padding
+        background-color: $light;
+        box-shadow: var(--bs-box-shadow);
+        margin-bottom: .75rem;
+        padding: 1rem;
+        border-radius: 1.5rem;
         overflow: hidden;
 
         > p {
@@ -77,11 +86,11 @@ a {
             margin-bottom: 0;
         }
 
-        &:nth-child(1) {
-            background-color: $primary;
+        &:nth-child(2) > p {
+            color: $primary;
         }
-        &:nth-child(2) {
-            background-color: $secondary;
+        &:nth-child(3) > p {
+            color: $secondary;
         }
         &:last-child {
             margin-bottom: 0;
@@ -93,9 +102,7 @@ a {
 
 .log-wrapper {
     background-color: $light;
-    border-top-left-radius: $card-border-radius;
-    border-top-right-radius: $card-border-radius;
-    box-shadow: var(--bs-box-shadow-sm);
+    box-shadow: var(--bs-box-shadow);
     max-width: 576px;
     padding: .75rem;
     padding-top: 1rem;
@@ -103,15 +110,24 @@ a {
     flex-grow: 1;
     overflow-y: auto;
 
+    %headings {
+        margin-left: .5rem;
+    }
+
     .log-list {
         color: inherit;
         margin-bottom: 0;
         width: 100%;
     
         td {
+            font-variant-numeric: tabular-nums;
             padding: 1rem .5rem!important;
             background: transparent!important;
             border-top-width: 1px;
+        }
+
+        #log-overdrive-icon {
+            color: $primary;
         }
     }
     

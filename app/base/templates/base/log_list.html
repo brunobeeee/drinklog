@@ -3,13 +3,13 @@
 <div class="dashboard-wrapper">
 
     <div class="greeting">
-        <a href="{% url 'logout' %}" class="h1">
-            Welcome, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
+        <a href="{% url 'logout' %}">
+            Welcome, <strong>{{ username }}</strong>👋🏻
         </a>
     </div>
-    
-    <div class="insight-wrapper">
 
+    <div class="insight-wrapper">
+        <h1>Insights</h1>
         <div class="insight-card">
             <p class="fw-semibold"><i class="fa-solid fa-gauge-simple-high"></i> Average</p>
             <h3><strong>{{ week_intensity_sum }}</strong> weekly drinks <span class="text-muted fw-normal">(last 7 days)</span></h3>
@@ -31,8 +31,8 @@
 
 <div class="log-wrapper">
     <div class="d-flex">
-        <h4 class="mt-auto ms-2">Your logs</h4>
-        <h1 class="logo ms-auto mb-1 me-2">
+        <h1 class="mt-auto">Your logs</h1>
+        <h1 class="d-none logo ms-auto mb-1 me-2">
             <i class="fa-solid fa-sm fa-beer-mug-empty"></i>Drinklog 
         </h1>
     </div>
@@ -47,11 +47,11 @@
     {% endif %} {% for log in logs %}
         <tr onclick="window.location='{% url 'log-update' log.id %}';" style="cursor: pointer">
 
-            <td>{{log.date|date:"d. M y"}}</td>
-            <td>{{log.intensity}} <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
+            <td>{{log.date|date:"d/m/Y"}}</td>
+            <td><span style="display: inline-block; width: 1.5em; text-align: right;">{{log.intensity}}</span> <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
             <td class="text-center text-sm-start">
                 {% if log.overdrive %}
-                    <i class="fa-solid {{ random_icon }} fa-lg" style="color: #E6BD37; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);"></i>
+                    <i id="log-overdrive-icon" class="fa-solid {{ random_icon }} fa-lg"></i>
                 {% else %}
                     <i class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px; opacity: .25;"></i>
                 {% endif %}
