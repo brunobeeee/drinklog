@@ -124,7 +124,7 @@ a {
     position: relative;
 
     #total-drinks {
-        color: $primary-text;
+        color: $primary;
     }
 }
 
@@ -163,7 +163,7 @@ a {
         flex-direction: column;
 
         i {
-            color: $primary-icon;
+            color: $primary;
             box-shadow: var(--bs-box-shadow-lg);
             margin-right: 20px;
             margin-bottom: 30px;
@@ -207,7 +207,7 @@ input[type=range]::-moz-range-thumb {
     appearance: none;
     width: 20px;
     height: 20px;
-    background-color: $primary-icon;
+    background-color: $primary;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -314,12 +314,12 @@ input[type=range]::-moz-range-thumb {
         margin: .25em;
         &:hover, &:active {
             color: $light;
-            background-color: $primary-icon;
+            background-color: $primary;
         }
     }
     .active {
         color: $light;
-        background-color: $primary-icon;
+        background-color: $primary;
     }
 }
 
@@ -351,7 +351,7 @@ input[type=range]::-moz-range-thumb {
         height: 60px;
         border-radius: 50%;
         color: $light;
-        background-color: $primary-icon;
+        background-color: $primary;
         font-size: 18px;
         position: absolute;
         left: 50%;
@@ -359,7 +359,7 @@ input[type=range]::-moz-range-thumb {
         transform: translateX(-50%);
         z-index: 2;
         &:hover {
-            background-color: darken($primary-icon, 10%);
+            background-color: darken($primary, 10%);
         }
     }
     
@@ -426,11 +426,6 @@ label {
     animation: fadeInAnimation ease 10s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-}
-
-
-.color-primary-icon {
-    color: $primary-icon;
 }
 
 @keyframes fadeInAnimation {
