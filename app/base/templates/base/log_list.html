@@ -7,33 +7,7 @@
             Welcome, <strong style="text-transform: capitalize;">{{ username }}</strong>👋🏻
         </a>
     </div>
-
-    <div class="row d-none mb-4">
-        <div class="col-12" id="search-wrapper" style="padding-left: .6rem; padding-right: .6rem;">
-
-            <form method="GET" class="d-flex">
-                <input
-                    type="text"
-                    name="search-area"
-                    id="search-input"
-                    class="form-control"
-                    placeholder="Search your log dates"
-                    value="{{ search_query }}"
-                />
-                
-                {% if search_query %}
-                    <button class="btn search-clear" onclick="document.getElementById('search-input').value = ''">
-                        <i class="fa-regular fa-circle-xmark"></i>
-                    </button>
-                {% endif %}
-                <button class="btn search-submit" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </form>
-
-        </div>
-    </div>
-
+    
     <div class="insight-wrapper">
 
         <div class="insight-card">
