@@ -49,19 +49,12 @@
 
             <td>{{log.date|date:"d/m/Y"}}</td>
             <td><span style="display: inline-block; width: 1.5em; text-align: right;">{{log.intensity}}</span> <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
-            <td class="text-center text-sm-start">
+            <td class="text-center text-sm-start" style="margin-right: 1.5rem;">
                 {% if log.overdrive %}
                     <i id="log-overdrive-icon" class="fa-solid {{ random_icon }} fa-lg"></i>
                 {% else %}
                     <i class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px; opacity: .25;"></i>
                 {% endif %}
-            </td>
-            <td style="vertical-align: middle">
-                <a
-                    class="d-flex text-decoration-none"
-                    href="{% url 'log-delete' log.id %}"
-                    ><i class="fa-regular fa-trash-can text-dark fa-md m-auto" style="margin-right: 3px!important;"></i
-                ></a>
             </td>
         </tr>
 

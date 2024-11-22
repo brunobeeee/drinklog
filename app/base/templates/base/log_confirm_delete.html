@@ -30,7 +30,9 @@
 
     <form method="POST">
         {% csrf_token %}
-        <input class="button" type="submit" value="Delete" />
+        <button class="text-decoration-none button-danger" type="submit">
+            <i class="fa-regular fa-trash-can"></i>Delete
+        </button>
     </form>
 </div>
 
