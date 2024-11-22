@@ -1,13 +1,25 @@
-$primary: #EFD47F;
-$secondary: #C8C2FF;
-$tertiary: #BECBB3;
-$info: #84C2EB;
+// color scheme from penpot
+$grey-100: #ededf3;
+$grey-200: #d1d1da;
+$grey-500: #6f6f75;
+$grey-900: #181819;
+$primary-500: #f2a61e;
+$secondary-500: #681ef2;
+$success-500: #0fe23c;
+$danger-500: #e92e2e;
+$info-500: #1e20f2;
+
+// standard bootstrap colors
+$primary: $primary-500;
+$secondary: $secondary-500;
+$info: $info-500;
 $warning: $primary;
-$danger: #C51B29;
-$muted: #F8F7F2;
-$light: #FFFFFF;
-$dark: #272727;
-$background: #F6F6EF;
+$danger: $danger-500;
+$muted: $grey-200;
+$light: white;
+$dark: $grey-900;
+$background: $grey-100;
+
 
 $primary-text: #E6BD37;
 $primary-icon: #EBC95C;
