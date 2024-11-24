@@ -12,9 +12,9 @@
         <h1>Insights</h1>
         <div class="insight-card">
             <p class="fw-semibold"><i class="fa-solid fa-gauge-simple-high"></i> Average</p>
-            <h3><strong>{{ week_intensity_sum }}</strong> weekly drinks <span class="text-muted fw-normal">(last 7 days)</span></h3>
+            <h3><strong>{{ week_intensity_sum }}</strong> weekly drinks <span class="text-muted fw-normal" style="font-size: .75rem;">(last 7 days)</span></h3>
             {% if week_intensity_sum != month_intensity_sum %}
-            <h3><strong>{{ month_intensity_sum }}</strong> monthly drinks <span class="text-muted fw-normal">(last 31 days)</span></h3>
+            <h3><strong>{{ month_intensity_sum }}</strong> monthly drinks <span class="text-muted fw-normal" style="font-size: .75rem;">(last 31 days)</span></h3>
             {% endif %}
         </div>
 
@@ -30,11 +30,13 @@
 
 
 <div class="log-wrapper">
-    <div class="d-flex">
+    <div class="d-flex mb-3">
         <h1 class="mt-auto">Your logs</h1>
         <h1 class="d-none logo ms-auto mb-1 me-2">
             <i class="fa-solid fa-sm fa-beer-mug-empty"></i>Drinklog 
         </h1>
+        <a class="button-secondary button-outline ms-auto me-2" href="{% url 'log-plot' %}"><i class="fa-solid fa-compass-drafting fa-lg m-auto"></i>Show Plot
+        </a>
     </div>
 
     <div id="search-active-banner" class="alert alert-info alert-dismissible fade mb-2" role="alert" style="display: none; border: none; border-radius: 1rem;">
@@ -48,12 +50,12 @@
         <tr onclick="window.location='{% url 'log-update' log.id %}';" style="cursor: pointer">
 
             <td>{{log.date|date:"d/m/Y"}}</td>
-            <td><span style="display: inline-block; width: 1.5em; text-align: right;">{{log.intensity}}</span> <i class="fa-solid fa-xs fa-martini-glass" style="opacity: .5;"></i></td>
+            <td><span style="display: inline-block; width: 1.5em; text-align: right;">{{log.intensity}}</span> <i class="fa-solid fa-xs fa-martini-glass"></i></td>
             <td class="text-center text-sm-start" style="margin-right: 1.5rem;">
                 {% if log.overdrive %}
                     <i id="log-overdrive-icon" class="fa-solid {{ random_icon }} fa-lg"></i>
                 {% else %}
-                    <i class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px; opacity: .25;"></i>
+                    <i id="log-nooverdrive-icon" class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px;"></i>
                 {% endif %}
             </td>
         </tr>

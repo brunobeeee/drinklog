@@ -6,9 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-:root {
-    --bs-card-inner-border-radius: 10rem!important;
-}
+
 
 header {
     padding: .5rem;
@@ -114,6 +112,7 @@ a {
         margin-left: .5rem;
     }
 
+    // Table
     .log-list {
         color: inherit;
         margin-bottom: 0;
@@ -123,14 +122,23 @@ a {
             font-variant-numeric: tabular-nums;
             padding: 1rem .5rem!important;
             background: transparent!important;
-            border-top-width: 1px;
+            border-bottom: 1px $grey-200 solid;
+            i {
+                color: $grey-300;
+                &#log-overdrive-icon {
+                    color: $primary;
+                }
+                &#log-nooverdrive-icon {
+                    color: $grey-200;
+                }
+            }
+        }
+        
+        tr:last-child td {
+            border-bottom-width: 0;
         }
 
-        #log-overdrive-icon {
-            color: $primary;
-        }
     }
-    
 }
 
 
@@ -143,6 +151,8 @@ a {
         color: $primary;
     }
 }
+
+
 
 .card {
     margin: 0 auto;
@@ -157,6 +167,7 @@ a {
         input[type="text"],
         input[type="password"] {
             width: 100%;
+            background-color: $light;
         }
     }
     
@@ -192,6 +203,7 @@ a {
 input {
     outline: none;
     border: none;
+    margin-bottom: 20px;
 }
 input[type="text"],
 input[type="password"],
@@ -199,8 +211,8 @@ input[type="number"],
 input[type="date"],
 textarea {
     color: $dark;
-    background-color: $light;
-    border: 1px solid rgba($dark, .5);
+    background-color: transparent;
+    border: 1.5px solid $grey-700;
     border-radius: .65rem;
     padding: 2.5px 10px;
 }
@@ -212,7 +224,7 @@ input[type=range] {
     appearance: none;
     width: 100%;
     height: 10px;
-    background-color: rgba($dark, .25);
+    background-color: $grey-200;
     cursor: pointer;
     border-radius: 10px;
     border: none;
@@ -301,6 +313,86 @@ input[type=range]::-moz-range-thumb {
     display: flex;
 }
 
+.button {
+    color: inherit;
+    background-color: transparent;
+    border: 1.5px solid;
+    border-color: inherit;
+    font-weight: normal;
+    text-decoration: none;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+    padding: 2.5px 10px;
+    border-radius: 50rem;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover, &:active {
+        background-color: rgba($grey-200, .5);
+    }
+    i {
+        margin: auto;
+        padding-bottom: 2px;
+        padding-right: .25rem;
+    }
+    &[disabled] {
+        cursor: not-allowed;
+        border-color: rgba($dark, .25)!important;
+        i {
+            color: rgba($dark, .25)!important;
+        }
+    }
+}
+
+.button-primary {
+    @extend .button;
+    color: $light;
+    border: none;
+    background-color: $primary;
+    &:hover, &:active {
+        background-color: $primary-600;
+    }
+}
+
+.button-secondary {
+    @extend .button;
+    color: $light;
+    border: none;
+    background-color: $secondary;
+    &.button-outline {
+        color: $secondary;
+        background-color: transparent;
+        border: 1.5px solid; // same as .button
+        border-color: $secondary;
+        &:hover, &:active {
+            background-color: $secondary-100;
+        }
+    }
+    &:hover, &:active {
+        background-color: $secondary-600;
+    }
+}
+
+.button-danger {
+    @extend .button;
+    color: $light;
+    background-color: $danger;
+    &:hover, &:active {
+        background-color: $danger-600;
+    }
+}
+
+.button-lg {
+    display: block;
+    font-size: large;
+    text-align: center;
+    border-radius: 1rem;
+    width: 100%;
+    padding: 10px;
+}
+
+
+
 #menu {
     display: flex;
     justify-content: space-around;
@@ -311,14 +403,15 @@ input[type=range]::-moz-range-thumb {
     margin: 0 auto;
 
     &.menu-v {
-        border: $dark 1px solid;
+        border: $dark 1.5px solid;
         border-right: none;
         border-radius:  .35em 0 0 .35em;
         flex-direction: column;
         position: absolute;
         z-index: 5;
-        top: 200px;
         right: 0px;
+        top: 45%;
+        transform: translateY(-50%);
     }
 
     button {
@@ -338,6 +431,8 @@ input[type=range]::-moz-range-thumb {
         background-color: $primary;
     }
 }
+
+
 
 // Hovering menu on the bottom
 .quick-menu {
@@ -403,61 +498,10 @@ input[type=range]::-moz-range-thumb {
 }
 
 
-label {
-    padding-top: 10px !important;
-    display: block;
-}
 
 ::placeholder {
     font-weight: 300;
     opacity: 0.5;
-}
-
-.button {
-    color: inherit;
-    background-color: transparent;
-    border: 1px solid;
-    border-color: inherit;
-    font-weight: normal;
-    text-decoration: none;
-    margin-top: .5rem;
-    margin-bottom: .5rem;
-    margin-right: .5rem;
-    padding: 2.5px 10px;
-    border-radius: 50rem;
-    cursor: pointer;
-    text-decoration: none;
-    &:hover, &:active {
-        background-color: rgba($grey-200, .5);
-    }
-    i {
-        margin: auto;
-        padding-bottom: 2px;
-        padding-right: .25rem;
-    }
-    &[disabled] {
-        cursor: not-allowed;
-        border-color: rgba($dark, .25)!important;
-        i {
-            color: rgba($dark, .25)!important;
-        }
-    }
-}
-
-.button-primary {
-    @extend .button;
-    color: $light;
-    border: none;
-    background-color: $primary;
-}
-
-.button-danger {
-    @extend .button;
-    color: $danger;
-    border-color: $danger;
-    i {
-        color: $danger;
-    }
 }
 
 .video-bg {
@@ -479,7 +523,7 @@ label {
 
 // Rounded corners border radius bar chart
 div.js-plotly-plot > div > div > svg > g.cartesianlayer > g > g.plot > g > g > g > g > path {
-    clip-path: inset(0% 0% 0% 0% round 1em 1em 0 0);
+    clip-path: inset(0% 0% 0% 0% round 100 100 0 0);
 }
 
 // Push down xaxis labels a bit

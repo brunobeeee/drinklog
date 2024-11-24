@@ -10,8 +10,8 @@
 
 
 <div class="content-wrapper">
-    <p class="ps-1">Are your sure you want to delete this log?</p>
-    <table id="loglist" class="table card-table mb-3">
+    <p>Are your sure you want to delete this log?</p>
+    <table id="loglist" class="log-list">
         <thead>
             <th>Date</th>
             <th>Intensity</th>
@@ -19,18 +19,20 @@
         </thead>
         <tr>
             <td>{{log.date|date:"d.m.Y"}}</td>
-            <td>{{log.intensity}}</td>
+            <td><span style="display: inline-block; width: 1.5em; text-align: right;">{{log.intensity}}</span> <i class="fa-solid fa-xs fa-martini-glass"></i></td>
             <td>
                 {% if log.overdrive %}
-                <i class="fa-solid fa-check fa-lg text-danger"></i> {% else %}
-                <i class="fa-solid fa-xmark fa-lg"></i> {% endif %}
+                    <i id="log-overdrive-icon" class="fa-solid {{ random_icon }} fa-lg"></i>
+                {% else %}
+                    <i id="log-nooverdrive-icon" class="fa-solid fa-circle" style="font-size: .5em; margin-bottom: 2px;"></i>
+                {% endif %}
             </td>
         </tr>
     </table>
 
     <form method="POST">
         {% csrf_token %}
-        <button class="text-decoration-none button-danger" type="submit">
+        <button class="button-danger button-lg" type="submit">
             <i class="fa-regular fa-trash-can"></i>Delete
         </button>
     </form>
