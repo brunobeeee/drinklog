@@ -151,6 +151,13 @@ class LogUpdate(LoginRequiredMixin, UpdateView):
         )
         return form
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["editing"] = True
+
+        return context
+
 
 class DeleteView(LoginRequiredMixin, DeleteView):
     model = Log
@@ -198,7 +205,7 @@ def logplot(request):
         title="",
         labels={"intensity": "Intensity", "date": "Date"},
         color="color",
-        color_discrete_map={"black": "#272727", "yellow": "#C8C2FF"},
+        color_discrete_map={"black": "#181819", "yellow": "#f2a61e"},
     )
     pre_format_fig(fig)
     fig.update_traces(hovertemplate="<b>Intensity: %{y}</b><br>%{x}<extra></extra>")
@@ -241,7 +248,7 @@ def logplot(request):
 
     fig2.update_traces(
         xbins_size="M1",
-        marker_color="#C8C2FF",
+        marker_color="#f2a61e",
         hovertemplate="<b>Avg Intensity: %{y}</b><extra></extra>",
     )
 
@@ -267,8 +274,8 @@ def pre_format_fig(fig):
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font_color="#090B0B",
-        title_font_family="Jost",
+        font_color="#181819",
+        title_font_family="Montserrat",
         coloraxis_showscale=False,
         xaxis_title=None,
         yaxis_title=None,
@@ -279,9 +286,9 @@ def pre_format_fig(fig):
     fig.update_yaxes(
         showgrid=True,
         gridwidth=1,
-        gridcolor="#D2DADA",
+        gridcolor="#a6a6ae",
         zeroline=True,
-        zerolinecolor="#D2DADA",
+        zerolinecolor="#6f6f75",
     )
 
     fig.update_traces(

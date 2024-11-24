@@ -6,9 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-:root {
-    --bs-card-inner-border-radius: 10rem!important;
-}
+
 
 header {
     padding: .5rem;
@@ -52,21 +50,30 @@ a {
 
 .dashboard-wrapper {
     margin-bottom: 1rem;
-    padding: 2rem .75rem .75rem .75rem;
+    padding: 2.5rem .75rem .75rem .75rem;
     flex-shrink: 0;
 
     .greeting {
+        font-size: calc(1.625rem + 1.5vw);
+        text-transform: capitalize;
         margin-left: .25rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        a {
+            color: $dark;
+        }
     }
 }
 
 .insight-wrapper {
+    > %headings {
+        margin-left: .5rem;
+    }
     .insight-card {
-        color: $dark;
-        margin-bottom: .7rem;
-        padding: 1rem 1.5rem;
-        border-radius: 1.5rem; // $card-border-radius - padding
+        background-color: $light;
+        box-shadow: var(--bs-box-shadow);
+        margin-bottom: .75rem;
+        padding: 1rem;
+        border-radius: 1.5rem;
         overflow: hidden;
 
         > p {
@@ -77,14 +84,11 @@ a {
             margin-bottom: 0;
         }
 
-        &:nth-child(1) {
-            background-color: $primary;
+        &:nth-child(2) > p {
+            color: $primary;
         }
-        &:nth-child(2) {
-            background-color: $secondary;
-        }
-        &:nth-child(3) {
-            background-color: $tertiary;
+        &:nth-child(3) > p {
+            color: $secondary;
         }
         &:last-child {
             margin-bottom: 0;
@@ -96,9 +100,7 @@ a {
 
 .log-wrapper {
     background-color: $light;
-    border-top-left-radius: $card-border-radius;
-    border-top-right-radius: $card-border-radius;
-    box-shadow: var(--bs-box-shadow-sm);
+    box-shadow: var(--bs-box-shadow);
     max-width: 576px;
     padding: .75rem;
     padding-top: 1rem;
@@ -106,18 +108,37 @@ a {
     flex-grow: 1;
     overflow-y: auto;
 
+    %headings {
+        margin-left: .5rem;
+    }
+
+    // Table
     .log-list {
         color: inherit;
         margin-bottom: 0;
         width: 100%;
     
         td {
+            font-variant-numeric: tabular-nums;
             padding: 1rem .5rem!important;
             background: transparent!important;
-            border-top-width: 1px;
+            border-bottom: 1px $grey-200 solid;
+            i {
+                color: $grey-300;
+                &#log-overdrive-icon {
+                    color: $primary;
+                }
+                &#log-nooverdrive-icon {
+                    color: $grey-200;
+                }
+            }
         }
+        
+        tr:last-child td {
+            border-bottom-width: 0;
+        }
+
     }
-    
 }
 
 
@@ -127,9 +148,11 @@ a {
     position: relative;
 
     #total-drinks {
-        color: $primary-text;
+        color: $primary;
     }
 }
+
+
 
 .card {
     margin: 0 auto;
@@ -144,6 +167,7 @@ a {
         input[type="text"],
         input[type="password"] {
             width: 100%;
+            background-color: $light;
         }
     }
     
@@ -166,7 +190,7 @@ a {
         flex-direction: column;
 
         i {
-            color: $primary-icon;
+            color: $primary;
             box-shadow: var(--bs-box-shadow-lg);
             margin-right: 20px;
             margin-bottom: 30px;
@@ -179,6 +203,7 @@ a {
 input {
     outline: none;
     border: none;
+    margin-bottom: 20px;
 }
 input[type="text"],
 input[type="password"],
@@ -186,8 +211,8 @@ input[type="number"],
 input[type="date"],
 textarea {
     color: $dark;
-    background-color: $light;
-    border: 1px solid rgba($dark, .5);
+    background-color: transparent;
+    border: 1.5px solid $grey-700;
     border-radius: .65rem;
     padding: 2.5px 10px;
 }
@@ -199,7 +224,7 @@ input[type=range] {
     appearance: none;
     width: 100%;
     height: 10px;
-    background-color: rgba($dark, .25);
+    background-color: $grey-200;
     cursor: pointer;
     border-radius: 10px;
     border: none;
@@ -210,7 +235,7 @@ input[type=range]::-moz-range-thumb {
     appearance: none;
     width: 20px;
     height: 20px;
-    background-color: $primary-icon;
+    background-color: $primary;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -288,6 +313,86 @@ input[type=range]::-moz-range-thumb {
     display: flex;
 }
 
+.button {
+    color: inherit;
+    background-color: transparent;
+    border: 1.5px solid;
+    border-color: inherit;
+    font-weight: normal;
+    text-decoration: none;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+    padding: 2.5px 10px;
+    border-radius: 50rem;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover, &:active {
+        background-color: rgba($grey-200, .5);
+    }
+    i {
+        margin: auto;
+        padding-bottom: 2px;
+        padding-right: .25rem;
+    }
+    &[disabled] {
+        cursor: not-allowed;
+        border-color: rgba($dark, .25)!important;
+        i {
+            color: rgba($dark, .25)!important;
+        }
+    }
+}
+
+.button-primary {
+    @extend .button;
+    color: $light;
+    border: none;
+    background-color: $primary;
+    &:hover, &:active {
+        background-color: $primary-600;
+    }
+}
+
+.button-secondary {
+    @extend .button;
+    color: $light;
+    border: none;
+    background-color: $secondary;
+    &.button-outline {
+        color: $secondary;
+        background-color: transparent;
+        border: 1.5px solid; // same as .button
+        border-color: $secondary;
+        &:hover, &:active {
+            background-color: $secondary-100;
+        }
+    }
+    &:hover, &:active {
+        background-color: $secondary-600;
+    }
+}
+
+.button-danger {
+    @extend .button;
+    color: $light;
+    background-color: $danger;
+    &:hover, &:active {
+        background-color: $danger-600;
+    }
+}
+
+.button-lg {
+    display: block;
+    font-size: large;
+    text-align: center;
+    border-radius: 1rem;
+    width: 100%;
+    padding: 10px;
+}
+
+
+
 #menu {
     display: flex;
     justify-content: space-around;
@@ -298,14 +403,15 @@ input[type=range]::-moz-range-thumb {
     margin: 0 auto;
 
     &.menu-v {
-        border: $dark 1px solid;
+        border: $dark 1.5px solid;
         border-right: none;
         border-radius:  .35em 0 0 .35em;
         flex-direction: column;
         position: absolute;
         z-index: 5;
-        top: 200px;
         right: 0px;
+        top: 45%;
+        transform: translateY(-50%);
     }
 
     button {
@@ -317,14 +423,16 @@ input[type=range]::-moz-range-thumb {
         margin: .25em;
         &:hover, &:active {
             color: $light;
-            background-color: $primary-icon;
+            background-color: $primary;
         }
     }
     .active {
         color: $light;
-        background-color: $primary-icon;
+        background-color: $primary;
     }
 }
+
+
 
 // Hovering menu on the bottom
 .quick-menu {
@@ -354,7 +462,7 @@ input[type=range]::-moz-range-thumb {
         height: 60px;
         border-radius: 50%;
         color: $light;
-        background-color: $primary-icon;
+        background-color: $primary;
         font-size: 18px;
         position: absolute;
         left: 50%;
@@ -362,7 +470,7 @@ input[type=range]::-moz-range-thumb {
         transform: translateX(-50%);
         z-index: 2;
         &:hover {
-            background-color: darken($primary-icon, 10%);
+            background-color: darken($primary, 10%);
         }
     }
     
@@ -390,37 +498,10 @@ input[type=range]::-moz-range-thumb {
 }
 
 
-label {
-    padding-top: 10px !important;
-    display: block;
-}
 
 ::placeholder {
     font-weight: 300;
     opacity: 0.5;
-}
-
-.button {
-    color: inherit;
-    background-color: transparent;
-    border: 1px solid;
-    border-color: inherit;
-    margin-top: .5rem;
-    margin-bottom: .5rem;
-    padding: 2.5px 10px;
-    border-radius: 50rem;
-    cursor: pointer;
-    text-decoration: none;
-    &:hover, &:active {
-        background-color: rgba($secondary, .15);
-    }
-    &[disabled] {
-        cursor: not-allowed;
-        border-color: rgba($dark, .25)!important;
-        i {
-            color: rgba($dark, .25)!important;
-        }
-    }
 }
 
 .video-bg {
@@ -429,11 +510,6 @@ label {
     animation: fadeInAnimation ease 10s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-}
-
-
-.color-primary-icon {
-    color: $primary-icon;
 }
 
 @keyframes fadeInAnimation {
@@ -447,7 +523,7 @@ label {
 
 // Rounded corners border radius bar chart
 div.js-plotly-plot > div > div > svg > g.cartesianlayer > g > g.plot > g > g > g > g > path {
-    clip-path: inset(0% 0% 0% 0% round 1em 1em 0 0);
+    clip-path: inset(0% 0% 0% 0% round 100 100 0 0);
 }
 
 // Push down xaxis labels a bit

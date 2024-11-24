@@ -6,13 +6,13 @@
 <div class="card card-login" style="background-color: transparent;">
     <div class="banner">
         <h1><i class="fa-solid fa-beer-mug-empty fa-xl fa-flip-horizontal"></i></h1>
-        <h1>Drinklog</h1>
+        <h1 class="fw-bold" style="margin-left: -15px;">Drinklog</h1>
     </div>
 
     <div class="card-body text-light" style="background-color: transparent;">
 
         {% if form.errors %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Login error!</strong><br/>
             Please provide valid credentials.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -29,7 +29,7 @@
                 <label class="h5" for="id_password">Password:</label>
                 {{ form.password }}
             </div>
-            <input class="button mt-3 mb-0" type="submit" value="Login" />
+            <button class="button-primary" type="submit"><i class="fa-solid fa-right-to-bracket fa-lg m-auto"></i>Login</button>
         </form>
     </div>
 </div>
