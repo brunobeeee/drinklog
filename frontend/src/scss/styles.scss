@@ -19,10 +19,11 @@ body {
     font-family: "Montserrat", sans-serif;
     font-weight: 400;
     min-height: 100vh;
-    max-width: 576px;
+    max-width: 700px;
     margin: 0 auto; // x-auto
     display: flex;
     flex-direction: column;
+    overscroll-behavior: none;
 }
 
 h1,
@@ -101,16 +102,11 @@ a {
 .log-wrapper {
     background-color: $light;
     box-shadow: var(--bs-box-shadow);
-    max-width: 576px;
     padding: .75rem;
     padding-top: 1rem;
     padding-bottom: 100px;
     flex-grow: 1;
     overflow-y: auto;
-
-    %headings {
-        margin-left: .5rem;
-    }
 
     // Table
     .log-list {
@@ -324,6 +320,7 @@ input[type=range]::-moz-range-thumb {
     margin-bottom: .5rem;
     margin-right: .5rem;
     padding: 2.5px 10px;
+    align-content: center;
     border-radius: 50rem;
     cursor: pointer;
     text-decoration: none;
