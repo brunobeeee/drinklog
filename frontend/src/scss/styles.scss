@@ -108,6 +108,10 @@ a {
     flex-grow: 1;
     overflow-y: auto;
 
+    %headings {
+        margin-left: .25rem;
+    }
+
     // Table
     .log-list {
         color: inherit;
@@ -150,38 +154,23 @@ a {
 
 
 
-.card {
-    margin: 0 auto;
-    max-width: 576px;
+.login-wrapper {
+    color: $light;
+    max-width: 350px;
+    margin: 1rem auto;
+    z-index: 5;
 
-    &.card-login {
-        max-width: 350px;
-        padding: .5rem;
-        background-color: transparent;
-        box-shadow: none;
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        background-color: $light;
+    }
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            background-color: $light;
-        }
-    }
-    
-    .card-header {
-        color: $light;
-        border: none !important;
-        background: linear-gradient(
-            90deg,
-            $primary 0%,
-            darken($primary, .1) 50%,
-            darken($primary, .1) 100%
-        );
-    }
     .banner {
         background: transparent;
         color: $light;
         margin: 3rem;
-        margin-bottom: 0;
+        margin-bottom: 2rem;
         text-align: center;
         flex-direction: column;
 
@@ -192,7 +181,11 @@ a {
             margin-bottom: 30px;
         }
     }
+
 }
+
+
+
 
 
 ///// INPUTS /////

@@ -30,7 +30,7 @@
 
 
 <div class="log-wrapper">
-    <div class="d-flex mb-3">
+    <div class="d-flex">
         <h1 class="mt-auto">Your logs</h1>
         <h1 class="d-none logo ms-auto mb-1 me-2">
             <i class="fa-solid fa-sm fa-beer-mug-empty"></i>Drinklog 
@@ -39,11 +39,6 @@
         </a>
     </div>
 
-    <div id="search-active-banner" class="alert alert-info alert-dismissible fade mb-2" role="alert" style="display: none; border: none; border-radius: 1rem;">
-        <strong>Active search:</strong> <span id="search-term"></span>
-        <button type="button" class="btn-close" aria-label="Close" id="clear-search-btn"></button>
-    </div>
-    
     {% if logs|length > 0 %}
     <table id="loglist" class="log-list">
     {% endif %} {% for log in logs %}
