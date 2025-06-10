@@ -1,4 +1,4 @@
-Django==3.2.25
+Django>=4.2.22
 environs==14.1.1
 plotly==5.3.1
 pandas==2.2.1
