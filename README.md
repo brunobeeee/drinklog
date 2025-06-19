@@ -38,6 +38,7 @@ First you have to supply a `.env.prod` and a `.env.prod.db` file to set the env 
 SECRET_KEY=*****
 
 DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+DJANGO_CSRF_TRUSTED_ORIGINS=https://your.url http://localhost
 
 SQL_ENGINE=django.db.backends.postgresql
 SQL_DATABASE=drinklogs
